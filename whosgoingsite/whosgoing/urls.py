@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
-from whosgoing.views import home
+from whosgoing.views.home import HomeView
+
 
 urlpatterns = patterns('',
-   url(r'^$', home, name='home'),
+   url(r'^$', HomeView.as_view(), name='home'),
 )
