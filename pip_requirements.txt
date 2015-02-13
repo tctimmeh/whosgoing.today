@@ -1,0 +1,4 @@
+django >= 1.7, < 1.8
+dc-django-base
+django-testing-base
+
