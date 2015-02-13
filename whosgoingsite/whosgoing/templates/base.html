@@ -6,4 +6,15 @@
 {% block headerBarBrand %}{% trans "Who's Going Today?" %}{% endblock %}
 
 {% block footerBar %}
+    <div class="navbar-text navbar-right">
+        <a class="navbar-link" href="mailto:admin@whosgoing.today?Subject=whosgoing.today">
+            {% trans "Contact" %}
+        </a>
+
+        &centerdot;
+
+        <a class="navbar-link" href="https://github.com/tctimmeh/whosgoing.today">
+            {% trans "Contribute" %}
+        </a>
+    </div>
 {% endblock %}
