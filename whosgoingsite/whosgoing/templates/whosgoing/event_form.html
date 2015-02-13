@@ -1,0 +1,14 @@
+{% extends "dcbase/base-narrow-dialog.html" %}
+
+{% block pageTitle %}Create Event{% endblock %}
+
+{% block panelType %}primary{% endblock %}
+
+{% block panelHeading %}Create Event{% endblock %}
+
+{% block panelBody %}
+    <form method="post">
+        {% include "dcbase/form.html" %}
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+{% endblock %}
