@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block pageTitle %}{{ object.name }}{% endblock %}
+{% block pageTitle %}{{ object.name }} - {{ block.super }}{% endblock %}
 
 {% block content %}
     <div class="container">

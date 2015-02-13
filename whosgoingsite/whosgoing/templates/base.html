@@ -1,6 +1,9 @@
 {% extends "dcbase/base.html" %}
+{% load i18n %}
 
-{% block headerBarBrand %}Who's Going Today?{% endblock %}
+{% block pageTitle %}{% trans "Who's Going Today" %}{% endblock %}
+
+{% block headerBarBrand %}{% trans "Who's Going Today?" %}{% endblock %}
 
 {% block footerBar %}
 {% endblock %}

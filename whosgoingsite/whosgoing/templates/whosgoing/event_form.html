@@ -1,14 +1,17 @@
 {% extends "dcbase/base-narrow-dialog.html" %}
+{% load i18n %}
 
-{% block pageTitle %}Create Event{% endblock %}
+{% block pageTitle %}{% trans "Create Event" %} - {{ block.super }}{% endblock %}
 
 {% block panelType %}primary{% endblock %}
 
-{% block panelHeading %}Create Event{% endblock %}
+{% block panelHeading %}{% trans "Create Event" %}{% endblock %}
 
 {% block panelBody %}
     <form method="post">
         {% include "dcbase/form.html" %}
-        <button class="btn btn-primary" type="submit">Create</button>
+        <button class="btn btn-primary" type="submit">
+            {% trans "Create" %}
+        </button>
     </form>
 {% endblock %}
