@@ -1,0 +1,23 @@
+                        +---------------------------+          +----------------------+
+                        | User_Event                |          | Event                |
+                        +---------------------------+          +----------------------+
++-------------+ 1     * | user : django.User        | *      1 | name : string        |
+| django.User +---------+ event : Event             +----------+ description : string |
++------+------+         | last_attended : timestamp |          +----------+-----------+
+       |1               +---------------------------+                     |1
+       |                                                                  |
+       |                                                                  |
+       |                                                                  |*
+       |          +-------------------------------------+        +------------------+
+       |          | User_EventOccurrance                |        | EventOccurrance  |
+       |          +-------------------------------------+ *    1 +------------------+
+       |        * | user : django.User                  +--------+ event : Event    |
+       +----------+ eventOccurrance : EventOccurrance   |        | time : timestamp |
+                  | attendance : AttendanceResponse     |        +------------------+
+                  +----------------+--------------------+
+                                   |*
+                                   |
+                                   |1
+                         +---------+----------+
+                         | AttendanceResponse |
+                         +--------------------+
