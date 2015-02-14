@@ -1,0 +1,9 @@
+{% load i18n %}
+{% blocktrans %}Good News!{% endblocktrans %}
+
+{% blocktrans with event_name=invitation.event_name %}You've been invited to {{ event_name }} on WhosGoing.Today!" {% endblocktrans %}
+
+{% blocktrans %}To accept or reject this invitation please visit the link below.{% endblocktrans %}
+http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}
+
+{% blocktrans %}Thanks from the WhosGoing.Today team!{% endblocktrans %}

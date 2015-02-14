@@ -1,6 +1,31 @@
+{% load i18n %}
+{% spaceless %}
 <!doctype html>
 <html>
 <body>
-Are you going to {{ event.name }}? I think you should.
+    <h3>{% blocktrans %}Good News!{% endblocktrans %}</h3>
+
+    <p>
+        {% blocktrans with event_name=invitation.event_name%}
+            You've been invited to {{ event_name }} on WhosGoing.Today!
+        {% endblocktrans %}
+    </p>
+
+    <p>
+        {% blocktrans %}
+            To accept or reject this invitation click this link:
+        {% endblocktrans %}
+        <br />
+        <a href="http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}">
+            http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}
+        </a>
+    </p>
+
+    <p>
+        {% blocktrans %}
+            Thanks from the WhosGoing.Today team!
+        {% endblocktrans %}
+    </p>
 </body>
 </html>
+{% endspaceless %}

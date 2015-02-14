@@ -36,20 +36,26 @@
 
     <script>
         $(document).ready(function () {
-            $('#invite-form').ajaxForm(function (response) {
-                var message = '';
+            $('#invite-form').ajaxForm({
+                success: function (response, status) {
+                    var message = '';
 
-                if (response['success']) {
-                    message += '<div class="text-success">Invitation sent!</div>';
-                }
-                else {
-                    var errors = response['errors'];
-                    $.each(errors, function(index, errorMessage) {
-                        message += '<div class="text-danger">' + errorMessage + '</div>';
-                    })
-                }
+                    if (response['success']) {
+                        message += '<div class="text-success">Invitation sent!</div>';
+                    }
+                    else {
+                        var errors = response['errors'];
+                        $.each(errors, function (index, errorMessage) {
+                            message += '<div class="text-danger">' + errorMessage + '</div>';
+                        })
+                    }
 
-                $('#invite-messages').html(message);
+                    $('#invite-messages').html(message);
+                    $('#invite-form').resetForm();
+                },
+                error: function(xhr, response, status) {
+                    $('#invite-messages').html('<div class="text-danger">Failed to submit invitation: ' + status + '</div>')
+                }
             });
         });
     </script>
