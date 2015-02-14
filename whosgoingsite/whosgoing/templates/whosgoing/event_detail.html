@@ -1,9 +1,43 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block pageTitle %}{{ object.name }} - {{ block.super }}{% endblock %}
 
 {% block content %}
     <div class="container">
         <h1>{{ object.name }}</h1>
+
+        <div>
+            <h3>Invite</h3>
+
+            <form id="invite-form" class="form-inline" action="{% url "eventInvite" eventId=object.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="input-group">
+                        <label class="sr-only" for="user">
+                            {% trans "User" %}
+                        </label>
+                        {% include "dcbase/form-field.html" with field=inviteForm.user %}
+                        <span class="input-group-btn">
+                            <button id="invite-button" class="btn btn-default" type="submit">
+                                {% trans "Invite" %}
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#invite-form').ajaxForm(function () {
+                alert("Invited!");
+            });
+        });
+    </script>
 {% endblock %}
