@@ -1,6 +1,7 @@
+import json
 from django.core.urlresolvers import reverse
 from testbase.unit import UnitTestCase
-from whosgoing.models import Event
+from whosgoing.models import Event, EmailInvitation
 
 
 class TestInviteView(UnitTestCase):
@@ -26,11 +27,22 @@ class TestInviteView(UnitTestCase):
         response = self.client.post(self.get_url(), {'user': self.inviteAddress})
         self.assertJSONEqual(response.content.decode(), '{"success": true}')
 
-    def test_returnsForbiddenIfNoUserGiven(self):
-        response = self.client.post(self.get_url(), {'user': ''})
-        self._assertResponseStatusIs(response, 403)
-
     def test_rendersInviteEmailTemplate(self):
         response = self.client.post(self.get_url(), {'user': self.inviteAddress})
         self.assertTemplateUsed(response, 'whosgoing/inviteEmail.html')
+
+    def test_createsEmailInvitation(self):
+        response = self.client.post(self.get_url(), {'user': self.inviteAddress})
+        invitation = EmailInvitation.objects.get(event=self.event, address=self.inviteAddress)
+        self.assertIsNotNone(invitation)
+
+    def test_responseIndicatesFailureIfEmailAddressIsInvalid(self):
+        response = self.client.post(self.get_url(), {'user': self.randStr()})
+        responseData = json.loads(response.content.decode())
+        self.assertFalse(responseData['success'])
+
+    def test_responseIndicatesFailureIfPostDataInvalid(self):
+        response = self.client.post(self.get_url(), {'user': ''})
+        responseData = json.loads(response.content.decode())
+        self.assertFalse(responseData['success'])
 

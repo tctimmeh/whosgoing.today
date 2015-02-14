@@ -25,6 +25,7 @@
                         </span>
                     </div>
                 </div>
+                <div id="invite-messages"></div>
             </form>
         </div>
     </div>
@@ -35,8 +36,20 @@
 
     <script>
         $(document).ready(function () {
-            $('#invite-form').ajaxForm(function () {
-                alert("Invited!");
+            $('#invite-form').ajaxForm(function (response) {
+                var message = '';
+
+                if (response['success']) {
+                    message += '<div class="text-success">Invitation sent!</div>';
+                }
+                else {
+                    var errors = response['errors'];
+                    $.each(errors, function(index, errorMessage) {
+                        message += '<div class="text-danger">' + errorMessage + '</div>';
+                    })
+                }
+
+                $('#invite-messages').html(message);
             });
         });
     </script>
