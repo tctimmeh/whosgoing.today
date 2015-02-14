@@ -7,8 +7,7 @@ from whosgoing.models import Event
 class TestCreateEventView(UnitTestCase, RequiresLogin):
     def setUp(self):
         super().setUp()
-        user = self.createUser()
-        self.logInAs(user)
+        self.logInAs()
         self.url = self.get_url()
 
     def get_url(self):
