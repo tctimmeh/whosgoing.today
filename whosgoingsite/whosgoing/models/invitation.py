@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Model, DateTimeField, ForeignKey, EmailField, CharField
 
 
-class EmailInvitation(Model):
+class Invitation(Model):
     event = ForeignKey('Event')
     inviteId = CharField(max_length=36, default=uuid.uuid4)
     sent = DateTimeField(auto_now_add=True)

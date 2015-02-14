@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from whosgoing.forms.invite import InviteForm
-from whosgoing.models import Event, EmailInvitation
+from whosgoing.models import Event, Invitation
 
 
 class EventInviteView(View):
@@ -19,7 +19,7 @@ class EventInviteView(View):
 
         user = form.cleaned_data['user']
 
-        invitation = EmailInvitation(event=event, address=user)
+        invitation = Invitation(event=event, address=user)
         try:
             invitation.full_clean()
         except ValidationError as e:

@@ -1,2 +1,2 @@
 from .event import Event
-from .emailInvitation import EmailInvitation
+from .invitation import Invitation

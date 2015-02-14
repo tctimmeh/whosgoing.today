@@ -1,7 +1,7 @@
 import json
 from django.core.urlresolvers import reverse
 from testbase.unit import UnitTestCase
-from whosgoing.models import Event, EmailInvitation
+from whosgoing.models import Event, Invitation
 
 
 class TestInviteView(UnitTestCase):
@@ -33,7 +33,7 @@ class TestInviteView(UnitTestCase):
 
     def test_createsEmailInvitation(self):
         response = self.client.post(self.get_url(), {'user': self.inviteAddress})
-        invitation = EmailInvitation.objects.get(event=self.event, address=self.inviteAddress)
+        invitation = Invitation.objects.get(event=self.event, address=self.inviteAddress)
         self.assertIsNotNone(invitation)
 
     def test_responseIndicatesFailureIfEmailAddressIsInvalid(self):
