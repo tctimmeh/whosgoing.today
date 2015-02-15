@@ -1,9 +1,34 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block pageTitle %}Invitation - {{ block.super }}{% endblock %}
 
+{% block style %}
+    <style>
+        .event_name { font-weight: bold; font-size: 150%; font-style: italic; text-shadow: 3px 3px lightgray; }
+    </style>
+{% endblock %}
+
 {% block content %}
+    {% url "account_login" as sign_in_link %}
+
     <div class="container">
-        This is an invitation.
+        <h1>{% trans "You're Invited!" %}</h1>
+
+        <p>
+            {% blocktrans with event_name=invitation.event_name %}
+                You've been invited to join <span class="event_name">{{ event_name }}</span>.
+            {% endblocktrans %}
+        </p>
+
+        <p>
+            {% if user.is_authenticated %}
+                You're logged in! Good.
+            {% else %}
+                {% blocktrans with next=request.path %}
+                    Please <a class="btn btn-xs btn-primary" href="{{ sign_in_link }}?next={{ next }}">Sign In</a> to accept this invitation.
+                {% endblocktrans %}
+            {% endif %}
+        </p>
     </div>
 {% endblock %}
