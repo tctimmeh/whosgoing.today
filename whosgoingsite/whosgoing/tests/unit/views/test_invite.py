@@ -46,3 +46,9 @@ class TestInviteView(UnitTestCase):
         responseData = json.loads(response.content.decode())
         self.assertFalse(responseData['success'])
 
+    def test_returnsFailureMessageIfDuplicateInvitationSentTooSoon(self):
+        self.client.post(self.get_url(), {'user': self.inviteAddress})
+        response = self.client.post(self.get_url(), {'user': self.inviteAddress})
+        responseData = json.loads(response.content.decode())
+        self.assertFalse(responseData['success'])
+

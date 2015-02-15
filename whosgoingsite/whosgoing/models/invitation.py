@@ -1,6 +1,8 @@
 import uuid
+
 from django.core.urlresolvers import reverse
 from django.db.models import Model, DateTimeField, ForeignKey, EmailField, CharField
+from django.utils import timezone
 
 
 class Invitation(Model):
@@ -18,3 +20,8 @@ class Invitation(Model):
     @property
     def event_name(self):
         return self.event.name
+
+    @property
+    def since_last_sent(self):
+        return timezone.now() - self.sent
+
