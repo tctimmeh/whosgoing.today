@@ -1,34 +1,58 @@
-{% extends "base.html" %}
+{% extends "dcbase/base-narrow-dialog.html" %}
 {% load i18n %}
 
 {% block pageTitle %}Invitation - {{ block.super }}{% endblock %}
 
 {% block style %}
     <style>
-        .event_name { font-weight: bold; font-size: 150%; font-style: italic; text-shadow: 3px 3px lightgray; }
+        .event_name { color: black; font-weight: bold; font-size: 150%; font-style: italic; text-shadow: 3px 3px lightgray; }
+        .invitation-form { display: inline; }
+        .invitation-form:not(:first-child) { margin-left: 5px; }
     </style>
 {% endblock %}
 
-{% block content %}
+{% block panelType %}primary{% endblock %}
+
+{% block panelHeading %}
+    <h2>{% trans "You're Invited!" %}</h2>
+{% endblock %}
+
+{% block panelBody %}
     {% url "account_login" as sign_in_link %}
+    {% url "eventDetail" id=invitation.event.id as event_link %}
 
-    <div class="container">
-        <h1>{% trans "You're Invited!" %}</h1>
-
+    {% if user.is_authenticated and not inviteForUser %}
+        <p>
+            {% blocktrans %}
+                Oops! Looks like you've found an event invitation that's meant for somebody else.
+            {% endblocktrans %}
+        </p>
+    {% else %}
         <p>
             {% blocktrans with event_name=invitation.event_name %}
-                You've been invited to join <span class="event_name">{{ event_name }}</span>.
+                You've been invited to join <a href="{{ event_link }}" class="event_name">{{ event_name }}</a>.
             {% endblocktrans %}
         </p>
 
-        <p>
-            {% if user.is_authenticated %}
-                You're logged in! Good.
-            {% else %}
+        {% if user.is_authenticated %}
+            <div>
+                <form class="invitation-form" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="accept" />
+                    <button class="btn btn-success">Join<span class="hidden-xs"> the</span> Event</button>
+                </form>
+                <form class="invitation-form" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="reject" />
+                    <button class="btn btn-danger">Reject<span class="hidden-xs"> the Invitation</span></button>
+                </form>
+            </div>
+        {% else %}
+            <p>
                 {% blocktrans with next=request.path %}
                     Please <a class="btn btn-xs btn-primary" href="{{ sign_in_link }}?next={{ next }}">Sign In</a> to accept this invitation.
                 {% endblocktrans %}
-            {% endif %}
-        </p>
-    </div>
+            </p>
+        {% endif %}
+    {% endif %}
 {% endblock %}
