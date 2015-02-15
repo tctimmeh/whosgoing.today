@@ -9,3 +9,6 @@ setup: venv
 	
 venv:
 	$(VENV) -p $(PYTHON) $(VENV_DIR)
+
+test:
+	whosgoingsite/manage.py test whosgoing

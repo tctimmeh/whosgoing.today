@@ -1,5 +1,6 @@
 from allauth.account.models import EmailAddress
 from django.core.urlresolvers import reverse
+from whosgoing.models import Invitation
 from whosgoing.tests.unit.whosGoingUnitTestCase import WhosGoingUnitTestCase
 
 
@@ -31,3 +32,24 @@ class TestInvitationView(WhosGoingUnitTestCase):
         self.get()
         self.assertLastContextValueEqual('inviteForUser', False)
 
+    def test_postingAsAnonymousUserReturnsForbiddenResponse(self):
+        response = self.client.post(self.get_url(), {'action': 'reject'})
+        self._assertResponseStatusIs(response, 403)
+
+    def test_postingAsWrongUserReturnsForbiddenResponse(self):
+        user = self.logInAs()
+        EmailAddress.objects.create(user=user, email=self.randStr()+'@host.com')
+        response = self.client.post(self.get_url(), {'action': 'reject'})
+        self._assertResponseStatusIs(response, 403)
+
+    def test_postingRejectionDeletesInvitation(self):
+        user = self.logInAs()
+        EmailAddress.objects.create(user=user, email=self.invitation.address)
+        self.client.post(self.get_url(), {'action': 'reject'})
+        self.assertRaises(Invitation.DoesNotExist, Invitation.objects.get, id=self.invitation.id)
+
+    def test_postingRejectionRedirectsToHomePage(self):
+        user = self.logInAs()
+        EmailAddress.objects.create(user=user, email=self.invitation.address)
+        response = self.client.post(self.get_url(), {'action': 'reject'})
+        self.assertRedirects(response, reverse('home'))
