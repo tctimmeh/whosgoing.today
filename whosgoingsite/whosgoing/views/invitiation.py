@@ -1,7 +1,8 @@
 from allauth.account.models import EmailAddress
+from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 from whosgoing.models import Invitation
 
@@ -26,8 +27,14 @@ class InvitationView(DetailView):
         action = request.POST['action']
         if action == 'reject':
             self.object.delete()
-
-        return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('home'))
+        elif action == 'accept':
+            self.object.delete()
+            self.object.event.add_member(self.request.user)
+            messages.success(request, _('Successfully joined event "%(event_name)s".') % {'event_name': self.object.event.name})
+            return HttpResponseRedirect(reverse('eventDetail', kwargs={'id': self.object.event.id}))
+        else:
+            return HttpResponseForbidden()
 
     def _is_invite_for_user(self):
         if self.request.user is None:
