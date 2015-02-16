@@ -18,5 +18,11 @@ class Event(Model):
     def add_member(self, user):
         EventMember.objects.create(event=self, user=user)
 
+    def remove_member(self, user):
+        try:
+            EventMember.objects.get(event=self, user=user).delete()
+        except EventMember.DoesNotExist:
+            pass
+
     def is_member(self, user):
         return self.members.filter(id=user.id).exists()

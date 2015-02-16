@@ -16,3 +16,11 @@ class TestEventModel(WhosGoingUnitTestCase):
         otherUser = self.createUser()
         self.assertTrue(event.is_member(user))
         self.assertFalse(event.is_member(otherUser))
+
+    def test_removingMemberDeletesEventMembership(self):
+        event = self.create_event()
+        user = self.createUser()
+        event.add_member(user)
+        event.remove_member(user)
+        self.assertModelInstanceNotExists(EventMember, user=user, event=event)
+

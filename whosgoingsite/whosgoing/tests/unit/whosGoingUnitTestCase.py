@@ -6,6 +6,9 @@ class WhosGoingUnitTestCase(UnitTestCase):
     def assertModelInstanceExists(self, modelClass, **filterOptions):
         self.assertTrue(modelClass.objects.filter(**filterOptions).exists())
 
+    def assertModelInstanceNotExists(self, modelClass, **filterOptions):
+        self.assertFalse(modelClass.objects.filter(**filterOptions).exists())
+
     def create_event(self, name=None):
         if name is None:
             name = self.randStr()
