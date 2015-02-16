@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models import Model, CharField, TextField, ManyToManyField
+from whosgoing.models import EventMember
 
 
 class Event(Model):
@@ -13,3 +14,6 @@ class Event(Model):
 
     def get_absolute_url(self):
         return reverse('eventDetail', kwargs={'id': self.id})
+
+    def add_member(self, user):
+        EventMember.objects.create(event=self, user=user)

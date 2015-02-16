@@ -9,7 +9,7 @@ class CreateEventView(CreateView):
 
     def form_valid(self, form):
         out = super().form_valid(form)
-        EventMember.objects.create(user=self.request.user, event=self.object)
+        self.object.add_member(self.request.user)
         return out
 
 createEventView = login_required(CreateEventView.as_view())

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import Model, ForeignKey, DateTimeField
+from django.db.models import Model, ForeignKey
 
 
 class EventMember(Model):

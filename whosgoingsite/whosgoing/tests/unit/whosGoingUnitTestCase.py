@@ -3,6 +3,9 @@ from whosgoing.models import Event, Invitation
 
 
 class WhosGoingUnitTestCase(UnitTestCase):
+    def assertModelInstanceExists(self, modelClass, **filterOptions):
+        self.assertTrue(modelClass.objects.filter(**filterOptions).exists())
+
     def create_event(self, name=None):
         if name is None:
             name = self.randStr()
