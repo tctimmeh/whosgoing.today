@@ -6,7 +6,10 @@ from whosgoing.models import Event, Invitation
 
 class TestInviteView(UnitTestCase):
     def setUp(self):
+        super().setUp()
+        user = self.logInAs()
         self.event = Event.objects.create(name=self.randStr())
+        self.event.add_member(user)
         self.inviteAddress = self.randStr() + '@host.com'
 
     def get_url(self, eventId=None):
@@ -52,5 +55,7 @@ class TestInviteView(UnitTestCase):
         responseData = json.loads(response.content.decode())
         self.assertFalse(responseData['success'])
 
-    # def test_postingAsUserWhoIsNotMembersReturnsForbidden(self):
-
+    def test_postingAsUserWhoIsNotMembersReturnsForbidden(self):
+        user = self.logInAs()
+        response = self.client.post(self.get_url(), {'user': self.inviteAddress})
+        self._assertResponseStatusIs(response, 403)

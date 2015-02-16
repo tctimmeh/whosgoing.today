@@ -9,7 +9,8 @@ class EventDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['inviteForm'] = InviteForm()
+        if self.object.is_member(self.request.user):
+            data['inviteForm'] = InviteForm()
         return data
 
 

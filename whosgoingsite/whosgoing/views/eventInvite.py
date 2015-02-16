@@ -3,7 +3,7 @@ import datetime
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.core.exceptions import ValidationError
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils import timezone
@@ -23,6 +23,8 @@ class EventInviteView(View):
 
     def post(self, request, eventId):
         event = get_object_or_404(Event, id=eventId)
+        if not event.is_member(self.request.user):
+            return HttpResponseForbidden()
 
         try:
             address = self._get_address_from_form(request.POST)
