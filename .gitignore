@@ -1,6 +1,5 @@
 venv
 db.sqlite3
-settings_prod.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
