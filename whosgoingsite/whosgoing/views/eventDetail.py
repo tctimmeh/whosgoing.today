@@ -11,6 +11,7 @@ class EventDetailView(DetailView):
         data = super().get_context_data(**kwargs)
         if self.object.is_member(self.request.user):
             data['inviteForm'] = InviteForm()
+        data['members'] = self.object.members.order_by('username')
         return data
 
 

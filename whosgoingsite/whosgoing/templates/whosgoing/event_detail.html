@@ -46,7 +46,7 @@
             <div class="col-md-8">
                 <h3>Members</h3>
                 <ul class="member-list">
-                    {% for user in object.members.all %}
+                    {% for user in members %}
                         <li>
                             <a href="{% url "account_profile_user" username=user.username %}">
                                 {% gravatar user.email 30 %}{% user_display user %}
