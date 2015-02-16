@@ -17,3 +17,6 @@ class Event(Model):
 
     def add_member(self, user):
         EventMember.objects.create(event=self, user=user)
+
+    def is_member(self, user):
+        return self.members.filter(id=user.id).exists()
