@@ -7,26 +7,31 @@ from whosgoing.models import Event
 class TestCreateEventView(UnitTestCase, RequiresLogin):
     def setUp(self):
         super().setUp()
-        self.logInAs()
+        self.user = self.logInAs()
         self.url = self.get_url()
+        self.eventName = self.randStr()
+        self.postData = {'name': self.eventName}
 
     def get_url(self):
         return reverse('createEvent')
 
     def test_postRedirectsToLoginIfUserNotLoggedIn(self):
         self.logOut()
-        response = self.client.post(self.url, data={'name': self.randStr()})
+        response = self.client.post(self.url, self.postData)
         self.assertRedirects(response, reverse('account_login') + '?next={}'.format(self.url))
 
     def test_postWithValidFormDataCreatesNewEvent(self):
-        eventName = self.randStr()
-        self.client.post(self.url, data={'name': eventName})
-        event = Event.objects.get(name=eventName)
+        self.client.post(self.url, self.postData)
+        event = Event.objects.get(name=self.eventName)
         self.assertIsNotNone(event)
 
     def test_postWithValidFormDataRedirectsToEventDetailPage(self):
-        eventName = self.randStr()
-        response = self.client.post(self.url, data={'name': eventName})
-        event = Event.objects.get(name=eventName)
+        response = self.client.post(self.url, self.postData)
+        event = Event.objects.get(name=self.eventName)
         self.assertRedirects(response, reverse('eventDetail', kwargs={'id': event.id}))
 
+    def test_eventCreatorIsMemberOfEvent(self):
+        self.client.post(self.url, self.postData)
+        event = Event.objects.get(name=self.eventName)
+        members = event.members.all()
+        self.assertIn(self.user, members)
