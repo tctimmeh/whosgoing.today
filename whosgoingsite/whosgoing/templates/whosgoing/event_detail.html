@@ -1,32 +1,54 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load account %}
+{% load gravatar %}
 
 {% block pageTitle %}{{ object.name }} - {{ block.super }}{% endblock %}
+
+{% block style %}
+    <style>
+        .member-list .gravatar { margin-right: 5px; }
+    </style>
+{% endblock %}
 
 {% block content %}
     <div class="container">
         <h1>{{ object.name }}</h1>
 
-        <div>
-            <h3>Invite</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Invite</h3>
 
-            <form id="invite-form" class="form-inline" action="{% url "eventInvite" eventId=object.id %}" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <div class="input-group">
-                        <label class="sr-only" for="user">
-                            {% trans "User" %}
-                        </label>
-                        {% include "dcbase/form-field.html" with field=inviteForm.user %}
-                        <span class="input-group-btn">
-                            <button id="invite-button" class="btn btn-default" type="submit">
-                                {% trans "Invite" %}
-                            </button>
-                        </span>
+                <form id="invite-form" class="form-inline" action="{% url "eventInvite" eventId=object.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label class="sr-only" for="user">
+                                {% trans "User" %}
+                            </label>
+                            {% include "dcbase/form-field.html" with field=inviteForm.user %}
+                            <span class="input-group-btn">
+                                <button id="invite-button" class="btn btn-default" type="submit">
+                                    {% trans "Invite" %}
+                                </button>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div id="invite-messages"></div>
-            </form>
+                    <div id="invite-messages"></div>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <h3>Members</h3>
+                <ul class="member-list">
+                    {% for user in object.members.all %}
+                        <li>
+                            <a href="{% url "account_profile_user" username=user.username %}">
+                                {% gravatar user.email 30 %}{% user_display user %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}

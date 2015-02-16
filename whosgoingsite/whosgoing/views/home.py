@@ -6,7 +6,8 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['events'] = self.request.user.events.order_by('name')
+        if not self.request.user.is_anonymous():
+            data['events'] = self.request.user.events.order_by('name')
         return data
 
 homeView = HomeView.as_view()

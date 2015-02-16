@@ -52,3 +52,5 @@ class TestInviteView(UnitTestCase):
         responseData = json.loads(response.content.decode())
         self.assertFalse(responseData['success'])
 
+    # def test_postingAsUserWhoIsNotMembersReturnsForbidden(self):
+
