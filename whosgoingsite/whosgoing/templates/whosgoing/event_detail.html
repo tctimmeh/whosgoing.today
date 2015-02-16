@@ -8,6 +8,8 @@
 {% block style %}
     <style>
         .member-list .gravatar { margin-right: 5px; }
+        .kick-button:hover { cursor: pointer; }
+        #kick-form { display: inline; margin-left: 5px; }
     </style>
 {% endblock %}
 
@@ -49,9 +51,45 @@
                             <a href="{% url "account_profile_user" username=user.username %}">
                                 {% gravatar user.email 30 %}{% user_display user %}
                             </a>
+                            <span class="kick-button text-danger" data-user-id="{{ user.id }}" data-user-name="{% user_display user %}">
+                                &#x2716;
+                            </span>
                         </li>
                     {% endfor %}
                 </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="kick-dialog" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Kick Member</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        {% blocktrans %}
+                            You are about to remove <strong id="kick-user-name"></strong> from this event.
+                            They will not be able to join again without an invitation from an existing member.
+                        {% endblocktrans %}
+                    </p>
+
+                    <p>
+                        {% blocktrans %}
+                            Do you wish to continue?
+                        {% endblocktrans %}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <form id="kick-form" method="post" action="{% url "eventKick" eventId=object.id %}">
+                        {% csrf_token %}
+                        <input id="kick-user-input" name="user" type="hidden" value="-1" />
+                        <button type="submit" class="btn btn-danger">Kick</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -82,6 +120,20 @@
                 error: function(xhr, response, status) {
                     $('#invite-messages').html('<div class="text-danger">Failed to submit invitation: ' + status + '</div>')
                 }
+            });
+
+            $('#kick-form').ajaxForm(function(response, status) {
+               window.location.reload();
+            });
+
+            $('.kick-button').click(function(event) {
+                var element = $(event.target);
+                console.log(element.data());
+                var userId = element.data('user-id');
+                var userName = element.data('user-name');
+                $('#kick-user-input').val(userId);
+                $('#kick-user-name').html(userName);
+                $('#kick-dialog').modal();
             });
         });
     </script>
