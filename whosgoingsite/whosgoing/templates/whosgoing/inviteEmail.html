@@ -1,13 +1,14 @@
 {% load i18n %}
 {% spaceless %}
+{% url "home" as home_link %}
 <!doctype html>
 <html>
 <body>
-    <h3>{% blocktrans %}Good News!{% endblocktrans %}</h3>
+    <h2>{% trans "Good News!" %}</h2>
 
     <p>
-        {% blocktrans with event_name=invitation.event_name%}
-            You've been invited to {{ event_name }} on WhosGoing.Today!
+        {% blocktrans with event_name=invitation.event_name domain=site.domain %}
+            You've been invited to <strong>{{ event_name }}</strong> on <a href="http://{{ domain }}{{ home_link }}">WhosGoing.Today</a>!
         {% endblocktrans %}
     </p>
 
@@ -15,15 +16,15 @@
         {% blocktrans %}
             To accept or reject this invitation click this link:
         {% endblocktrans %}
-        <br />
-        <a href="http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}">
-            http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}
+        <a style="color: #fff; background-color: #428bca; padding: 6px 12px; cursor: pointer; border-radius: 4px; text-decoration: none;"
+           href="http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}">
+            {% trans "Your Invitation" %}
         </a>
     </p>
 
     <p>
-        {% blocktrans %}
-            Thanks from the WhosGoing.Today team!
+        {% blocktrans with domain=site.domain %}
+            Thanks from the <a href="http://{{ domain }}{{ home_link }}">WhosGoing.Today</a> team!
         {% endblocktrans %}
     </p>
 </body>
