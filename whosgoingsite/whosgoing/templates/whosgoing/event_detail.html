@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load account %}
-{% load gravatar %}
 
 {% block pageTitle %}{{ object.name }} - {{ block.super }}{% endblock %}
 
@@ -16,83 +14,26 @@
 {% block content %}
     <div class="container">
         <h1>{{ object.name }}</h1>
+        <p>{{ object.description }}</p>
 
         <div class="row">
             <div class="col-md-4">
                 <h3>Invite</h3>
 
                 {% if inviteForm %}
-                    <form id="invite-form" class="form-inline" action="{% url "eventInvite" eventId=object.id %}" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <div class="input-group">
-                                <label class="sr-only" for="user">
-                                    {% trans "User" %}
-                                </label>
-                                {% include "dcbase/form-field.html" with field=inviteForm.user %}
-                                <span class="input-group-btn">
-                                    <button id="invite-button" class="btn btn-default" type="submit">
-                                        {% trans "Invite" %}
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <div id="invite-messages"></div>
-                    </form>
+                    {% include "whosgoing/invite_form.html" with event=object %}
                 {% else %}
                     <p>{% trans "Only event members may send invites." %}</p>
                 {% endif %}
             </div>
             <div class="col-md-8">
                 <h3>Members</h3>
-                <ul class="member-list">
-                    {% for user in members %}
-                        <li>
-                            <a href="{% url "account_profile_user" username=user.username %}">
-                                {% gravatar user.email 30 %}{% user_display user %}
-                            </a>
-                            <span class="kick-button text-danger" data-user-id="{{ user.id }}" data-user-name="{% user_display user %}">
-                                &#x2716;
-                            </span>
-                        </li>
-                    {% endfor %}
-                </ul>
+                {% include "whosgoing/members_list.html" %}
             </div>
         </div>
     </div>
 
-    <div id="kick-dialog" class="modal fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Kick Member</h4>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        {% blocktrans %}
-                            You are about to remove <strong id="kick-user-name"></strong> from this event.
-                            They will not be able to join again without an invitation from an existing member.
-                        {% endblocktrans %}
-                    </p>
-
-                    <p>
-                        {% blocktrans %}
-                            Do you wish to continue?
-                        {% endblocktrans %}
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <form id="kick-form" method="post" action="{% url "eventKick" eventId=object.id %}">
-                        {% csrf_token %}
-                        <input id="kick-user-input" name="user" type="hidden" value="-1" />
-                        <button type="submit" class="btn btn-danger">Kick</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include "whosgoing/kick_confirm_dialog.html" %}
 {% endblock %}
 
 {% block script %}
