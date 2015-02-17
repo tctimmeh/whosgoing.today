@@ -67,9 +67,9 @@ class EventInviteView(View):
     def _send_email(self, invitation):
         template_context = {'invitation': invitation, 'site': get_current_site(self.request)}
         try:
-            send_mail(subject=_("Are you going to %(event_name)s today?" % {'event_name': invitation.event.name}),
+            send_mail(subject=_("[Who's Going Today?] You've been invited to %(event_name)s!" % {'event_name': invitation.event.name}),
                       message=render_to_string('whosgoing/inviteEmailText.html', template_context),
-                      from_email="<Who's Going Today?> noreply@whosgoing.today",
+                      from_email="Who's Going Today? <noreply@whosgoing.today>",
                       recipient_list=[invitation.address],
                       html_message=render_to_string('whosgoing/inviteEmail.html', template_context),
             )
