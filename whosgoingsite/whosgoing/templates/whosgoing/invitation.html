@@ -19,6 +19,7 @@
 
 {% block panelBody %}
     {% url "account_login" as sign_in_link %}
+    {% url "account_signup" as sign_up_link %}
     {% url "account_email" as profile_email_link %}
     {% url "eventDetail" id=invitation.event.id as event_link %}
 
@@ -57,7 +58,9 @@
         {% else %}
             <p>
                 {% blocktrans with next=request.path %}
-                    Please <a class="btn btn-xs btn-primary" href="{{ sign_in_link }}?next={{ next }}">Sign In</a> to accept this invitation.
+                    <a class="btn btn-xs btn-primary" href="{{ sign_in_link }}?next={{ next }}">Sign In</a> to your existing account or
+                    <a class="btn btn-xs btn-success" href="{{ sign_up_link }}?next={{ next }}">Sign Up</a> for a new account
+                    to accept this invitation.
                 {% endblocktrans %}
             </p>
         {% endif %}
