@@ -6,6 +6,18 @@
         <h1>{% trans "Who's Going Today?" %}</h1>
 
         {% if user.is_authenticated %}
+            {% if invitations %}
+                <h3>Your Pending Invitations</h3>
+
+                <ul>
+                    {% for invitation in invitations %}
+                        <li><a href="{% url "invitation" inviteId=invitation.inviteId %}">
+                            {{ invitation.event.name }}
+                        </a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
             <h3>Your Events</h3>
 
             <ul>

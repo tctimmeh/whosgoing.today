@@ -1,15 +1,22 @@
 import uuid
 
 from django.core.urlresolvers import reverse
-from django.db.models import Model, DateTimeField, ForeignKey, EmailField, CharField
+from django.db.models import Model, DateTimeField, ForeignKey, EmailField, CharField, Manager
 from django.utils import timezone
 
+
+class InvitationManager(Manager):
+    def for_user(self, user):
+        emails = [record.email for record in user.emailaddress_set.only('email')]
+        return self.filter(address__in=emails)
 
 class Invitation(Model):
     event = ForeignKey('Event')
     inviteId = CharField(max_length=36, default=uuid.uuid4)
     sent = DateTimeField(auto_now_add=True)
     address = EmailField(max_length=254)
+
+    objects = InvitationManager()
 
     def __str__(self):
         return 'Invitation to {} for {}'.format(self.event.name, self.address)
