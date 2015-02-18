@@ -19,21 +19,28 @@
 
 {% block panelBody %}
     {% url "account_login" as sign_in_link %}
+    {% url "account_email" as profile_email_link %}
     {% url "eventDetail" id=invitation.event.id as event_link %}
 
-    {% if user.is_authenticated and not inviteForUser %}
-        <p>
-            {% blocktrans %}
-                Oops! Looks like you've found an event invitation that's meant for somebody else.
-            {% endblocktrans %}
-        </p>
-    {% else %}
-        <p>
-            {% blocktrans with event_name=invitation.event_name %}
-                You've been invited to join <a href="{{ event_link }}" class="event_name">{{ event_name }}</a>.
-            {% endblocktrans %}
-        </p>
+    <p>
+        {% blocktrans with event_name=invitation.event_name %}
+            You've been invited to join <a href="{{ event_link }}" class="event_name">{{ event_name }}</a>.
+        {% endblocktrans %}
+    </p>
 
+    {% if user.is_authenticated and not inviteForUser %}
+        {% blocktrans with invite_email=invitation.address %}
+            <p>
+                Unfortunately, the email address for this invitation, <strong>{{ invite_email }}</strong>,
+                doesn't match any email address associated with your account.
+            </p>
+
+            <p>
+                If this is one of your alternate email addresses, please <a href="{{ profile_email_link }}">add it to your profile</a>
+                and return here to accept the invitation.
+            </p>
+        {% endblocktrans %}
+    {% else %}
         {% if user.is_authenticated %}
             <div>
                 <form class="invitation-form" method="post">
