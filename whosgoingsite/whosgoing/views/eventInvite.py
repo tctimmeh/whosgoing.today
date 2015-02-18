@@ -38,9 +38,9 @@ class EventInviteView(View):
     def _get_address_from_form(self, formData):
         form = InviteForm(data=formData)
         if not form.is_valid():
-            raise InviteError(form.errors['user'])
-        user = form.cleaned_data['user']
-        return user
+            raise InviteError(form.errors['address'])
+        address = form.cleaned_data['address']
+        return address
 
     def _get_invitation(self, event, address):
         existing_invitations = Invitation.objects.filter(event=event, address=address)

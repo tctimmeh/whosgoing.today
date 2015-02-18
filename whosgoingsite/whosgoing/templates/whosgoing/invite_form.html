@@ -4,11 +4,11 @@
     {% csrf_token %}
     <div class="form-group">
         <div class="input-group">
-            <label class="sr-only" for="user">
+            <label class="sr-only" for="address">
                 {% trans "User" %}
             </label>
 
-            {% include "dcbase/form-field.html" with field=inviteForm.user %}
+            {% include "dcbase/form-field.html" with field=inviteForm.address %}
 
             <span class="input-group-btn">
                 <button id="invite-button" class="btn btn-default" type="submit">
