@@ -8,52 +8,78 @@
         .member-list .gravatar { margin-right: 5px; }
         .kick-button:hover { cursor: pointer; }
         #kick-form { display: inline; margin-left: 5px; }
+        #occurance-pane { border-left: 2px solid #bbb; border-right: 2px solid #bbb; }
     </style>
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1>{{ object.name }}</h1>
-        <p>{{ object.description }}</p>
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-9 col-xs-12">
+                <h1>{{ object.name }}</h1>
+                <p>{{ object.description }}</p>
+            </div>
+        </div>
+        <hr />
 
         <div class="row">
-            <div class="col-md-4">
-                <h3>Invite</h3>
-
-                {% if inviteForm %}
-                    {% include "whosgoing/invite_form.html" with event=object %}
-                {% else %}
-                    <p>{% trans "Only event members may send invites." %}</p>
-                {% endif %}
-            </div>
-            <div class="col-md-8">
-                <h3>Members</h3>
+            <div id="members-pane" class="col-sm-3">
+                <h3>{% trans "Members" %}</h3>
                 {% include "whosgoing/members_list.html" %}
+            </div>
+
+            <div id="occurance-pane" class="col-sm-6">
+                <h3>{% trans "Next Occurrence" %}</h3>
+                <p>Coming soon...</p>
+            </div>
+
+            <div id="action-pane" class="col-sm-3">
+                <h3>{% trans "Actions" %}</h3>
+                {% if user_is_member %}
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#inviteModal">
+                        {% trans "Invite To Event" %}
+                    </button>
+                {% else %}
+                    <p>{% trans "Only event members may edit the event." %}</p>
+                {% endif %}
             </div>
         </div>
     </div>
 
     {% include "whosgoing/kick_confirm_dialog.html" %}
+    {% include "whosgoing/invite_dialog.html" %}
 {% endblock %}
 
 {% block script %}
     <script>
+        function showInviteMessage(type, message) {
+            var alert = $('#invite-messages');
+            alert.removeClass('alert-success');
+            alert.removeClass('alert-danger');
+            alert.addClass('alert-'+type);
+            alert.html(message);
+            alert.show();
+            alert.delay(2500).fadeOut(700);
+        }
+
         $(document).ready(function () {
             $('#invite-form').ajaxForm({
                 success: function (response, status) {
+                    var messageType = 'success';
                     var message = '';
 
                     if (response['success']) {
-                        message += '<div class="text-success">Invitation sent!</div>';
+                        message += 'Invitation sent!';
                     }
                     else {
                         var errors = response['errors'];
                         $.each(errors, function (index, errorMessage) {
-                            message += '<div class="text-danger">' + errorMessage + '</div>';
+                            messageType = 'danger';
+                            message += '<div>' + errorMessage + '</div>';
                         })
                     }
 
-                    $('#invite-messages').html(message);
+                    showInviteMessage(messageType, message);
                     $('#invite-form').resetForm();
                 },
                 error: function(xhr, response, status) {
