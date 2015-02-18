@@ -8,13 +8,13 @@
         {% if user.is_authenticated %}
             <h3>Your Events</h3>
 
-            <p>
+            <ul>
                 {% for event in events %}
-                    <a href="{{ event.get_absolute_url }}">{{ event }}</a>
+                    <li><a href="{{ event.get_absolute_url }}">{{ event }}</a></li>
                 {% empty %}
                     {% trans "You are not a member of any events. Use the button below to create an event and start inviting people!" %}
                 {% endfor %}
-            </p>
+            </ul>
 
             <p>
                 <a href="{% url "createEvent" %}" class="btn btn-primary">
