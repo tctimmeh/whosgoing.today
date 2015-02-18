@@ -11,6 +11,7 @@ class TestInviteView(UnitTestCase):
         self.event = Event.objects.create(name=self.randStr())
         self.event.add_member(user)
         self.inviteAddress = self.randStr() + '@host.com'
+        self.post_data = {'address': self.inviteAddress, 'from_name': self.randStr(), 'message': self.randStr()}
 
     def get_url(self, eventId=None):
         if eventId is None:
@@ -18,44 +19,46 @@ class TestInviteView(UnitTestCase):
         return reverse('eventInvite', kwargs={'eventId': eventId})
 
     def test_sendsEmailToUser(self):
-        self.client.post(self.get_url(), {'address': self.inviteAddress})
+        self.client.post(self.get_url(), self.post_data)
         emails = self.getEmailsToRecipient(self.inviteAddress)
         self.assertEqual(len(emails), 1)
 
     def test_returnsNotFoundIfEventIdIsInvalid(self):
-        response = self.client.post(self.get_url(9999), {'address': self.inviteAddress})
+        response = self.client.post(self.get_url(9999), self.post_data)
         self.assertResponseStatusIsNotFound(response)
 
     def test_returnsJsonSuccessResponseWithValidData(self):
-        response = self.client.post(self.get_url(), {'address': self.inviteAddress})
+        response = self.client.post(self.get_url(), self.post_data)
         self.assertJSONEqual(response.content.decode(), '{"success": true}')
 
     def test_rendersInviteEmailTemplate(self):
-        response = self.client.post(self.get_url(), {'address': self.inviteAddress})
+        response = self.client.post(self.get_url(), self.post_data)
         self.assertTemplateUsed(response, 'whosgoing/inviteEmail.html')
 
     def test_createsInvitation(self):
-        response = self.client.post(self.get_url(), {'address': self.inviteAddress})
+        response = self.client.post(self.get_url(), self.post_data)
         invitation = Invitation.objects.get(event=self.event, address=self.inviteAddress)
         self.assertIsNotNone(invitation)
 
     def test_responseIndicatesFailureIfEmailAddressIsInvalid(self):
-        response = self.client.post(self.get_url(), {'address': self.randStr()})
+        self.post_data['address'] = self.randStr()
+        response = self.client.post(self.get_url(), self.post_data)
         responseData = json.loads(response.content.decode())
         self.assertFalse(responseData['success'])
 
     def test_responseIndicatesFailureIfPostDataInvalid(self):
-        response = self.client.post(self.get_url(), {'address': ''})
+        self.post_data['address'] = ''
+        response = self.client.post(self.get_url(), self.post_data)
         responseData = json.loads(response.content.decode())
         self.assertFalse(responseData['success'])
 
     def test_returnsFailureMessageIfDuplicateInvitationSentTooSoon(self):
-        self.client.post(self.get_url(), {'address': self.inviteAddress})
-        response = self.client.post(self.get_url(), {'address': self.inviteAddress})
+        self.client.post(self.get_url(), self.post_data)
+        response = self.client.post(self.get_url(), self.post_data)
         responseData = json.loads(response.content.decode())
         self.assertFalse(responseData['success'])
 
     def test_postingAsUserWhoIsNotMembersReturnsForbidden(self):
         user = self.logInAs()
-        response = self.client.post(self.get_url(), {'address': self.inviteAddress})
+        response = self.client.post(self.get_url(), self.post_data)
         self._assertResponseStatusIs(response, 403)
