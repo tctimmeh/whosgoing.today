@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% if message %}
+    <div id="invite-messages" class="alert alert-success">{{ message }}</div>
+{% endif %}
+
+<form id="invite-form" action="{% url "eventInvite" eventId=event.id %}" method="post">
+    {% include "dcbase/form.html" %}
+
+    <button id="invite-button" class="btn btn-primary" type="submit">
+        {% trans "Invite" %}
+    </button>
+</form>

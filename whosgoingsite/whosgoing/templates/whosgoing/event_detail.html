@@ -52,40 +52,21 @@
 
 {% block script %}
     <script>
-        function showInviteMessage(type, message) {
-            var alert = $('#invite-messages');
-            alert.removeClass('alert-success');
-            alert.removeClass('alert-danger');
-            alert.addClass('alert-'+type);
-            alert.html(message);
-            alert.show();
-            alert.delay(2500).fadeOut(700);
-        }
-
-        $(document).ready(function () {
+        function setupInviteForm() {
             $('#invite-form').ajaxForm({
-                success: function (response, status) {
-                    var messageType = 'success';
-                    var message = '';
-
-                    if (response['success']) {
-                        message += 'Invitation sent!';
-                    }
-                    else {
-                        var errors = response['errors'];
-                        $.each(errors, function (index, errorMessage) {
-                            messageType = 'danger';
-                            message += '<div>' + errorMessage + '</div>';
-                        })
-                    }
-
-                    showInviteMessage(messageType, message);
-                    $('#invite-form').resetForm();
+                target: '#invite-dialog-body',
+                success: function() {
+                    setupInviteForm();
                 },
                 error: function(xhr, response, status) {
                     $('#invite-messages').html('<div class="text-danger">Failed to submit invitation: ' + status + '</div>')
                 }
             });
+
+        }
+
+        $(document).ready(function () {
+            setupInviteForm();
 
             $('#kick-form').ajaxForm(function(response, status) {
                window.location.reload();

@@ -7,14 +7,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 id="inviteModalLabel">{% trans "Invite Users" %}</h3>
       </div>
-      <div class="modal-body">
-          <div id="invite-messages" class="alert alert-success" style="display: none"></div>
-          <form id="invite-form" action="{% url "eventInvite" eventId=event.id %}" method="post">
-              {% include "dcbase/form.html" with form=inviteForm %}
-              <button id="invite-button" class="btn btn-primary" type="submit">
-                  {% trans "Invite" %}
-              </button>
-          </form>
+      <div id="invite-dialog-body" class="modal-body">
+          {% include "whosgoing/invite_form.html" with form=inviteForm %}
       </div>
     </div>
   </div>

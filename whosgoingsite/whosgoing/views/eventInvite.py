@@ -1,10 +1,10 @@
 from smtplib import SMTPException
 import datetime
+
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.core.exceptions import ValidationError
-from django.http import JsonResponse, HttpResponseForbidden
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import ugettext as _
@@ -13,9 +13,8 @@ from whosgoing.forms.invite import InviteForm
 from whosgoing.models import Event, Invitation
 
 
-class InviteError(Exception):
-    def __init__(self, errors):
-        self.errors = errors
+class InviteError(RuntimeError):
+    pass
 
 
 class EventInviteView(View):
@@ -26,45 +25,37 @@ class EventInviteView(View):
         if not self.event.is_member(self.request.user):
             return HttpResponseForbidden()
 
+        message = None
+        form = InviteForm(request.POST)
         try:
-            address = self._validate_form(request.POST)
-            invitation = self._get_invitation()
-            self._send_email(invitation)
+            if form.is_valid():
+                self.address = form.cleaned_data['address']
+                self.from_name = form.cleaned_data['from_name']
+                self.message = form.cleaned_data['message']
+
+                invitation = self._get_invitation()
+                self._send_email(invitation)
+
+                message = _('Successfully sent invite to %(recipient)s!') % {'recipient': self.address}
+                form = InviteForm(initial={'from_name': self.from_name, 'message': self.message})
         except InviteError as e:
-            return JsonResponse({'success': False, 'errors': e.errors})
+            form.add_error(None, str(e))
 
-        return JsonResponse({'success': True})
-
-    def _validate_form(self, formData):
-        form = InviteForm(data=formData)
-        if not form.is_valid():
-            raise InviteError(form.errors['address'])
-        self.address = form.cleaned_data['address']
-        self.from_name = form.cleaned_data['from_name']
-        self.message = form.cleaned_data['message']
+        return render(self.request, 'whosgoing/invite_form.html', {'event': self.event, 'form': form, 'message': message})
 
     def _get_invitation(self):
         existing_invitations = Invitation.objects.filter(event=self.event, address=self.address)
         if not existing_invitations:
-            invitation = self._create_invitation()
+            invitation = Invitation.objects.create(event=self.event, address=self.address, from_name=self.from_name, message=self.message)
         else:
             invitation = existing_invitations[0]
             if invitation.since_last_sent < EventInviteView.MAX_INVITE_FREQUENCY:
-                raise InviteError([_('Please wait before sending another invitation to this address')])
+                raise InviteError(_('Please wait before sending another invitation to this address'))
             else:
                 invitation.sent = timezone.now()
                 invitation.from_name = self.from_name
                 invitation.message = self.message
                 invitation.save()
-        return invitation
-
-    def _create_invitation(self):
-        invitation = Invitation(event=self.event, address=self.address, from_name=self.from_name, message=self.message)
-        try:
-            invitation.full_clean()
-        except ValidationError as e:
-            raise InviteError(e.messages)
-        invitation.save()
         return invitation
 
     def _send_email(self, invitation):
