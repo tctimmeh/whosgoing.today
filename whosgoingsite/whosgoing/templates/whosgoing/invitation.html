@@ -29,6 +29,20 @@
         {% endblocktrans %}
     </p>
 
+    {% if invitation.from_name %}
+        <p>
+            {% if invitation.message %}
+                {% blocktrans with from_name=invitation.from_name %}<strong>{{ from_name }}</strong> says:{% endblocktrans %}
+            {% else %}
+                {% blocktrans with from_name=invitation.from_name %}From <strong>{{ from_name }}</strong>{% endblocktrans %}
+            {% endif %}
+        </p>
+    {% endif %}
+
+    {% if invitation.message %}
+        <blockquote>{{ invitation.message }}</blockquote>
+    {% endif %}
+
     {% if user.is_authenticated and not inviteForUser %}
         {% blocktrans with invite_email=invitation.address %}
             <p>
