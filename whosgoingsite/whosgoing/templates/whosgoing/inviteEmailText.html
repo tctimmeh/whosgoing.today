@@ -3,6 +3,10 @@
 
 {% blocktrans with event_name=invitation.event_name %}You've been invited to {{ event_name }} on WhosGoing.Today!" {% endblocktrans %}
 
+{% if invitation.from_name %}{% if invitation.message %}{% blocktrans with from_name=invitation.from_name %}{{ from_name }} says:{% endblocktrans %}{% else %}{% blocktrans with from_name=invitation.from_name %}From: {{ from_name }}{% endblocktrans %}{% endif %}{% endif %}
+
+{% if invitation.message %}{{ invitation.message }}{% endif %}
+
 {% blocktrans %}To accept or reject this invitation please visit the link below.{% endblocktrans %}
 http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}
 

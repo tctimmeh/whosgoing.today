@@ -12,15 +12,36 @@
         {% endblocktrans %}
     </p>
 
-    <p>
-        {% blocktrans %}
-            To accept or reject this invitation click this link:
-        {% endblocktrans %}
-        <a style="color: #fff; background-color: #428bca; padding: 6px 12px; cursor: pointer; border-radius: 4px; text-decoration: none;"
-           href="http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}">
-            {% trans "Your Invitation" %}
-        </a>
-    </p>
+    {% if invitation.from_name %}
+        <p>
+            {% if invitation.message %}
+                {% blocktrans with from_name=invitation.from_name %}<strong>{{ from_name }}</strong> says:{% endblocktrans %}
+            {% else %}
+                {% blocktrans with from_name=invitation.from_name %}From <strong>{{ from_name }}</strong>{% endblocktrans %}
+            {% endif %}
+        </p>
+    {% endif %}
+
+    {% if invitation.message %}
+        <p style="margin-left: 15px"><em>{{ invitation.message }}</em></p>
+    {% endif %}
+
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    {% trans "To accept or reject this invitation click this link:" %}
+                </td>
+                <td style="background-color: #428bca; padding: 6px 12px;">
+                    <a style="color: #fff; text-decoration: none" href="http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}">
+                        {% trans "Your Invitation" %}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
 
     <p>
         {% blocktrans with domain=site.domain %}
