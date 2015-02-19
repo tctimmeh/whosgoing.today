@@ -35,10 +35,12 @@ class TestInviteView(UnitTestCase):
         response = self.client.post(self.get_url(), self.post_data)
         self.assertTemplateUsed(response, 'whosgoing/inviteEmail.html')
 
-    def test_createsInvitation(self):
+    def test_createsInvitationWithPostedData(self):
         response = self.client.post(self.get_url(), self.post_data)
         invitation = Invitation.objects.get(event=self.event, address=self.inviteAddress)
-        self.assertIsNotNone(invitation)
+        self.assertEqual(self.post_data['address'], invitation.address)
+        self.assertEqual(self.post_data['from_name'], invitation.from_name)
+        self.assertEqual(self.post_data['message'], invitation.message)
 
     def test_responseIndicatesFailureIfEmailAddressIsInvalid(self):
         self.post_data['address'] = self.randStr()
