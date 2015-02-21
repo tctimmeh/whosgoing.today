@@ -7,6 +7,7 @@ from whosgoing.models import Event
 class CreateEventView(CreateView):
     model = Event
     fields = ['name', 'description']
+    template_name = 'whosgoing/single_form.html'
 
     def form_valid(self, form):
         out = super().form_valid(form)

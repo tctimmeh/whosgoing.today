@@ -6,7 +6,7 @@ from whosgoing.models import Event
 class EventUpdateView(UpdateView):
     model = Event
     pk_url_kwarg = 'id'
-    template_name = 'whosgoing/event_form.html'
+    template_name = 'whosgoing/single_form.html'
     fields = ['name', 'description']
 
     def get_context_data(self, **kwargs):
