@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
 from whosgoing.models import Event
@@ -15,5 +17,10 @@ class EventUpdateView(UpdateView):
         data['submitText'] = _('Update')
         return data
 
+    def get_object(self, queryset=None):
+        event = super().get_object(queryset)
+        if not event.is_member(self.request.user):
+            raise PermissionDenied()
+        return event
 
-eventUpdateView = EventUpdateView.as_view()
+eventUpdateView = login_required(EventUpdateView.as_view())
