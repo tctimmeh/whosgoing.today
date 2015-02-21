@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% if user_is_member %}
+    <a class="btn btn-default btn-block" href="{% url "eventUpdate" id=object.id %}">{% trans "Edit" %}</a>
+
+    <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#inviteModal">
+        {% trans "Invite To Event" %}
+    </button>
+{% else %}
+    <p>{% trans "Only event members may edit the event." %}</p>
+{% endif %}

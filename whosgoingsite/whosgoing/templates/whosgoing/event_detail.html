@@ -23,26 +23,21 @@
         <hr />
 
         <div class="row">
-            <div id="members-pane" class="col-sm-3">
-                <h3>{% trans "Members" %}</h3>
-                {% include "whosgoing/members_list.html" %}
-            </div>
-
-            <div id="occurance-pane" class="col-sm-6">
+            <div id="occurance-pane" class="col-sm-6 col-sm-push-3">
                 <h3>{% trans "Next Occurrence" %}</h3>
                 <p>Coming soon...</p>
             </div>
 
-            <div id="action-pane" class="col-sm-3">
+            <div id="action-pane" class="col-sm-3 col-sm-push-3">
                 <h3>{% trans "Actions" %}</h3>
-                {% if user_is_member %}
-                    <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#inviteModal">
-                        {% trans "Invite To Event" %}
-                    </button>
-                {% else %}
-                    <p>{% trans "Only event members may edit the event." %}</p>
-                {% endif %}
+                {% include "whosgoing/event_actions.html" %}
             </div>
+
+            <div id="members-pane" class="col-sm-3 col-sm-pull-9">
+                <h3>{% trans "Members" %}</h3>
+                {% include "whosgoing/members_list.html" %}
+            </div>
+
         </div>
     </div>
 

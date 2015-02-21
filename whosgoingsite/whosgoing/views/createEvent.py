@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import ugettext as _
 from django.views.generic import CreateView
-from whosgoing.models import Event, EventMember
+from whosgoing.models import Event
 
 
 class CreateEventView(CreateView):
@@ -11,5 +12,12 @@ class CreateEventView(CreateView):
         out = super().form_valid(form)
         self.object.add_member(self.request.user)
         return out
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = _('Create Event')
+        data['submitText'] = _('Create')
+        return data
+
 
 createEventView = login_required(CreateEventView.as_view())
