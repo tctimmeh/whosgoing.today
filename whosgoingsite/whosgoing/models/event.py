@@ -1,13 +1,27 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.db.models import Model, CharField, TextField, ManyToManyField
+from django.db.models import Model, CharField, TextField, ManyToManyField, DateTimeField
+from django.utils.timezone import get_current_timezone
+from django.utils.translation import ugettext as _
 from whosgoing.models import EventMember
 
 
+def default_event_time():
+    t = datetime.datetime.now(get_current_timezone())
+    return t.replace(hour=12, minute=0, second=0)
+
+
 class Event(Model):
-    name = CharField(max_length=50, verbose_name='Event Name')
+    name = CharField(max_length=50, verbose_name=_('Event Name'))
     description = TextField(blank=True, default='')
     members = ManyToManyField(User, through='EventMember', related_name='events')
+    time = DateTimeField(
+        verbose_name=_('Default Time'),
+        default=default_event_time,
+        help_text=_('Time when this event normally occurs')
+    )
 
     def __str__(self):
         return self.name
