@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, url, include
 from whosgoing.views.createEvent import createEventView
-from whosgoing.views.createOccurrence import createOccurrenceView
-from whosgoing.views.eventDelete import eventDeleteView
-from whosgoing.views.eventDetail import eventDetailView
-from whosgoing.views.eventInvite import eventInviteView
-from whosgoing.views.eventKick import eventKickView
-from whosgoing.views.eventUpdate import eventUpdateView
+from whosgoing.views.event.createOccurrence import createOccurrenceView
+from whosgoing.views.event.eventDelete import eventDeleteView
+from whosgoing.views.event.eventDetail import eventDetailView
+from whosgoing.views.event.eventInvite import eventInviteView
+from whosgoing.views.event.eventKick import eventKickView
+from whosgoing.views.event.eventUpdate import eventUpdateView
 from whosgoing.views.home import homeView
 from whosgoing.views.invitiation import invitationView
 
