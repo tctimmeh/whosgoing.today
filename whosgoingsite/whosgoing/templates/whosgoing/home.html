@@ -11,7 +11,7 @@
 
                 <ul>
                     {% for invitation in invitations %}
-                        <li><a href="{% url "invitation" inviteId=invitation.inviteId %}">
+                        <li><a href="{% url "whosgoing:invitation" inviteId=invitation.inviteId %}">
                             {{ invitation.event.name }}
                         </a></li>
                     {% endfor %}
@@ -29,7 +29,7 @@
             </ul>
 
             <p>
-                <a href="{% url "createEvent" %}" class="btn btn-primary">
+                <a href="{% url "whosgoing:createEvent" %}" class="btn btn-primary">
                     {% trans "Create Event" %}
                 </a>
             </p>

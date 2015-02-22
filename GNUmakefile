@@ -11,4 +11,4 @@ venv:
 	$(VENV) -p $(PYTHON) $(VENV_DIR)
 
 test:
-	whosgoingsite/manage.py test whosgoing
+	$(VENV_ACTIVATE) && whosgoingsite/manage.py test whosgoing

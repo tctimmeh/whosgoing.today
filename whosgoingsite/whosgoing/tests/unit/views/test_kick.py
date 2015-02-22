@@ -16,7 +16,7 @@ class TestKickView(WhosGoingUnitTestCase):
     def get_url(self, eventId=None):
         if eventId is None:
             eventId = self.event.id
-        return reverse('eventKick', kwargs={'eventId': eventId})
+        return reverse('whosgoing:eventKick', kwargs={'eventId': eventId})
 
     def test_returnsSuccessWithValidFormData(self):
         response = self.client.post(self.get_url(), self.post_data)

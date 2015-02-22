@@ -28,7 +28,7 @@ class Event(Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('eventDetail', kwargs={'id': self.id})
+        return reverse('whosgoing:eventDetail', kwargs={'id': self.id})
 
     def add_member(self, user):
         EventMember.objects.create(event=self, user=user)

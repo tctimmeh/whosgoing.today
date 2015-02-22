@@ -4,7 +4,7 @@ from whosgoing.tests.unit.whosGoingUnitTestCase import WhosGoingUnitTestCase
 
 class TestHomeView(WhosGoingUnitTestCase):
     def test_rootUrlRendersHomePage(self):
-        response = self.get('home')
+        response = self.get('whosgoing:home')
         self.assertResponseStatusIsOk()
         self.assertTemplateUsed(response, 'whosgoing/home.html')
 
@@ -20,6 +20,6 @@ class TestHomeView(WhosGoingUnitTestCase):
 
         self.create_invitation(event, self.randStr()+'@host.com')
 
-        response = self.get('home')
+        response = self.get('whosgoing:home')
         actualInvitations = response.context['invitations']
         self.assertEqual(set(actualInvitations), {invitation1, invitation2})

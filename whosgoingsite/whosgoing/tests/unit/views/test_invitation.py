@@ -11,7 +11,7 @@ class TestInvitationView(WhosGoingUnitTestCase):
         self.invitation = self.create_invitation()
 
     def get_url(self):
-        return reverse('invitation', kwargs={'inviteId': self.invitation.inviteId})
+        return reverse('whosgoing:invitation', kwargs={'inviteId': self.invitation.inviteId})
 
     def test_rendersInvitationTemplate(self):
         response = self.get()
@@ -49,7 +49,7 @@ class TestInvitationView(WhosGoingUnitTestCase):
     def test_postingRejectionRedirectsToHomePage(self):
         EmailAddress.objects.create(user=self.user, email=self.invitation.address)
         response = self.client.post(self.get_url(), {'action': 'reject'})
-        self.assertRedirects(response, reverse('home'))
+        self.assertRedirects(response, reverse('whosgoing:home'))
 
     def test_postingAcceptanceAddUserToEventMembers(self):
         EmailAddress.objects.create(user=self.user, email=self.invitation.address)
@@ -59,7 +59,7 @@ class TestInvitationView(WhosGoingUnitTestCase):
     def test_postingAcceptanceRedirectsToEventPage(self):
         EmailAddress.objects.create(user=self.user, email=self.invitation.address)
         response = self.client.post(self.get_url(), {'action': 'accept'})
-        self.assertRedirects(response, reverse('eventDetail', kwargs={'id': self.invitation.event.id}))
+        self.assertRedirects(response, reverse('whosgoing:eventDetail', kwargs={'id': self.invitation.event.id}))
 
     def test_postingWithUnknownActionArgumentReturnsForbidden(self):
         EmailAddress.objects.create(user=self.user, email=self.invitation.address)

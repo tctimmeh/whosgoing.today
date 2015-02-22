@@ -8,6 +8,6 @@
 {% if invitation.message %}{{ invitation.message }}{% endif %}
 
 {% blocktrans %}To accept or reject this invitation please visit the link below.{% endblocktrans %}
-http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}
+http://{{ site.domain }}{% url "whosgoing:invitation" inviteId=invitation.inviteId %}
 
 {% blocktrans %}Thanks from the WhosGoing.Today team!{% endblocktrans %}

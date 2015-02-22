@@ -11,12 +11,12 @@ class TestCreateOccurrenceView(WhosGoingUnitTestCase):
         self.user = self.logInAs()
         self.event = self.create_event()
         self.event.add_member(self.user)
-        self.eventDetailUrl = reverse('eventDetail', kwargs={'id': self.event.id})
+        self.eventDetailUrl = reverse('whosgoing:eventDetail', kwargs={'id': self.event.id})
 
     def get_url(self, eventId=None):
         if eventId is None:
             eventId = self.event.id
-        return reverse('createOccurrence', kwargs={'eventId': eventId})
+        return reverse('whosgoing:createOccurrence', kwargs={'eventId': eventId})
 
     def test_returnsNotFoundForInvalidEventId(self):
         response = self.client.post(self.get_url(9999))

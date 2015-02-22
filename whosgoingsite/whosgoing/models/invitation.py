@@ -24,7 +24,7 @@ class Invitation(Model):
         return 'Invitation to {} for {}'.format(self.event.name, self.address)
 
     def get_absolute_url(self):
-        return reverse('invitation', kwargs={'inviteId': self.inviteId})
+        return reverse('whosgoing:invitation', kwargs={'inviteId': self.inviteId})
 
     @property
     def event_name(self):

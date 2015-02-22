@@ -27,12 +27,12 @@ class InvitationView(DetailView):
         action = request.POST['action']
         if action == 'reject':
             self.object.delete()
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('whosgoing:home'))
         elif action == 'accept':
             self.object.delete()
             self.object.event.add_member(self.request.user)
             messages.success(request, _('Successfully joined event "%(event_name)s".') % {'event_name': self.object.event.name})
-            return HttpResponseRedirect(reverse('eventDetail', kwargs={'id': self.object.event.id}))
+            return HttpResponseRedirect(reverse('whosgoing:eventDetail', kwargs={'id': self.object.event.id}))
         else:
             return HttpResponseForbidden()
 

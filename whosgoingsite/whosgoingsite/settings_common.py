@@ -25,6 +25,6 @@ TIME_INPUT_FORMATS = (
 ROOT_URLCONF = 'whosgoingsite.urls'
 WSGI_APPLICATION = 'whosgoingsite.wsgi.application'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'whosgoing:home'
 
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'

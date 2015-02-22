@@ -14,7 +14,7 @@ class EventDeleteView(DeleteView):
 
     def get_success_url(self):
         messages.success(self.request, _("Successfully deleted Event %(eventName)s") % {'eventName': self.object.name})
-        return reverse('home')
+        return reverse('whosgoing:home')
 
     def get_object(self, queryset=None):
         event = super().get_object(queryset)

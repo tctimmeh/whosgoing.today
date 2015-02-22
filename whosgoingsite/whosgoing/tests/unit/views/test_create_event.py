@@ -13,7 +13,7 @@ class TestCreateEventView(UnitTestCase, RequiresLogin):
         self.postData = {'name': self.eventName, 'time': '12:34 pm'}
 
     def get_url(self):
-        return reverse('createEvent')
+        return reverse('whosgoing:createEvent')
 
     def test_postRedirectsToLoginIfUserNotLoggedIn(self):
         self.logOut()
@@ -28,7 +28,7 @@ class TestCreateEventView(UnitTestCase, RequiresLogin):
     def test_postWithValidFormDataRedirectsToEventDetailPage(self):
         response = self.client.post(self.url, self.postData)
         event = Event.objects.get(name=self.eventName)
-        self.assertRedirects(response, reverse('eventDetail', kwargs={'id': event.id}))
+        self.assertRedirects(response, reverse('whosgoing:eventDetail', kwargs={'id': event.id}))
 
     def test_eventCreatorIsMemberOfEvent(self):
         self.client.post(self.url, self.postData)

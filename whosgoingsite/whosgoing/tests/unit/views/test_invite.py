@@ -16,7 +16,7 @@ class TestInviteView(UnitTestCase):
     def get_url(self, eventId=None):
         if eventId is None:
             eventId = self.event.id
-        return reverse('eventInvite', kwargs={'eventId': eventId})
+        return reverse('whosgoing:eventInvite', kwargs={'eventId': eventId})
 
     def test_sendsEmailToUser(self):
         self.client.post(self.get_url(), self.post_data)

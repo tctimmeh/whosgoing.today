@@ -1,6 +1,6 @@
 {% load i18n %}
 {% spaceless %}
-{% url "home" as home_link %}
+{% url "whosgoing:home" as home_link %}
 <!doctype html>
 <html>
 <body>
@@ -33,7 +33,7 @@
                     {% trans "To accept or reject this invitation click this link:" %}
                 </td>
                 <td style="background-color: #428bca; padding: 6px 12px;">
-                    <a style="color: #fff; text-decoration: none" href="http://{{ site.domain }}{% url "invitation" inviteId=invitation.inviteId %}">
+                    <a style="color: #fff; text-decoration: none" href="http://{{ site.domain }}{% url "whosgoing:invitation" inviteId=invitation.inviteId %}">
                         {% trans "Your Invitation" %}
                     </a>
                 </td>
