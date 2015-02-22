@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Model, CharField, TextField, ManyToManyField, DateTimeField
 from django.utils.timezone import get_current_timezone
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 from whosgoing.models import EventMember
 
 
@@ -40,3 +41,19 @@ class Event(Model):
 
     def is_member(self, user):
         return self.members.filter(id=user.id).exists()
+
+    @property
+    def next_occurrence(self):
+        from whosgoing.models import EventOccurrence
+        try:
+            return self.occurrences.order_by('time').reverse()[0:1].get()
+        except EventOccurrence.DoesNotExist:
+            return None
+
+    @property
+    def next_occurrence_time(self):
+        now = timezone.now()
+        next_time = now.replace(hour=self.time.hour, minute=self.time.minute, second=self.time.second)
+        if next_time < now:
+            next_time += datetime.timedelta(days=1)
+        return next_time

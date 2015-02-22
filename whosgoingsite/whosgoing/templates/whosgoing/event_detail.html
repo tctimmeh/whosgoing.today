@@ -9,6 +9,7 @@
         .kick-button:hover { cursor: pointer; }
         #kick-form { display: inline; margin-left: 5px; }
         #occurance-pane { border-left: 2px solid #bbb; border-right: 2px solid #bbb; }
+        #create-occurrence-form { margin-bottom: 10px; }
     </style>
 {% endblock %}
 
@@ -26,18 +27,8 @@
         <div class="row">
             <div id="occurance-pane" class="col-sm-6 col-sm-push-3">
                 <h3>{% trans "Next Occurrence" %}</h3>
-                {% if not occurrence %}
-                    <form method="post" action="{% url "createOccurrence" eventId=object.id %}">
-                        {% csrf_token %}
-                        <button class="btn btn-primary" type="submit">Create Next Occurrence</button>
-                    </form>
-                {% else %}
-                    <div>
-                        <p>
-                            <strong>{% trans "When:" %}</strong> {{ occurrence.time }}
-                        </p>
-                    </div>
-                {% endif %}
+                {% include "whosgoing/create_occurrence_form.html" %}
+                {% include "whosgoing/occurrence_detail.html" %}
             </div>
 
             <div id="action-pane" class="col-sm-3 col-sm-push-3">

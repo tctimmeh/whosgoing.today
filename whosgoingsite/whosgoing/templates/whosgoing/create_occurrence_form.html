@@ -1,0 +1,8 @@
+{% load i18n %}
+
+{% if not occurrence or occurrence.is_past %}
+    <form id="create-occurrence-form" method="post" action="{% url "createOccurrence" eventId=object.id %}">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit">{% trans "Create Next Occurrence" %}</button>
+    </form>
+{% endif %}

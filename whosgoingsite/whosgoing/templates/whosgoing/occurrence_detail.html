@@ -1,0 +1,9 @@
+{% load i18n %}
+
+{% if occurrence %}
+    <div>
+        <p>
+            <strong>{% trans "When:" %}</strong> {{ occurrence.time }}
+        </p>
+    </div>
+{% endif %}

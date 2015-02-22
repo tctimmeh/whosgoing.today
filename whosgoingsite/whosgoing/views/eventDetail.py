@@ -15,11 +15,7 @@ class EventDetailView(DetailView):
             'from_name': ' '.join([self.request.user.first_name, self.request.user.last_name]).strip()
         })
         data['members'] = self.object.members.order_by('username')
-
-        try:
-            data['occurrence'] = self.object.occurrences.filter(time__gte=timezone.now())[0:1].get()
-        except EventOccurrence.DoesNotExist:
-            pass
+        data['occurrence'] = self.object.next_occurrence
 
         return data
 
