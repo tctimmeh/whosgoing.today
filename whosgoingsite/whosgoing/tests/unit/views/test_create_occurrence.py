@@ -11,7 +11,6 @@ class TestCreateOccurrenceView(WhosGoingUnitTestCase):
         self.user = self.logInAs()
         self.event = self.create_event()
         self.event.add_member(self.user)
-        self.eventDetailUrl = reverse('whosgoing:eventDetail', kwargs={'id': self.event.id})
 
     def get_url(self, eventId=None):
         if eventId is None:
@@ -30,12 +29,12 @@ class TestCreateOccurrenceView(WhosGoingUnitTestCase):
     def test_createsNoOccurrenceIfNextOccurrenceIsInFuture(self):
         EventOccurrence.objects.create(event=self.event, time=timezone.now()+timedelta(hours=2))
         response = self.client.post(self.get_url())
-        self.assertRedirects(response, self.eventDetailUrl)
+        self.assertRedirects(response, self.event.get_absolute_url())
         self.assertEqual(1, len(EventOccurrence.objects.all()))
 
     def test_createsOccurrenceWithEventTimeIfNextOccurrenceIsInPast(self):
         EventOccurrence.objects.create(event=self.event, time=timezone.now()-timedelta(hours=2))
         response = self.client.post(self.get_url())
-        self.assertRedirects(response, self.eventDetailUrl)
+        self.assertRedirects(response, self.event.get_absolute_url())
         self.assertEqual(2, len(EventOccurrence.objects.all()))
 

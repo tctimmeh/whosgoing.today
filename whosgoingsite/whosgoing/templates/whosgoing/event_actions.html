@@ -2,11 +2,11 @@
 
 {% if user_is_member %}
     <div class="btn-group-vertical" role="group">
-        <a class="btn btn-default" href="{% url "whosgoing:eventUpdate" id=object.id %}">{% trans "Edit" %}</a>
+        <a class="btn btn-default" href="{% url "whosgoing:eventUpdate" eventId=object.id %}">{% trans "Edit" %}</a>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#inviteModal">
             {% trans "Invite To Event" %}
         </button>
-        <a class="btn btn-danger" href="{% url "whosgoing:eventDelete" id=object.id %}">{% trans "Delete" %}</a>
+        <a class="btn btn-danger" href="{% url "whosgoing:eventDelete" eventId=object.id %}">{% trans "Delete" %}</a>
     </div>
 
 {% else %}

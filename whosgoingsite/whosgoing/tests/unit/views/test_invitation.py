@@ -59,7 +59,7 @@ class TestInvitationView(WhosGoingUnitTestCase):
     def test_postingAcceptanceRedirectsToEventPage(self):
         EmailAddress.objects.create(user=self.user, email=self.invitation.address)
         response = self.client.post(self.get_url(), {'action': 'accept'})
-        self.assertRedirects(response, reverse('whosgoing:eventDetail', kwargs={'id': self.invitation.event.id}))
+        self.assertRedirects(response, self.invitation.event.get_absolute_url())
 
     def test_postingWithUnknownActionArgumentReturnsForbidden(self):
         EmailAddress.objects.create(user=self.user, email=self.invitation.address)

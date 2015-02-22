@@ -28,7 +28,7 @@ class TestCreateEventView(UnitTestCase, RequiresLogin):
     def test_postWithValidFormDataRedirectsToEventDetailPage(self):
         response = self.client.post(self.url, self.postData)
         event = Event.objects.get(name=self.eventName)
-        self.assertRedirects(response, reverse('whosgoing:eventDetail', kwargs={'id': event.id}))
+        self.assertRedirects(response, event.get_absolute_url())
 
     def test_eventCreatorIsMemberOfEvent(self):
         self.client.post(self.url, self.postData)

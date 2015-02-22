@@ -9,7 +9,7 @@ class TestUpdateEventView(WhosGoingUnitTestCase, RequiresPermission):
         self.event = self.create_event()
 
     def get_url(self):
-        return reverse('whosgoing:eventUpdate', kwargs={'id': self.event.id})
+        return reverse('whosgoing:eventUpdate', kwargs={'eventId': self.event.id})
 
     def add_permission(self):
         self.event.add_member(self.loggedInUser)

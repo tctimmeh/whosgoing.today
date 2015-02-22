@@ -15,11 +15,11 @@ class CreateOccurrenceView(View):
 
         nextOccurrence = event.next_occurrence
         if nextOccurrence and not nextOccurrence.is_past:
-            return HttpResponseRedirect(reverse('whosgoing:eventDetail', kwargs={'id': eventId}))
+            return HttpResponseRedirect(event.get_absolute_url())
 
         event.occurrences.create(time=event.next_occurrence_time)
 
-        return HttpResponseRedirect(reverse('whosgoing:eventDetail', kwargs={'id': eventId}))
+        return HttpResponseRedirect(event.get_absolute_url())
 
 
 createOccurrenceView = login_required(CreateOccurrenceView.as_view())
