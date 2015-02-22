@@ -10,7 +10,7 @@ class TestCreateEventView(UnitTestCase, RequiresLogin):
         self.user = self.logInAs()
         self.url = self.get_url()
         self.eventName = self.randStr()
-        self.postData = {'name': self.eventName}
+        self.postData = {'name': self.eventName, 'time': '12:34 pm'}
 
     def get_url(self):
         return reverse('createEvent')
