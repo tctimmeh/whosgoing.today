@@ -4,7 +4,7 @@
     <div id="invite-messages" class="alert alert-success">{{ message }}</div>
 {% endif %}
 
-<form id="invite-form" action="{% url "whosgoing:eventInvite" eventId=event.id %}" method="post">
+<form id="invite-form" action="{% url "whosgoing:event:invite" eventId=event.id %}" method="post">
     {% include "dcbase/form.html" %}
 
     <button id="invite-button" class="btn btn-primary" type="submit">

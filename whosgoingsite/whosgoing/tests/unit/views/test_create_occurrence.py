@@ -15,7 +15,7 @@ class TestCreateOccurrenceView(WhosGoingUnitTestCase):
     def get_url(self, eventId=None):
         if eventId is None:
             eventId = self.event.id
-        return reverse('whosgoing:createOccurrence', kwargs={'eventId': eventId})
+        return reverse('whosgoing:event:createOccurrence', kwargs={'eventId': eventId})
 
     def test_returnsNotFoundForInvalidEventId(self):
         response = self.client.post(self.get_url(9999))

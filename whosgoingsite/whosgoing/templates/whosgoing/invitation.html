@@ -21,7 +21,7 @@
     {% url "account_login" as sign_in_link %}
     {% url "account_signup" as sign_up_link %}
     {% url "account_email" as profile_email_link %}
-    {% url "whosgoing:eventDetail" eventId=invitation.event.id as event_link %}
+    {% url "whosgoing:event:detail" eventId=invitation.event.id as event_link %}
 
     <p>
         {% blocktrans with event_name=invitation.event_name %}

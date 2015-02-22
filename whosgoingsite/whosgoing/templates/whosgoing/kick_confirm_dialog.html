@@ -23,7 +23,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <form id="kick-form" method="post" action="{% url "whosgoing:eventKick" eventId=object.id %}">
+                <form id="kick-form" method="post" action="{% url "whosgoing:event:kick" eventId=object.id %}">
                     {% csrf_token %}
                     <input id="kick-user-input" name="user" type="hidden" value="-1" />
                     <button type="submit" class="btn btn-danger">Kick</button>

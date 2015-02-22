@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from whosgoing.views.createEvent import createEventView
 from whosgoing.views.createOccurrence import createOccurrenceView
 from whosgoing.views.eventDelete import eventDeleteView
@@ -9,15 +9,18 @@ from whosgoing.views.eventUpdate import eventUpdateView
 from whosgoing.views.home import homeView
 from whosgoing.views.invitiation import invitationView
 
+eventUrls = patterns('',
+    url(r'^$', eventDetailView, name='detail'),
+    url(r'^edit/$', eventUpdateView, name='update'),
+    url(r'^delete/$', eventDeleteView, name='delete'),
+    url(r'^invite/$', eventInviteView, name='invite'),
+    url(r'^kick/$', eventKickView, name='kick'),
+    url(r'^createOccurrence/$', createOccurrenceView, name='createOccurrence'),
+)
 
 urlpatterns = patterns('',
-   url(r'^$', homeView, name='home'),
-   url(r'^events/create/$', createEventView, name='createEvent'),
-   url(r'^events/(?P<eventId>\d+)/$', eventDetailView, name='eventDetail'),
-   url(r'^events/(?P<eventId>\d+)/edit/$', eventUpdateView, name='eventUpdate'),
-   url(r'^events/(?P<eventId>\d+)/delete/$', eventDeleteView, name='eventDelete'),
-   url(r'^events/(?P<eventId>\d+)/invite/$', eventInviteView, name='eventInvite'),
-   url(r'^events/(?P<eventId>\d+)/kick/$', eventKickView, name='eventKick'),
-   url(r'^events/(?P<eventId>\d+)/createOccurrence/$', createOccurrenceView, name='createOccurrence'),
-   url(r'^invitations/(?P<inviteId>[\w-]{36})/', invitationView, name='invitation'),
+    url(r'^$', homeView, name='home'),
+    url(r'^events/create/$', createEventView, name='createEvent'),
+    url(r'^events/(?P<eventId>\d+)/', include(eventUrls, namespace='event')),
+    url(r'^invitations/(?P<inviteId>[\w-]{36})/', invitationView, name='invitation'),
 )
