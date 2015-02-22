@@ -17,15 +17,27 @@
         <div class="row">
             <div class="col-sm-offset-3 col-sm-9 col-xs-12">
                 <h1>{{ object.name }}</h1>
+
                 <p>{{ object.description }}</p>
             </div>
         </div>
-        <hr />
+        <hr/>
 
         <div class="row">
             <div id="occurance-pane" class="col-sm-6 col-sm-push-3">
                 <h3>{% trans "Next Occurrence" %}</h3>
-                <p>Coming soon...</p>
+                {% if not occurrence %}
+                    <form method="post" action="{% url "createOccurrence" eventId=object.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" type="submit">Create Next Occurrence</button>
+                    </form>
+                {% else %}
+                    <div>
+                        <p>
+                            <strong>{% trans "When:" %}</strong> {{ occurrence.time }}
+                        </p>
+                    </div>
+                {% endif %}
             </div>
 
             <div id="action-pane" class="col-sm-3 col-sm-push-3">
@@ -50,10 +62,10 @@
         function setupInviteForm() {
             $('#invite-form').ajaxForm({
                 target: '#invite-dialog-body',
-                success: function() {
+                success: function () {
                     setupInviteForm();
                 },
-                error: function(xhr, response, status) {
+                error: function (xhr, response, status) {
                     $('#invite-messages').html('<div class="text-danger">Failed to submit invitation: ' + status + '</div>')
                 }
             });
@@ -63,11 +75,11 @@
         $(document).ready(function () {
             setupInviteForm();
 
-            $('#kick-form').ajaxForm(function(response, status) {
-               window.location.reload();
+            $('#kick-form').ajaxForm(function (response, status) {
+                window.location.reload();
             });
 
-            $('.kick-button').click(function(event) {
+            $('.kick-button').click(function (event) {
                 var element = $(event.target);
                 console.log(element.data());
                 var userId = element.data('user-id');

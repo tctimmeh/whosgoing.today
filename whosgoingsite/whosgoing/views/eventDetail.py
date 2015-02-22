@@ -1,6 +1,7 @@
+from django.utils import timezone
 from django.views.generic import DetailView
 from whosgoing.forms.invite import InviteForm
-from whosgoing.models import Event
+from whosgoing.models import Event, EventOccurrence
 
 
 class EventDetailView(DetailView):
@@ -14,6 +15,12 @@ class EventDetailView(DetailView):
             'from_name': ' '.join([self.request.user.first_name, self.request.user.last_name]).strip()
         })
         data['members'] = self.object.members.order_by('username')
+
+        try:
+            data['occurrence'] = self.object.occurrences.filter(time__gte=timezone.now())[0:1].get()
+        except EventOccurrence.DoesNotExist:
+            pass
+
         return data
 
 
