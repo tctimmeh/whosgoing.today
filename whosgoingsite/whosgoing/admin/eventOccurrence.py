@@ -4,5 +4,6 @@ from whosgoing.models import EventOccurrence
 
 @admin.register(EventOccurrence)
 class EventOccurrenceAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ['event']
+    ordering = ['time']
 

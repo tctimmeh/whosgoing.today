@@ -29,8 +29,8 @@ class TestInviteView(UnitTestCase):
 
     def test_rendersInviteEmailTemplate(self):
         response = self.client.post(self.get_url(), self.post_data)
-        self.assertTemplateUsed(response, 'whosgoing/mail/inviteEmail.html')
-        self.assertTemplateUsed(response, 'whosgoing/mail/inviteEmail.txt')
+        self.assertTemplateUsed(response, 'whosgoing/mail/invite.html')
+        self.assertTemplateUsed(response, 'whosgoing/mail/invite.txt')
 
     def test_createsInvitationWithPostedData(self):
         response = self.client.post(self.get_url(), self.post_data)
