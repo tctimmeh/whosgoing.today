@@ -22,6 +22,9 @@ class EventOccurrence(Model):
         from whosgoing.models import OccurrenceMember
         OccurrenceMember.objects.create(user=user, occurrence=self)
 
+    def remove_member(self, user):
+        self.members.filter(id=user.id).delete()
+
 @receiver(post_save, sender=EventOccurrence)
 def event_occurrence_post_save(sender, instance, created, raw, **kwargs):
     if not created or raw:

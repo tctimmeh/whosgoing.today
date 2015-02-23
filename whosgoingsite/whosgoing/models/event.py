@@ -42,6 +42,10 @@ class Event(Model):
         except EventMember.DoesNotExist:
             pass
 
+        occurrence = self.next_occurrence
+        if occurrence and not occurrence.is_past:
+            occurrence.remove_member(user)
+
     def is_member(self, user):
         return self.members.filter(id=user.id).exists()
 

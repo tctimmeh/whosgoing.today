@@ -37,6 +37,20 @@ class TestEventModel(WhosGoingUnitTestCase):
         self.event.remove_member(self.user)
         self.assertModelInstanceNotExists(EventMember, user=self.user, event=self.event)
 
+    def test_removingMemberRemovesUserFromOccurrence(self):
+        self.logInAs()
+        self.event.add_member(self.loggedInUser)
+        occurrence = EventOccurrence.objects.create(event=self.event, time=timezone.now() + datetime.timedelta(hours=1))
+        self.event.remove_member(self.loggedInUser)
+        self.assertNotIn(self.loggedInUser, occurrence.members.all())
+
+    def test_removingMemberDoesNotRemoveUserFromOccurrenceIfOccurrenceHasPast(self):
+        self.logInAs()
+        self.event.add_member(self.loggedInUser)
+        occurrence = EventOccurrence.objects.create(event=self.event, time=timezone.now() - datetime.timedelta(hours=1))
+        self.event.remove_member(self.loggedInUser)
+        self.assertIn(self.loggedInUser, occurrence.members.all())
+
     def test_nextOccurrenceReturnsOccurrenceWithLatestTime(self):
         expected = EventOccurrence.objects.create(event=self.event, time=timezone.now()+datetime.timedelta(days=1))
         EventOccurrence.objects.create(event=self.event, time=timezone.now())
