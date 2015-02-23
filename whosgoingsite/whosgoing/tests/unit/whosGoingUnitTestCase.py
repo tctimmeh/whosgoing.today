@@ -20,3 +20,4 @@ class WhosGoingUnitTestCase(UnitTestCase):
         if address is None:
             address = self.randStr() + '@host.com'
         return Invitation.objects.create(event=event, address=address)
+
