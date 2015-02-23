@@ -18,12 +18,18 @@ class EventOccurrence(Model):
     def is_past(self):
         return self.time < timezone.now()
 
+    @property
+    def member_details_by_user(self):
+        from whosgoing.models import OccurrenceMember
+        return OccurrenceMember.objects.filter(occurrence=self).order_by('user__username')
+
     def add_member(self, user):
         from whosgoing.models import OccurrenceMember
         OccurrenceMember.objects.create(user=user, occurrence=self)
 
     def remove_member(self, user):
-        self.members.filter(id=user.id).delete()
+        from whosgoing.models import OccurrenceMember
+        OccurrenceMember.objects.filter(occurrence=self, user=user).delete()
 
 @receiver(post_save, sender=EventOccurrence)
 def event_occurrence_post_save(sender, instance, created, raw, **kwargs):

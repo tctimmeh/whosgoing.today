@@ -5,5 +5,26 @@
         <p>
             <strong>{% trans "When:" %}</strong> {{ occurrence.time }}
         </p>
+
+        <table class="table table-condensed">
+            <tbody>
+                {% for member in occurrenceMembers %}
+                   <tr>
+                   <td>
+                       {% if member.attendance.name == 'Undecided' %}
+                           <span class="attendance-mark attendance-mark-undecided">?</span>
+                       {% elif member.attendance.name == 'Accept' %}
+                           <span class="attendance-mark attendance-mark-accept glyphicon glyphicon-ok"></span>
+                       {% elif member.attendance.name == 'Regret' %}
+                           <span class="attendance-mark attendance-mark-regret glyphicon glyphicon-remove"></span>
+                       {% endif %}
+                   </td>
+                   <td>
+                       {% include "whosgoing/fragments/user_link_with_avatar.html" with user=member.user %}
+                   </td>
+                   </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endif %}

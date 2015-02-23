@@ -37,10 +37,7 @@ class Event(Model):
             occurrence.add_member(user)
 
     def remove_member(self, user):
-        try:
-            EventMember.objects.get(event=self, user=user).delete()
-        except EventMember.DoesNotExist:
-            pass
+        EventMember.objects.filter(event=self, user=user).delete()
 
         occurrence = self.next_occurrence
         if occurrence and not occurrence.is_past:

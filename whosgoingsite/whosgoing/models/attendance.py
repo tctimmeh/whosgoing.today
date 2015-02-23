@@ -8,3 +8,5 @@ class Attendance(Model):
     ACCEPT = 2
     REGRET = 3
 
+    def __str__(self):
+        return self.name

@@ -4,9 +4,7 @@
 <div class="member-list">
     {% for user in members %}
         <div>
-            <a href="{% url "account_profile_user" username=user.username %}">
-                {% gravatar user.email 30 %}{% user_display user %}
-            </a>
+            {% include "whosgoing/fragments/user_link_with_avatar.html" %}
 
             <span class="kick-button text-danger" data-user-id="{{ user.id }}" data-user-name="{% user_display user %}">
                 &#x2716;

@@ -1,0 +1,8 @@
+{% load account %}
+{% load gravatar %}
+
+<span class="user-link">
+    <a href="{% url "account_profile_user" username=user.username %}">
+        {% gravatar user.email 30 %}{% user_display user %}
+    </a>
+</span>

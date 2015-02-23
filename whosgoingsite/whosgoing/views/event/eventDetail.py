@@ -16,7 +16,11 @@ class EventDetailView(DetailView):
             'from_name': ' '.join([self.request.user.first_name, self.request.user.last_name]).strip()
         })
         data['members'] = self.object.members.order_by('username')
-        data['occurrence'] = self.object.next_occurrence
+
+        occurrence = self.object.next_occurrence
+        if occurrence:
+            data['occurrence'] = occurrence
+            data['occurrenceMembers'] = occurrence.member_details_by_user
 
         return data
 
