@@ -3,7 +3,7 @@ from whosgoing.models import Invitation
 
 
 class HomeView(TemplateView):
-    template_name = 'whosgoing/home.html'
+    template_name = 'whosgoing/pages/home.html'
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

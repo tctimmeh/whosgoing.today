@@ -6,7 +6,7 @@ class TestHomeView(WhosGoingUnitTestCase):
     def test_rootUrlRendersHomePage(self):
         response = self.get('whosgoing:home')
         self.assertResponseStatusIsOk()
-        self.assertTemplateUsed(response, 'whosgoing/home.html')
+        self.assertTemplateUsed(response, 'whosgoing/pages/home.html')
 
     def test_contextContainsInvitationsForAllUsersEmailAddresses(self):
         user = self.logInAs()

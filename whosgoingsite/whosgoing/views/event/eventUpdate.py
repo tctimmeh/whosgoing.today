@@ -10,7 +10,7 @@ from whosgoing.models import Event
 class EventUpdateView(UpdateView):
     model = Event
     pk_url_kwarg = 'eventId'
-    template_name = 'whosgoing/event_update.html'
+    template_name = 'whosgoing/pages/event_update.html'
     form_class = EventForm
 
     def get_initial(self):

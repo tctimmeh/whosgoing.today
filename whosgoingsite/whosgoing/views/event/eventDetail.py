@@ -6,6 +6,7 @@ from whosgoing.models import Event, EventOccurrence
 
 class EventDetailView(DetailView):
     model = Event
+    template_name = 'whosgoing/pages/event_detail.html'
     pk_url_kwarg = 'eventId'
 
     def get_context_data(self, **kwargs):

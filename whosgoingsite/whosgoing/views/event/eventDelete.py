@@ -9,7 +9,7 @@ from whosgoing.models import Event
 
 class EventDeleteView(DeleteView):
     model = Event
-    template_name = "whosgoing/delete_form.html"
+    template_name = "whosgoing/pages/delete_form.html"
     pk_url_kwarg = 'eventId'
 
     def get_success_url(self):

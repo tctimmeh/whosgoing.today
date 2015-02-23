@@ -9,7 +9,7 @@ from whosgoing.models import Event
 class CreateEventView(CreateView):
     model = Event
     form_class = EventForm
-    template_name = 'whosgoing/event_update.html'
+    template_name = 'whosgoing/pages/event_update.html'
 
     def get_initial(self):
         dt = datetime.datetime.now()

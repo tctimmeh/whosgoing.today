@@ -27,25 +27,25 @@
         <div class="row">
             <div id="occurance-pane" class="col-sm-6 col-sm-push-3">
                 <h3>{% trans "Next Occurrence" %}</h3>
-                {% include "whosgoing/create_occurrence_form.html" %}
-                {% include "whosgoing/occurrence_detail.html" %}
+                {% include "whosgoing/fragments/create_occurrence_form.html" %}
+                {% include "whosgoing/fragments/occurrence_detail.html" %}
             </div>
 
             <div id="action-pane" class="col-sm-3 col-sm-push-3">
                 <h3>{% trans "Actions" %}</h3>
-                {% include "whosgoing/event_actions.html" %}
+                {% include "whosgoing/fragments/event_actions.html" %}
             </div>
 
             <div id="members-pane" class="col-sm-3 col-sm-pull-9">
                 <h3>{% trans "Members" %}</h3>
-                {% include "whosgoing/members_list.html" %}
+                {% include "whosgoing/fragments/members_list.html" %}
             </div>
 
         </div>
     </div>
 
-    {% include "whosgoing/kick_confirm_dialog.html" %}
-    {% include "whosgoing/invite_dialog.html" %}
+    {% include "whosgoing/fragments/kick_confirm_dialog.html" %}
+    {% include "whosgoing/fragments/invite_dialog.html" %}
 {% endblock %}
 
 {% block script %}

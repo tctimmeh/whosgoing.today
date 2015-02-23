@@ -41,7 +41,7 @@ class EventInviteView(View):
         except InviteError as e:
             form.add_error(None, str(e))
 
-        return render(self.request, 'whosgoing/invite_form.html', {'event': self.event, 'form': form, 'message': message})
+        return render(self.request, 'whosgoing/fragments/invite_form.html', {'event': self.event, 'form': form, 'message': message})
 
     def _get_invitation(self):
         existing_invitations = Invitation.objects.filter(event=self.event, address=self.address)
@@ -62,10 +62,10 @@ class EventInviteView(View):
         template_context = {'invitation': invitation, 'site': get_current_site(self.request)}
         try:
             send_mail(subject=_("[Who's Going Today?] You've been invited to %(event_name)s!") % {'event_name': invitation.event.name},
-                      message=render_to_string('whosgoing/inviteEmailText.html', template_context),
+                      message=render_to_string('whosgoing/mail/invite.txt', template_context),
                       from_email="Who's Going Today? <noreply@whosgoing.today>",
                       recipient_list=[invitation.address],
-                      html_message=render_to_string('whosgoing/inviteEmail.html', template_context),
+                      html_message=render_to_string('whosgoing/mail/invite.html', template_context),
             )
         except SMTPException as e:
             invitation.delete()

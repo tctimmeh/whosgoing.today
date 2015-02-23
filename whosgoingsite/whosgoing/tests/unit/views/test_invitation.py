@@ -15,7 +15,7 @@ class TestInvitationView(WhosGoingUnitTestCase):
 
     def test_rendersInvitationTemplate(self):
         response = self.get()
-        self.assertTemplateUsed(response, 'whosgoing/invitation.html')
+        self.assertTemplateUsed(response, 'whosgoing/pages/invitation.html')
 
     def test_pageRenderedWithInvitation(self):
         self.get()

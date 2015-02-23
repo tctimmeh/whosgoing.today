@@ -11,7 +11,7 @@ class InvitationView(DetailView):
     model = Invitation
     slug_url_kwarg = 'inviteId'
     slug_field = 'inviteId'
-    template_name = 'whosgoing/invitation.html'
+    template_name = 'whosgoing/pages/invitation.html'
     context_object_name = 'invitation'
 
     def get_context_data(self, **kwargs):
