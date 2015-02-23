@@ -14,6 +14,18 @@ class TestEventModel(WhosGoingUnitTestCase):
         self.event.add_member(self.user)
         self.assertModelInstanceExists(EventMember, user=self.user, event=self.event)
 
+    def test_addingMemberAddsToLatestOccurrence(self):
+        occurrence = EventOccurrence.objects.create(event=self.event, time=timezone.now() + datetime.timedelta(hours=1))
+        self.logInAs()
+        self.event.add_member(self.loggedInUser)
+        self.assertIn(self.loggedInUser, occurrence.members.all())
+
+    def test_addingMemberDoesNotAddToLatestOccurrenceIfOccurrenceIsPast(self):
+        occurrence = EventOccurrence.objects.create(event=self.event, time=timezone.now() - datetime.timedelta(hours=1))
+        self.logInAs()
+        self.event.add_member(self.loggedInUser)
+        self.assertNotIn(self.loggedInUser, occurrence.members.all())
+
     def test_isMemberReturnsTrueIfUserIsMember(self):
         self.event.add_member(self.user)
         otherUser = self.createUser()

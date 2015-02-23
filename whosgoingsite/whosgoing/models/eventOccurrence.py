@@ -18,11 +18,13 @@ class EventOccurrence(Model):
     def is_past(self):
         return self.time < timezone.now()
 
+    def add_member(self, user):
+        from whosgoing.models import OccurrenceMember
+        OccurrenceMember.objects.create(user=user, occurrence=self)
+
 @receiver(post_save, sender=EventOccurrence)
 def event_occurrence_post_save(sender, instance, created, raw, **kwargs):
     if not created or raw:
         return
-    from whosgoing.models import OccurrenceMember
     eventMembers = instance.event.members.all()
-    for member in eventMembers:
-        OccurrenceMember.objects.create(user=member, occurrence=instance)
+    [instance.add_member(member) for member in eventMembers]

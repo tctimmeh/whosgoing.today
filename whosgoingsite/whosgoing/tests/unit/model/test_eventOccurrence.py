@@ -12,6 +12,12 @@ class TestEventOccurrence(WhosGoingUnitTestCase):
         self.event = self.create_event()
         self.event.add_member(self.loggedInUser)
 
+    def test_addMemberAddsMemberToOccurrence(self):
+        user = self.createUser()
+        occurrence = EventOccurrence.objects.create(event=self.event)
+        occurrence.add_member(user)
+        self.assertIn(user, occurrence.members.all())
+
     def test_isPastReturnsTrueIfOccurrenceTimeIsBeforeNow(self):
         occurrence = EventOccurrence.objects.create(event=self.event, time=timezone.now()-timedelta(days=1))
         self.assertTrue(occurrence.is_past)

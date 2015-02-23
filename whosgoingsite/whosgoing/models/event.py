@@ -32,6 +32,9 @@ class Event(Model):
 
     def add_member(self, user):
         EventMember.objects.create(event=self, user=user)
+        occurrence = self.next_occurrence
+        if occurrence and not occurrence.is_past:
+            occurrence.add_member(user)
 
     def remove_member(self, user):
         try:
