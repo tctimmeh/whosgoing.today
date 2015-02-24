@@ -10,3 +10,15 @@ class Attendance(Model):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def from_string(cls, name):
+        if name == 'Accept':
+            return Attendance(id=Attendance.ACCEPT)
+        elif name == 'Regret':
+            return Attendance(id=Attendance.REGRET)
+        elif name == 'Undecided':
+            return Attendance(id=Attendance.UNDECIDED)
+        else:
+            raise ValueError('{} is not a valid attendance string'.format(name))
+
