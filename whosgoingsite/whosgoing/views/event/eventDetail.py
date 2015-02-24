@@ -21,6 +21,7 @@ class EventDetailView(DetailView):
         if occurrence:
             data['occurrence'] = occurrence
             data['occurrenceMembers'] = occurrence.member_details_by_user
+            data['userAttendance'] = occurrence.get_member_attendance(self.request.user)
 
         return data
 

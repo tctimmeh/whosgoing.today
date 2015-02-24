@@ -23,6 +23,14 @@ class EventOccurrence(Model):
         from whosgoing.models import OccurrenceMember
         return OccurrenceMember.objects.filter(occurrence=self).order_by('user__username')
 
+    def get_member_attendance(self, user):
+        from whosgoing.models import OccurrenceMember
+        try:
+            member = OccurrenceMember.objects.get(occurrence=self, user=user)
+            return member.attendance
+        except OccurrenceMember.DoesNotExist:
+            return None
+
     def add_member(self, user):
         from whosgoing.models import OccurrenceMember
         OccurrenceMember.objects.create(user=user, occurrence=self)
