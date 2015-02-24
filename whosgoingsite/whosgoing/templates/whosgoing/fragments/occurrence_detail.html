@@ -7,7 +7,7 @@
         </p>
 
         {% if user_is_member %}
-            <form id="attendance-form" method="post" action="">
+            <form id="attendance-form" method="post" action="{% url "whosgoing:setAttendance" occurrenceId=occurrence.id %}">
                 {% csrf_token %}
 
                 <strong>{% trans "Going?" %} </strong>

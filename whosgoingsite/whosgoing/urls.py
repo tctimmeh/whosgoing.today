@@ -8,6 +8,8 @@ from whosgoing.views.event.eventKick import eventKickView
 from whosgoing.views.event.eventUpdate import eventUpdateView
 from whosgoing.views.home import homeView
 from whosgoing.views.invitiation import invitationView
+from whosgoing.views.setAttendance import setAttendanceView
+
 
 eventUrls = patterns('',
     url(r'^$', eventDetailView, name='detail'),
@@ -23,4 +25,5 @@ urlpatterns = patterns('',
     url(r'^events/create/$', createEventView, name='createEvent'),
     url(r'^events/(?P<eventId>\d+)/', include(eventUrls, namespace='event')),
     url(r'^invitations/(?P<inviteId>[\w-]{36})/', invitationView, name='invitation'),
+    url(r'^occurrences/(?P<occurrenceId>\d+)/setAttendance/$', setAttendanceView, name='setAttendance'),
 )
