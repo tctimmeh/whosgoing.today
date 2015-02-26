@@ -8,7 +8,7 @@ class InviteForm(ModelForm):
         model = Invitation
         fields = ['address', 'from_name', 'message']
         labels = {
-            'address': _('To Email Address'),
+            'address': _('User or Email Address'),
             'from_name': _('From'),
             'message': _('Invite Message')
         }

@@ -5,7 +5,7 @@
 {% endif %}
 
 <form id="invite-form" action="{% url "whosgoing:event:invite" eventId=event.id %}" method="post">
-    {% include "dcbase/form.html" %}
+    {% include "dcbase/form/form.html" %}
 
     <button id="invite-button" class="btn btn-primary" type="submit">
         {% trans "Invite" %}

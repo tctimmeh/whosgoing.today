@@ -52,6 +52,8 @@
 {% endblock %}
 
 {% block script %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
+
     <script>
         function setupInviteForm() {
             $('#invite-form').ajaxForm({
@@ -82,6 +84,8 @@
                 $('#kick-user-name').html(userName);
                 $('#kick-dialog').modal();
             });
+
+            dcbase.createUserTypeahead('#id_address');
         });
     </script>
 {% endblock %}

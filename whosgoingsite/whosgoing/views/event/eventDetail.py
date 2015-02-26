@@ -11,17 +11,21 @@ class EventDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['user_is_member'] = self.object.is_member(self.request.user)
-        data['inviteForm'] = InviteForm(initial={
-            'from_name': ' '.join([self.request.user.first_name, self.request.user.last_name]).strip()
-        })
+        userIsMember = self.object.is_member(self.request.user)
+
+        data['user_is_member'] = userIsMember
+        if userIsMember:
+            data['inviteForm'] = InviteForm(initial={
+                'from_name': ' '.join([self.request.user.first_name, self.request.user.last_name]).strip()
+            })
         data['members'] = self.object.members.order_by('username')
 
         occurrence = self.object.next_occurrence
         if occurrence:
             data['occurrence'] = occurrence
             data['occurrenceMembers'] = occurrence.member_details_by_user
-            data['userAttendance'] = occurrence.get_member_attendance(self.request.user)
+            if userIsMember:
+                data['userAttendance'] = occurrence.get_member_attendance(self.request.user)
 
         return data
 
