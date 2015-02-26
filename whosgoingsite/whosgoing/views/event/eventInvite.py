@@ -1,5 +1,6 @@
 from smtplib import SMTPException
 import datetime
+from django.contrib.auth.models import AbstractUser
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
@@ -29,14 +30,17 @@ class EventInviteView(View):
         form = InviteForm(request.POST)
         try:
             if form.is_valid():
-                self.address = form.cleaned_data['address']
+                recipient = form.cleaned_data['address']
+                self.address = recipient
+                if isinstance(recipient, AbstractUser):
+                    self.address = recipient.email
                 self.from_name = form.cleaned_data['from_name']
                 self.message = form.cleaned_data['message']
 
                 invitation = self._get_invitation()
                 self._send_email(invitation)
 
-                message = _('Successfully sent invite to %(recipient)s!') % {'recipient': self.address}
+                message = _('Successfully sent invite to %(recipient)s!') % {'recipient': recipient}
                 form = InviteForm(initial={'from_name': self.from_name, 'message': self.message})
         except InviteError as e:
             form.add_error(None, str(e))

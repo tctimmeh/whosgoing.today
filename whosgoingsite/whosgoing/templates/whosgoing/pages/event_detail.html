@@ -56,6 +56,7 @@
 
     <script>
         function setupInviteForm() {
+            dcbase.createUserTypeahead('#id_address');
             $('#invite-form').ajaxForm({
                 target: '#invite-dialog-body',
                 success: function () {
@@ -84,8 +85,6 @@
                 $('#kick-user-name').html(userName);
                 $('#kick-dialog').modal();
             });
-
-            dcbase.createUserTypeahead('#id_address');
         });
     </script>
 {% endblock %}

@@ -1,18 +1,24 @@
-from django.forms import ModelForm
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.forms import CharField, Form, Textarea
 from django.utils.translation import ugettext as _
-from whosgoing.models import Invitation
 
 
-class InviteForm(ModelForm):
-    class Meta:
-        model = Invitation
-        fields = ['address', 'from_name', 'message']
-        labels = {
-            'address': _('User or Email Address'),
-            'from_name': _('From'),
-            'message': _('Invite Message')
-        }
-        help_texts = {
-            'address': _('Email address of the user to invite'),
-        }
+class InviteForm(Form):
+    address = CharField(max_length=254, label=_('User of Email Address'),
+                        help_text=_('User name or Email address of user to invite'),
+    )
+    from_name = CharField(max_length=50, label=_('From'), required=False)
+    message = CharField(max_length=500, required=False, widget=Textarea)
 
+    def clean_address(self):
+        value = self.cleaned_data['address']
+        try:
+            validate_email(value)
+        except ValidationError:
+            try:
+                value = User.objects.get(username=value)
+            except User.DoesNotExist:
+                raise ValidationError('Enter a user name or valid email address')
+        return value

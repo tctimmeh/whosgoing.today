@@ -7,9 +7,9 @@ from whosgoing.models import Event, Invitation
 class TestInviteView(UnitTestCase):
     def setUp(self):
         super().setUp()
-        user = self.logInAs()
+        self.logInAs()
         self.event = Event.objects.create(name=self.randStr())
-        self.event.add_member(user)
+        self.event.add_member(self.loggedInUser)
         self.inviteAddress = self.randStr() + '@host.com'
         self.post_data = {'address': self.inviteAddress, 'from_name': self.randStr(), 'message': self.randStr()}
 
@@ -33,13 +33,18 @@ class TestInviteView(UnitTestCase):
         self.assertTemplateUsed(response, 'whosgoing/mail/invite.txt')
 
     def test_createsInvitationWithPostedData(self):
-        response = self.client.post(self.get_url(), self.post_data)
+        self.client.post(self.get_url(), self.post_data)
         invitation = Invitation.objects.get(event=self.event, address=self.inviteAddress)
         self.assertEqual(self.post_data['address'], invitation.address)
         self.assertEqual(self.post_data['from_name'], invitation.from_name)
         self.assertEqual(self.post_data['message'], invitation.message)
 
+    def test_createsInvitationWithAddressFromUserName(self):
+        self.post_data['address'] = self.loggedInUser.username
+        self.client.post(self.get_url(), self.post_data)
+        Invitation.objects.get(event=self.event, address=self.loggedInUser.email)
+
     def test_postingAsUserWhoIsNotMembersReturnsForbidden(self):
-        user = self.logInAs()
+        self.logInAs()
         response = self.client.post(self.get_url(), self.post_data)
         self._assertResponseStatusIs(response, 403)
