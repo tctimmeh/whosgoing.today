@@ -40,7 +40,7 @@ class InvitationView(DetailView):
         if self.request.user is None:
             return False
 
-        userEmails = EmailAddress.objects.filter(user__id=self.request.user.id, email=self.object.address)
+        userEmails = EmailAddress.objects.filter(user__id=self.request.user.id, email__iexact=self.object.address)
         return len(userEmails) > 0
 
 
