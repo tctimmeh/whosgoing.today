@@ -2,12 +2,15 @@ import uuid
 
 from django.core.urlresolvers import reverse
 from django.db.models import Model, DateTimeField, ForeignKey, EmailField, CharField, Manager, TextField
+from django.db.models.signals import pre_save
 from django.utils import timezone
+from django.dispatch import receiver
 
 
 class InvitationManager(Manager):
     def for_user(self, user):
         emails = [record.email for record in user.emailaddress_set.only('email')]
+        emails = [email.lower() for email in emails]
         return self.filter(address__in=emails)
 
 class Invitation(Model):
@@ -34,3 +37,8 @@ class Invitation(Model):
     def since_last_sent(self):
         return timezone.now() - self.sent
 
+@receiver(pre_save, sender=Invitation)
+def invitation_pre_save(sender, instance, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+    instance.address = instance.address.lower()

@@ -11,6 +11,7 @@ class TestInviteView(UnitTestCase):
         self.event = Event.objects.create(name=self.randStr())
         self.event.add_member(self.loggedInUser)
         self.inviteAddress = self.randStr() + '@host.com'
+        self.inviteAddress = self.inviteAddress.lower()
         self.post_data = {'address': self.inviteAddress, 'from_name': self.randStr(), 'message': self.randStr()}
 
     def get_url(self, eventId=None):
@@ -42,7 +43,7 @@ class TestInviteView(UnitTestCase):
     def test_createsInvitationWithAddressFromUserName(self):
         self.post_data['address'] = self.loggedInUser.username
         self.client.post(self.get_url(), self.post_data)
-        Invitation.objects.get(event=self.event, address=self.loggedInUser.email)
+        Invitation.objects.get(event=self.event, address__iexact=self.loggedInUser.email)
 
     def test_postingAsUserWhoIsNotMembersReturnsForbidden(self):
         self.logInAs()
