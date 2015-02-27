@@ -6,7 +6,7 @@
             <strong>{% trans "When:" %}</strong> {{ occurrence.time }}
         </p>
 
-        {% if user_is_member %}
+        {% if user_is_member and not occurrence.is_past %}
             <form id="attendance-form" method="post" action="{% url "whosgoing:setAttendance" occurrenceId=occurrence.id %}">
                 {% csrf_token %}
 
