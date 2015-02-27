@@ -1,5 +1,5 @@
 import datetime
-from django.forms import ModelForm, TimeField
+from django.forms import ModelForm, TimeField, Textarea
 from django.forms.utils import from_current_timezone
 from django.utils.translation import ugettext as _
 from whosgoing.models import Event
@@ -11,6 +11,9 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
         fields = ['name', 'description']
+        widgets = {
+            'description': Textarea({'rows': 2})
+        }
 
     def clean_time(self):
         t = self.cleaned_data['time']
