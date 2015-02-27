@@ -26,6 +26,11 @@ class TestInvitationView(WhosGoingUnitTestCase):
         self.get()
         self.assertLastContextValueEqual('inviteForUser', True)
 
+    def test_indicatesInvitationForLoggedInUserWithEmailThatOnlyDiffersByCase(self):
+        EmailAddress.objects.create(user=self.user, email=self.invitation.address.upper())
+        self.get()
+        self.assertLastContextValueEqual('inviteForUser', True)
+
     def test_indicatesInvitationNotForLoggedInUserWithWrongEmail(self):
         EmailAddress.objects.create(user=self.user, email=self.randStr()+'@host.com')
         self.get()
