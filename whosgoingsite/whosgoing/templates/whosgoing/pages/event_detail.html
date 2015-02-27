@@ -25,21 +25,28 @@
                 <p>{{ object.description }}</p>
             </div>
         </div>
-        <hr/>
+
+        <hr class="hidden-xs"/>
+        <div class="row visible-xs">
+            <div class="col-xs-12">
+                <p>{% include "whosgoing/fragments/event_actions.html" %}</p>
+            </div>
+        </div>
 
         <div class="row">
             <div id="occurance-pane" class="col-sm-6 col-sm-push-3">
-                <h3>{% trans "Next Occurrence" %}</h3>
+                <h3 class="hidden-xs">{% trans "Next Occurrence" %}</h3>
+
                 {% include "whosgoing/fragments/create_occurrence_form.html" %}
                 {% include "whosgoing/fragments/occurrence_detail.html" %}
             </div>
 
-            <div id="action-pane" class="col-sm-3 col-sm-push-3">
+            <div id="action-pane" class="hidden-xs col-sm-3 col-sm-push-3">
                 <h3>{% trans "Actions" %}</h3>
-                {% include "whosgoing/fragments/event_actions.html" %}
+                {% include "whosgoing/fragments/event_actions.html" with btnGroupStyle="-vertical" %}
             </div>
 
-            <div id="members-pane" class="col-sm-3 col-sm-pull-9">
+            <div id="members-pane" class="hidden-xs col-sm-3 col-sm-pull-9">
                 <h3>{% trans "Members" %}</h3>
                 {% include "whosgoing/fragments/members_list.html" %}
             </div>

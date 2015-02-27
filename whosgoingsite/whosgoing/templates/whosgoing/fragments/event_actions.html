@@ -1,12 +1,21 @@
 {% load i18n %}
 
 {% if user_is_member %}
-    <div class="btn-group-vertical" role="group">
-        <a class="btn btn-default" href="{% url "whosgoing:event:update" eventId=object.id %}">{% trans "Edit" %}</a>
+    <div class="btn-group{{ btnGroupStyle }}" role="group">
+        <a class="btn btn-default" href="{% url "whosgoing:event:update" eventId=object.id %}">
+            <span class="glyphicon glyphicon-pencil visible-xs" style="height: 20px"></span>
+            <span class="hidden-xs">{% trans "Edit" %}</span>
+        </a>
+
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#inviteModal">
-            {% trans "Invite To Event" %}
+            <span class="glyphicon glyphicon-user visible-xs" style="height: 20px"></span>
+            <span class="hidden-xs">{% trans "Invite To Event" %}</span>
         </button>
-        <a class="btn btn-danger" href="{% url "whosgoing:event:delete" eventId=object.id %}">{% trans "Delete" %}</a>
+
+        <a class="btn btn-danger" href="{% url "whosgoing:event:delete" eventId=object.id %}">
+            <span class="visible-xs"><strong>X</strong></span>
+            <span class="hidden-xs">{% trans "Delete" %}</span>
+        </a>
     </div>
 
 {% else %}

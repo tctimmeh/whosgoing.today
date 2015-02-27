@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load account %}
 
 {% if occurrence %}
     <div>
@@ -16,13 +17,13 @@
 
                 <div class="btn-group">
                     {% if not userAttendance.name == 'Accept' %}
-                        <input type="submit" name="attendance" value="Accept" class="btn btn-sm btn-success" />
+                        <input type="submit" name="attendance" value="Accept" class="btn btn-success" />
                     {% endif %}
                     {% if not userAttendance.name == 'Regret' %}
-                        <input type="submit" name="attendance" value="Regret" class="btn btn-sm btn-danger" />
+                        <input type="submit" name="attendance" value="Regret" class="btn btn-danger" />
                     {% endif %}
                     {% if not userAttendance.name == 'Undecided' %}
-                        <input type="submit" name="attendance" value="Undecided" class="btn btn-sm btn-warning" />
+                        <input type="submit" name="attendance" value="Undecided" class="btn btn-warning" />
                     {% endif %}
                 </div>
             </form>
@@ -43,6 +44,11 @@
                     </td>
                     <td>
                         {% include "whosgoing/fragments/user_link_with_avatar.html" with user=member.user %}
+                    </td>
+                    <td class="visible-xs">
+                        <span class="kick-button text-danger" data-user-id="{{ user.id }}" data-user-name="{% user_display user %}">
+                            &#x2716;
+                        </span>
                     </td>
                 </tr>
             {% endfor %}
