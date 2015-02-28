@@ -6,6 +6,7 @@ from whosgoing.views.event.eventDetail import eventDetailView
 from whosgoing.views.event.eventInvite import eventInviteView
 from whosgoing.views.event.eventKick import eventKickView
 from whosgoing.views.event.eventUpdate import eventUpdateView
+from whosgoing.views.event.toggleNotifyAddress import toggleNotifyAddressView
 from whosgoing.views.home import homeView
 from whosgoing.views.invitiation import invitationView
 from whosgoing.views.setAttendance import setAttendanceView
@@ -18,6 +19,7 @@ eventUrls = patterns('',
     url(r'^invite/$', eventInviteView, name='invite'),
     url(r'^kick/$', eventKickView, name='kick'),
     url(r'^createOccurrence/$', createOccurrenceView, name='createOccurrence'),
+    url(r'^toggleNotifyAddress/$', toggleNotifyAddressView, name='toggleNotifyAddress'),
 )
 
 urlpatterns = patterns('',

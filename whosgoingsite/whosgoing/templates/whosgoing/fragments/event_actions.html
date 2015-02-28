@@ -1,7 +1,13 @@
 {% load i18n %}
 
 {% if user_is_member %}
-    <div class="btn-group{{ btnGroupStyle }}" role="group">
+    <form id="notify-form" method="post" action="{% url "whosgoing:event:toggleNotifyAddress" eventId=event.id %}">
+        {% csrf_token %}
+        <input id="notify-address-value" type="hidden" name="address" />
+        {% include "whosgoing/fragments/notify_address_widget.html" %}
+    </form>
+
+    <div id="event-action-buttons" class="btn-group-vertical" role="group">
         <a class="btn btn-default" href="{% url "whosgoing:event:update" eventId=object.id %}">
             <span class="glyphicon glyphicon-pencil visible-xs" style="height: 20px"></span>
             <span class="hidden-xs">{% trans "Edit" %}</span>

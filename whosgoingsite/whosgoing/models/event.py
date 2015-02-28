@@ -1,4 +1,5 @@
 import datetime
+from allauth.account.models import EmailAddress
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -23,6 +24,7 @@ class Event(Model):
         default=default_event_time,
         help_text=_('Time when this event normally occurs')
     )
+    notify_addresses = ManyToManyField(EmailAddress)
 
     def __str__(self):
         return self.name
@@ -45,6 +47,12 @@ class Event(Model):
 
     def is_member(self, user):
         return self.members.filter(id=user.id).exists()
+
+    def get_notify_addresses_for_user(self, user):
+        '''Returns a dict of {EmailAddress: bool} where bool is True if the email is enabled for notifications'''
+        notifyAddresses = self.notify_addresses.filter(user=user)
+        emails = EmailAddress.objects.filter(user=user)
+        return {email: email in notifyAddresses for email in emails}
 
     @property
     def next_occurrence(self):

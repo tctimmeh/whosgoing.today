@@ -13,6 +13,9 @@
         .attendance-mark-regret { color: #a94442; }
         .attendance-mark-accept { color: #3c763d; }
         #attendance-form { margin-bottom: 10px; }
+        @media(max-width: 768px) {
+            #notify-form { display: inline-block; margin-bottom: 10px; }
+        }
     </style>
 {% endblock %}
 
@@ -27,23 +30,18 @@
         </div>
 
         <hr class="hidden-xs"/>
-        <div class="row visible-xs">
-            <div class="col-xs-12">
-                <p>{% include "whosgoing/fragments/event_actions.html" %}</p>
-            </div>
-        </div>
 
         <div class="row">
-            <div id="occurance-pane" class="col-sm-6 col-sm-push-3">
+            <div id="action-pane" class="col-sm-3 col-sm-push-9">
+                <h3 class="hidden-xs">{% trans "Actions" %}</h3>
+                {% include "whosgoing/fragments/event_actions.html" %}
+            </div>
+
+            <div id="occurance-pane" class="col-sm-6">
                 <h3 class="hidden-xs">{% trans "Next Occurrence" %}</h3>
 
                 {% include "whosgoing/fragments/create_occurrence_form.html" %}
                 {% include "whosgoing/fragments/occurrence_detail.html" %}
-            </div>
-
-            <div id="action-pane" class="hidden-xs col-sm-3 col-sm-push-3">
-                <h3>{% trans "Actions" %}</h3>
-                {% include "whosgoing/fragments/event_actions.html" with btnGroupStyle="-vertical" %}
             </div>
 
             <div id="members-pane" class="hidden-xs col-sm-3 col-sm-pull-9">
@@ -73,11 +71,41 @@
                     $('#invite-messages').html('<div class="text-danger">Failed to submit invitation: ' + status + '</div>')
                 }
             });
+        }
 
+        function setupNotifyAddressForm() {
+            var form = $('#notify-form');
+            $('.notify-address').click(function(e) {
+                e.stopPropagation();
+                var address = $(e.target).data('address');
+                $('#notify-address-value').val(address);
+                form.submit();
+            });
+
+            form.ajaxForm({
+                target: '#notify-address-dropdown',
+                replaceTarget: true,
+                success: function() {
+                    setupNotifyAddressForm();
+                }
+            });
+        }
+
+        function windowResized() {
+            var width = $(window).width();
+            if (width < 768) {
+                $('#event-action-buttons').removeClass('btn-group-vertical').addClass('btn-group');
+            }
+            else {
+                $('#event-action-buttons').removeClass('btn-group').addClass('btn-group-vertical');
+            }
         }
 
         $(document).ready(function () {
             setupInviteForm();
+            setupNotifyAddressForm();
+            windowResized();
+            $(window).resize(windowResized);
 
             $('#kick-form').ajaxForm(function (response, status) {
                 window.location.reload();

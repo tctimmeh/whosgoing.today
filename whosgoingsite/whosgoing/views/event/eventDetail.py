@@ -1,7 +1,6 @@
-from django.utils import timezone
 from django.views.generic import DetailView
 from whosgoing.forms.invite import InviteForm
-from whosgoing.models import Event, EventOccurrence
+from whosgoing.models import Event
 
 
 class EventDetailView(DetailView):
@@ -13,12 +12,14 @@ class EventDetailView(DetailView):
         data = super().get_context_data(**kwargs)
         userIsMember = self.object.is_member(self.request.user)
 
+        data['members'] = self.object.members.order_by('username')
         data['user_is_member'] = userIsMember
+
         if userIsMember:
             data['inviteForm'] = InviteForm(initial={
                 'from_name': ' '.join([self.request.user.first_name, self.request.user.last_name]).strip()
             })
-        data['members'] = self.object.members.order_by('username')
+            data['notifyAddresses'] = self.object.get_notify_addresses_for_user(self.request.user)
 
         occurrence = self.object.next_occurrence
         if occurrence:
