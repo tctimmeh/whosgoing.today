@@ -6,11 +6,11 @@ from django.utils.translation import ugettext as _
 
 
 class InviteForm(Form):
-    address = CharField(max_length=254, label=_('User of Email Address'),
-                        help_text=_('User name or Email address of user to invite'),
+    address = CharField(max_length=254, label=_('User or Email Address'),
+                        help_text=_('User name or Email of user to invite'),
     )
     from_name = CharField(max_length=50, label=_('From'), required=False)
-    message = CharField(max_length=500, required=False, widget=Textarea)
+    message = CharField(max_length=500, required=False, widget=Textarea(attrs={'rows': 2}))
 
     def clean_address(self):
         value = self.cleaned_data['address']

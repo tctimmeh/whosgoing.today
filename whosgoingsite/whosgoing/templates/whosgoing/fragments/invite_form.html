@@ -7,7 +7,13 @@
 <form id="invite-form" action="{% url "whosgoing:event:invite" eventId=event.id %}" method="post">
     {% include "dcbase/form/form.html" %}
 
-    <button id="invite-button" class="btn btn-primary" type="submit">
-        {% trans "Invite" %}
-    </button>
+    <div class="modal-footer">
+        <button id="invite-button" class="btn btn-primary" type="submit">
+            {% trans "Invite" %}
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+            {% trans "Cancel" %}
+        </button>
+    </div>
 </form>
+
