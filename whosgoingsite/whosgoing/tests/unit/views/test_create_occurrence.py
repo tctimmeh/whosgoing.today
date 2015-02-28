@@ -1,4 +1,5 @@
 from datetime import timedelta
+
 from allauth.account.models import EmailAddress
 from django.core.urlresolvers import reverse
 from django.utils import timezone
@@ -28,13 +29,13 @@ class TestCreateOccurrenceView(WhosGoingUnitTestCase):
         self._assertResponseStatusIs(response, 403)
 
     def test_createsNoOccurrenceIfNextOccurrenceIsInFuture(self):
-        EventOccurrence.objects.create(event=self.event, time=timezone.now()+timedelta(hours=2))
+        EventOccurrence.objects.create(event=self.event, time=timezone.now() + timedelta(hours=2))
         response = self.client.post(self.get_url())
         self.assertRedirects(response, self.event.get_absolute_url())
         self.assertEqual(1, len(EventOccurrence.objects.all()))
 
     def test_createsOccurrenceWithEventTimeIfNextOccurrenceIsInPast(self):
-        EventOccurrence.objects.create(event=self.event, time=timezone.now()-timedelta(hours=2))
+        EventOccurrence.objects.create(event=self.event, time=timezone.now() - timedelta(hours=2))
         response = self.client.post(self.get_url())
         self.assertRedirects(response, self.event.get_absolute_url())
         self.assertEqual(2, len(EventOccurrence.objects.all()))

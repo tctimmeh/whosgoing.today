@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}Thanks from the WhosGoing.Today team!{% endblocktrans %}

@@ -1,0 +1,34 @@
+{% load i18n %}
+{% spaceless %}
+{% url "whosgoing:home" as home_link %}
+{% with domain=site.domain %}
+<!doctype html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}{% trans "WhosGoing.Today" %}</title>
+</head>
+<body style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; font-size: 14px; background-color: #d3d3d3; padding: 0; margin: 0;">
+<div style="max-width: 570px; margin: auto; background-color: white; border: 1px solid gray; border-radius: 8px; margin-top: 7px; margin-bottom: 7px">
+
+    <div style="font-size: x-large; background-color: black; color: white; padding: 10px; border-top-left-radius: 8px; border-top-right-radius: 8px">
+        <a style="color: #fff; text-decoration: none" href="http://192.168.0.194:8000/">
+            {% trans "Whos Going Today?" %}
+        </a>
+    </div>
+
+    <div style="padding: 10px">
+        {% block content %}{% endblock %}
+
+        <hr/>
+
+        <p>
+            {% blocktrans %}
+                Thanks from the <a href="http://{{ domain }}{{ home_link }}">WhosGoing.Today</a> team!
+            {% endblocktrans %}
+        </p>
+    </div>
+</div>
+</body>
+</html>
+{% endwith %}
+{% endspaceless %}

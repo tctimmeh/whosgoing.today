@@ -1,6 +1,7 @@
 from smtplib import SMTPException
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
@@ -31,7 +32,8 @@ class CreateOccurrenceView(View):
         notifyAddresses = self.event.notify_addresses.values('email')
         notifyAddresses = [entry['email'] for entry in notifyAddresses]
         template_context = {
-            'occurrence': self.occurrence
+            'occurrence': self.occurrence,
+            'site': get_current_site(self.request),
         }
 
         try:
