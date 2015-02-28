@@ -1,47 +1,47 @@
+{% extends "whosgoing/mail/base.html" %}
 {% load i18n %}
-{% spaceless %}
-{% url "whosgoing:home" as home_link %}
-<!doctype html>
-<html>
-<body>
-    <h2>{% trans "Good News!" %}</h2>
 
-    <p>
-        {% blocktrans with event_name=invitation.event_name domain=site.domain %}
-            You've been invited to <strong>{{ event_name }}</strong> on <a href="http://{{ domain }}{{ home_link }}">WhosGoing.Today</a>!
-        {% endblocktrans %}
-    </p>
+{% block title %}{{ invitation.event.name }} - {{ block.super }}{% endblock %}
 
-    {% if invitation.from_name %}
+{% block content %}
+    {% url "whosgoing:invitation" inviteId=invitation.inviteId as invite_url %}
+    {% with event_name=invitation.event.name domain=site.domain from_name=invitation.from_name %}
+        <h2>{% trans "Good News!" %}</h2>
+
         <p>
-            {% if invitation.message %}
-                {% blocktrans with from_name=invitation.from_name %}<strong>{{ from_name }}</strong> says:{% endblocktrans %}
-            {% else %}
-                {% blocktrans with from_name=invitation.from_name %}From <strong>{{ from_name }}</strong>{% endblocktrans %}
-            {% endif %}
+            {% blocktrans %}
+                You've been invited to <strong style="font-size: x-large">{{ event_name }}</strong>
+                on <a href="http://{{ domain }}{{ home_link }}">WhosGoing.Today</a>!
+            {% endblocktrans %}
         </p>
-    {% endif %}
 
-    {% if invitation.message %}
-        <p style="margin-left: 15px"><em>{{ invitation.message }}</em></p>
-    {% endif %}
+        {% if invitation.from_name %}
+            <p>
+                {% if invitation.message %}
+                    {% blocktrans %}<strong>{{ from_name }}</strong> says:{% endblocktrans %}
+                {% else %}
+                    {% blocktrans %}From <strong>{{ from_name }}</strong>{% endblocktrans %}
+                {% endif %}
+            </p>
+        {% endif %}
 
-    <table>
-        <tbody>
-            <tr>
-                <td>
-                    {% trans "To accept or reject this invitation click this link:" %}
-                </td>
-                <td style="background-color: #428bca; padding: 6px 12px;">
-                    <a style="color: #fff; text-decoration: none" href="http://{{ site.domain }}{% url "whosgoing:invitation" inviteId=invitation.inviteId %}">
-                        {% trans "Your Invitation" %}
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        {% if invitation.message %}
+            <p style="margin-left: 15px"><em>{{ invitation.message }}</em></p>
+        {% endif %}
 
-    {% include "whosgoing/mail/mail_footer.html" %}
-</body>
-</html>
-{% endspaceless %}
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        {% trans "To accept or reject this invitation click this link:" %}
+                    </td>
+                    <td style="background-color: #428bca; padding: 6px 12px;">
+                        <a style="color: #fff; text-decoration: none" href="http://{{ domain }}{{ invite_url }}">
+                            {% trans "Your Invitation" %}
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% endwith %}
+{% endblock %}
