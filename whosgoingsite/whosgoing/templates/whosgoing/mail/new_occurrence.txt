@@ -4,8 +4,8 @@
 {% blocktrans with event_name=occurrence.event.name time=occurrence.time %}There is a new occurrence of {{ event_name }} at {{ time }} on WhosGoing.Today!{% endblocktrans %}
 {{ event.description }}
 
-{% blocktrans %}If you can attend, click here: {% endblocktrans %}http://{{ site.domain }}{% url "whosgoing:setAttendance" occurrenceId=occurrence.id %}?reply=accept
+{% blocktrans %}If you can attend, click here: {% endblocktrans %}http://{{ site.domain }}{% url "whosgoing:setAttendance" occurrenceId=occurrence.id %}?attend=accept
 
-{% blocktrans %}If you can not attend, click here: {% endblocktrans %}http://{{ site.domain }}{% url "whosgoing:setAttendance" occurrenceId=occurrence.id %}?reply=regret
+{% blocktrans %}If you can not attend, click here: {% endblocktrans %}http://{{ site.domain }}{% url "whosgoing:setAttendance" occurrenceId=occurrence.id %}?attend=regret
 
 {% include "whosgoing/mail/mail_footer.txt" %}

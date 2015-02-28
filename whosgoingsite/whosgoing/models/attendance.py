@@ -13,11 +13,12 @@ class Attendance(Model):
 
     @classmethod
     def from_string(cls, name):
-        if name == 'Accept':
+        name = name.upper()
+        if name == 'ACCEPT':
             return Attendance(id=Attendance.ACCEPT)
-        elif name == 'Regret':
+        elif name == 'REGRET':
             return Attendance(id=Attendance.REGRET)
-        elif name == 'Undecided':
+        elif name == 'UNDECIDED':
             return Attendance(id=Attendance.UNDECIDED)
         else:
             raise ValueError('{} is not a valid attendance string'.format(name))
