@@ -76,19 +76,16 @@
 
         function setupNotifyAddressForm() {
             var form = $('#notify-form');
+            form.ajaxForm();
+
             $('.notify-address').click(function(e) {
                 e.stopPropagation();
-                var address = $(e.target).data('address');
+                var notifyAddress = $(e.target);
+                var address = notifyAddress.data('address');
                 $('#notify-address-value').val(address);
                 form.submit();
-            });
-
-            form.ajaxForm({
-                target: '#notify-address-dropdown',
-                replaceTarget: true,
-                success: function() {
-                    setupNotifyAddressForm();
-                }
+                var checkBox = notifyAddress.find('input');
+                checkBox.prop('checked', !checkBox.prop('checked'));
             });
         }
 

@@ -1,6 +1,7 @@
 from allauth.account.models import EmailAddress
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from whosgoing.models import Event
 
@@ -8,15 +9,15 @@ from whosgoing.models import Event
 class ToggleNotifyAddressView(View):
     def post(self, request, eventId, **kwargs):
         event = get_object_or_404(Event, id=eventId)
-        if not event.is_member(self.request.user):
+        if not event.is_member(request.user):
             raise PermissionDenied()
 
-        address = self.request.POST.get('address')
+        address = request.POST.get('address')
         if address is None:
             raise PermissionDenied()
 
         try:
-            email = EmailAddress.objects.get(user=self.request.user, email__iexact=address)
+            email = EmailAddress.objects.get(user=request.user, email__iexact=address)
         except EmailAddress.DoesNotExist:
             raise PermissionDenied()
 
@@ -25,11 +26,7 @@ class ToggleNotifyAddressView(View):
         else:
             event.notify_addresses.add(email)
 
-        context = {
-            'notifyAddresses': event.get_notify_addresses_for_user(self.request.user)
-        }
-
-        return render(request, 'whosgoing/fragments/notify_address_widget.html', context)
+        return HttpResponse()
 
 
 toggleNotifyAddressView = ToggleNotifyAddressView.as_view()
