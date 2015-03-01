@@ -1,4 +1,5 @@
 import uuid
+import re
 
 from django.core.urlresolvers import reverse
 from django.db.models import Model, DateTimeField, ForeignKey, EmailField, CharField, Manager, TextField
@@ -13,8 +14,9 @@ class InvitationManager(Manager):
         emails = [email.lower() for email in emails]
         return self.filter(address__in=emails)
 
+
 class Invitation(Model):
-    event = ForeignKey('Event')
+    event = ForeignKey('Event', related_name='invitations')
     inviteId = CharField(max_length=36, default=uuid.uuid4)
     sent = DateTimeField(auto_now_add=True)
     address = EmailField(max_length=254)
@@ -36,6 +38,12 @@ class Invitation(Model):
     @property
     def since_last_sent(self):
         return timezone.now() - self.sent
+
+    def masked_address(self):
+        if not hasattr(Invitation, 'rxMaskedEmail'):
+            Invitation.rxMaskedEmail = re.compile(r'''(.{1,3}).*@(.{1,3}).*\.(.*)$''')
+        return self.rxMaskedEmail.sub(r'''\1*****.\2*****.\3''', self.address)
+
 
 @receiver(pre_save, sender=Invitation)
 def invitation_pre_save(sender, instance, raw, using, update_fields, **kwargs):

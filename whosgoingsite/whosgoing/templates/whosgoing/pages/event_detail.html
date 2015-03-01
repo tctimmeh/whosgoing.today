@@ -48,6 +48,11 @@
             <div id="members-pane" class="hidden-xs col-sm-3 col-sm-pull-9">
                 <h3>{% trans "Members" %}</h3>
                 {% include "whosgoing/fragments/members_list.html" %}
+
+                {% if invitations %}
+                    <h3>Invitations</h3>
+                    {% include "whosgoing/fragments/invitations.html" %}
+                {% endif %}
             </div>
 
         </div>

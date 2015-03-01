@@ -20,6 +20,7 @@ class EventDetailView(DetailView):
                 'from_name': ' '.join([self.request.user.first_name, self.request.user.last_name]).strip()
             })
             data['notifyAddresses'] = self.object.get_notify_addresses_for_user(self.request.user)
+            data['invitations'] = self.object.invitations.all()
 
         occurrence = self.object.next_occurrence
         if occurrence:
