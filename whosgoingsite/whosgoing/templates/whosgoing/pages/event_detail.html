@@ -45,9 +45,11 @@
                 {% include "whosgoing/fragments/occurrence_detail.html" %}
             </div>
 
-            <div id="members-pane" class="hidden-xs col-sm-3 col-sm-pull-9">
-                <h3>{% trans "Members" %}</h3>
-                {% include "whosgoing/fragments/members_list.html" %}
+            <div id="members-pane" class="col-sm-3 col-sm-pull-9">
+                <div {% if occurrence %}class="hidden-xs"{% endif %}>
+                    <h3>{% trans "Members" %}</h3>
+                    {% include "whosgoing/fragments/members_list.html" %}
+                </div>
 
                 {% if invitations %}
                     <h3>Invitations</h3>
