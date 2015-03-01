@@ -6,8 +6,7 @@
         <div>
             {% include "whosgoing/fragments/user_link_with_avatar.html" %}
 
-            <span class="kick-button text-danger" data-user-id="{{ user.id }}" data-user-name="{% user_display user %}">
-                &#x2716;
+            <span class="kick-button glyphicon glyphicon-remove text-danger" data-user-id="{{ user.id }}" data-user-name="{% user_display user %}">
             </span>
         </div>
     {% endfor %}

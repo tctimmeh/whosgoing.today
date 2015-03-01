@@ -22,4 +22,9 @@ class EventDeleteView(DeleteView):
             raise PermissionDenied()
         return event
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = str(self.object)
+        return data
+
 eventDeleteView = login_required(EventDeleteView.as_view())

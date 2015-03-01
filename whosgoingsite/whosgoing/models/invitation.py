@@ -39,6 +39,7 @@ class Invitation(Model):
     def since_last_sent(self):
         return timezone.now() - self.sent
 
+    @property
     def masked_address(self):
         if not hasattr(Invitation, 'rxMaskedEmail'):
             Invitation.rxMaskedEmail = re.compile(r'''(.{1,3}).*@(.{1,3}).*\.(.*)$''')
