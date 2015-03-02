@@ -9,17 +9,17 @@
 
     <div id="event-action-buttons" class="btn-group-vertical" role="group">
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#inviteModal">
-            <span class="glyphicon glyphicon-user visible-xs" style="height: 20px"></span>
+            <span class="event-action-glyph glyphicon glyphicon-user visible-xs"></span>
             <span class="hidden-xs">{% trans "Invite To Event" %}</span>
         </button>
 
         <a class="btn btn-default" href="{% url "whosgoing:event:update" eventId=object.id %}">
-            <span class="glyphicon glyphicon-pencil visible-xs" style="height: 20px"></span>
+            <span class="event-action-glyph glyphicon glyphicon-pencil visible-xs"></span>
             <span class="hidden-xs">{% trans "Edit" %}</span>
         </a>
 
         <a class="btn btn-danger" href="{% url "whosgoing:event:delete" eventId=object.id %}">
-            <span class="visible-xs"><strong>X</strong></span>
+            <span class="event-action-glyph glyphicon glyphicon-remove visible-xs"></span>
             <span class="hidden-xs">{% trans "Delete" %}</span>
         </a>
     </div>
