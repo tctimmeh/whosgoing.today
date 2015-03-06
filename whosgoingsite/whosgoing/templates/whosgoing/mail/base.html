@@ -4,30 +4,31 @@
 {% with domain=site.domain %}
 <!doctype html>
 <html>
-<head>
-    <title>{% block title %}{% endblock %}{% trans "WhosGoing.Today" %}</title>
-</head>
-<body style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; font-size: 14px; background-color: #d3d3d3; padding: 0; margin: 0;">
-<div style="max-width: 570px; margin: auto; background-color: white; border: 1px solid gray; border-radius: 8px; margin-top: 7px; margin-bottom: 7px">
-
-    <div style="font-size: x-large; background-color: black; color: white; padding: 10px; border-top-left-radius: 8px; border-top-right-radius: 8px">
-        <a style="color: #fff; text-decoration: none" href="http://192.168.0.194:8000/">
-            {% trans "Whos Going Today?" %}
-        </a>
-    </div>
-
-    <div style="padding: 10px">
-        {% block content %}{% endblock %}
-
-        <hr/>
-
-        <p>
+<head><title>{% block title %}{% endblock %}{% trans "WhosGoing.Today" %}</title></head>
+<body style="font-size: 14px; background-color: #d3d3d3; padding: 0; margin: 0;">
+<table style="font-family: Helvetica, Arial, sans-serif; width: 570px; background-color: white; border-collapse: collapse; margin: auto; margin-top: 10px; border: 1px solid black">
+    <tbody>
+    <tr style="background-color: black;">
+        <td style="font-size: 200%; padding: 10px;">
+            <a style="text-decoration: none; color: white" href="http://{{ domain }}{{ home_link }}">
+                {% trans "Who's Going Today?" %}
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 10px">
+            {% block content %}{% endblock %}
+        </td>
+    </tr>
+    <tr>
+        <td style="border-top: 1px solid black; padding: 10px">
             {% blocktrans %}
                 Thanks from the <a href="http://{{ domain }}{{ home_link }}">WhosGoing.Today</a> team!
             {% endblocktrans %}
-        </p>
-    </div>
-</div>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
 {% endwith %}

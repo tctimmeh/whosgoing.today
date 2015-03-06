@@ -1,0 +1,16 @@
+.user-link .gravatar {
+    margin-right: 5px;
+}
+
+.member-list .gravatar {
+    margin-bottom: 5px;
+}
+
+.kick-button:hover {
+    cursor: pointer;
+}
+
+#kick-form {
+    display: inline;
+    margin-left: 5px;
+}

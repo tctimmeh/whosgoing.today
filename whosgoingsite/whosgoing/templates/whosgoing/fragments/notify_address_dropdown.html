@@ -8,11 +8,8 @@
     </button>
     <ul class="dropdown-menu" role="menu">
         {% for address in notifyAddresses.items %}
-            <li>
-                <a href="#" class="notify-address" data-address="{{ address.0.email }}">
-                    <input type="checkbox" {% if address.1 %}checked{% endif %}/>
-                    {{ address.0.email }}
-                </a>
+            <li class="notify-address" data-address="{{ address.0.email }}">
+                {% include "whosgoing/fragments/notify_address_indicator.html" with address=address.0.email selected=address.1 %}
             </li>
         {% endfor %}
     </ul>

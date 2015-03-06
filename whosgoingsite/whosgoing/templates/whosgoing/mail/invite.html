@@ -6,11 +6,11 @@
 {% block content %}
     {% url "whosgoing:invitation" inviteId=invitation.inviteId as invite_url %}
     {% with event_name=invitation.event.name domain=site.domain from_name=invitation.from_name %}
-        <h2>{% trans "Good News!" %}</h2>
+        <p style="font-size: 180%">{% trans "Good News!" %}</p>
 
         <p>
             {% blocktrans %}
-                You've been invited to <strong style="font-size: x-large">{{ event_name }}</strong>
+                You've been invited to <strong style="font-size: 180%">{{ event_name }}</strong>
                 on <a href="http://{{ domain }}{{ home_link }}">WhosGoing.Today</a>!
             {% endblocktrans %}
         </p>
@@ -29,7 +29,7 @@
             <p style="margin-left: 15px"><em>{{ invitation.message }}</em></p>
         {% endif %}
 
-        <table>
+        <table style="font-family: Helvetica, Arial, sans-serif;">
             <tbody>
                 <tr>
                     <td>

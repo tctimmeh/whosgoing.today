@@ -1,0 +1,24 @@
+@media (max-width: 769px) {
+    #notify-address-dropdown {
+        display: inline-block;
+        margin-right: 5px;
+    }
+}
+
+.notify-address {
+    white-space: nowrap;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.notify-address:hover {
+    background-color: #e6e6e6;
+}
+
+.notify-address span {
+    margin-right: 5px;
+}
+
+#notify-address-dropdown {
+    margin-bottom: 10px;
+}

@@ -1,7 +1,14 @@
 {% extends "dcbase/base.html" %}
 {% load i18n %}
+{% load static %}
+{% load whosgoing %}
 
 {% block pageTitle %}{% trans "Who's Going Today" %}{% endblock %}
+
+{% block style %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "css/whosgoing.min.css" %}" />
+{% endblock %}
 
 {% block headerBarBrand %}{% trans "Who's Going Today?" %}{% endblock %}
 
@@ -17,4 +24,8 @@
             {% trans "Contribute" %}
         </a>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static "js/whosgoing.min.js" %}"></script>
 {% endblock %}
