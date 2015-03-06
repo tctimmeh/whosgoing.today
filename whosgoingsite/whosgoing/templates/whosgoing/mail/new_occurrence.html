@@ -6,11 +6,11 @@
 {% block content %}
     {% url "whosgoing:setAttendance" occurrenceId=occurrence.id as attendance_link %}
     {% with event_name=occurrence.event.name occurrence_time=occurrence.time event_link=occurrence.event.get_absolute_url %}
-        <h2>{% trans "Good News!" %}</h2>
+        <p style="font-size: 180%">{% trans "Good News!" %}</p>
 
         <p>
             {% blocktrans %}
-                There is a new occurrence of <strong style="font-size: x-large">{{ event_name }}</strong>
+                There is a new occurrence of <strong style="font-size: 180%">{{ event_name }}</strong>
                 on <a href="http://{{ domain }}{{ home_link }}">WhosGoing.Today</a>!
             {% endblocktrans %}
         </p>
@@ -25,15 +25,15 @@
             {% trans "Use one of these buttons to indicate your attendance:" %}
         </p>
 
-        <table style="width: 200px; margin: auto; text-align: center; font-size: large">
+        <table style="font-family: Helvetica, Arial, sans-serif; width: 200px; margin-left: 183px; text-align: center; font-size: 130%">
             <tbody>
             <tr>
-                <td style="background-color: #5cb85c; padding: 6px 12px;">
+                <td style="background-color: #5cb85c; border: 1px solid #4cae4c; padding: 6px 12px;">
                     <a style="color: #fff; text-decoration: none" href="http://{{ domain }}{{ attendance_link }}?attend=accept">
                         {% trans "Accept" %}
                     </a>
                 </td>
-                <td style="background-color: #d9534f; padding: 6px 12px;">
+                <td style="background-color: #d9534f; border: 1px solid #d43f3a; padding: 6px 12px;">
                     <a style="color: #fff; text-decoration: none" href="http://{{ domain }}{{ attendance_link }}?attend=regret">
                         {% trans "Regret" %}
                     </a>
@@ -44,7 +44,7 @@
 
         <p>
             {% blocktrans %}
-                Or visit the <a href="http://{{ domain }}{{ event_link }}">{{ event_name }} event page</a> see who's going
+                Or visit the <a href="http://{{ domain }}{{ event_link }}">{{ event_name }} event page</a> to see who's going
                 or remove yourself from this notification list.
             {% endblocktrans %}
         </p>
