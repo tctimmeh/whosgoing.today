@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block pageTitle %}{{ object.name }} - {{ block.super }}{% endblock %}
 
@@ -14,9 +15,12 @@
         .attendance-mark-accept { color: #3c763d; }
         #attendance-form { margin-bottom: 10px; }
         @media(max-width: 769px) {
-            #notify-form { display: inline-block; margin-right: 5px; }
+            #notify-address-dropdown { display: inline-block; margin-right: 5px; }
         }
-        #notify-form { margin-bottom: 10px; }
+        .notify-address { white-space: nowrap; padding: 5px 10px; cursor: pointer; }
+        .notify-address:hover { background-color: #e6e6e6; }
+        .notify-address span { margin-right: 5px; }
+        #notify-address-dropdown { margin-bottom: 10px; }
     </style>
 {% endblock %}
 
@@ -59,65 +63,8 @@
 
 {% block script %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
-
     <script>
-        function setupInviteForm() {
-            dcbase.createUserTypeahead('#id_address');
-            $('#invite-form').ajaxForm({
-                target: '#invite-dialog-body',
-                success: function () {
-                    setupInviteForm();
-                },
-                error: function (xhr, response, status) {
-                    $('#invite-messages').html('<div class="text-danger">Failed to submit invitation: ' + status + '</div>')
-                }
-            });
-        }
-
-        function setupNotifyAddressForm() {
-            var form = $('#notify-form');
-            form.ajaxForm();
-
-            $('.notify-address').click(function(e) {
-                e.stopPropagation();
-                var notifyAddress = $(e.target);
-                var address = notifyAddress.data('address');
-                $('#notify-address-value').val(address);
-                form.submit();
-                var checkBox = notifyAddress.find('input');
-                checkBox.prop('checked', !checkBox.prop('checked'));
-            });
-        }
-
-        function windowResized() {
-            var width = $(window).width();
-            if (width < 768) {
-                $('#event-action-buttons').removeClass('btn-group-vertical').addClass('btn-group');
-            }
-            else {
-                $('#event-action-buttons').removeClass('btn-group').addClass('btn-group-vertical');
-            }
-        }
-
-        $(document).ready(function () {
-            setupInviteForm();
-            setupNotifyAddressForm();
-            windowResized();
-            $(window).resize(windowResized);
-
-            $('#kick-form').ajaxForm(function (response, status) {
-                window.location.reload();
-            });
-
-            $('.kick-button').click(function (event) {
-                var element = $(event.target);
-                console.log(element.data());
-                var userId = element.data('user-id');
-                var userName = element.data('user-name');
-                $('#kick-user-input').val(userId);
-                $('#kick-user-name').html(userName);
-                $('#kick-dialog').modal();
-            });
-        });
+        var toggleNotifyAddressUrl = "{% url "whosgoing:event:toggleNotifyAddress" eventId=object.id %}";
     </script>
+    <script src="{% static "js/event_detail.js" %}"></script>
 {% endblock %}

@@ -1,11 +1,7 @@
 {% load i18n %}
 
 {% if user_is_member %}
-    <form id="notify-form" method="post" action="{% url "whosgoing:event:toggleNotifyAddress" eventId=event.id %}">
-        {% csrf_token %}
-        <input id="notify-address-value" type="hidden" name="address" />
-        {% include "whosgoing/fragments/notify_address_widget.html" %}
-    </form>
+    {% include "whosgoing/fragments/notify_address_dropdown.html" %}
 
     <div id="event-action-buttons" class="btn-group-vertical" role="group">
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#inviteModal">
