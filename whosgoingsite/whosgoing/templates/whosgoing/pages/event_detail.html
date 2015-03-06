@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
+{% load whosgoing %}
 
 {% block pageTitle %}{{ object.name }} - {{ block.super }}{% endblock %}
 
@@ -62,9 +63,33 @@
 {% endblock %}
 
 {% block script %}
+    {{ block.super }}
     <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
+    {% min_script "event_detail.js" %}
+    {% min_script "notify_address_checkbox.js" %}
     <script>
         var toggleNotifyAddressUrl = "{% url "whosgoing:event:toggleNotifyAddress" eventId=object.id %}";
+        $(document).ready(function () {
+            $('.notify-address').each(function(index, obj) {
+                new whosgoing.NotifyAddressCheckbox($(obj));
+            });
+
+            setupInviteForm();
+            windowResized();
+            $(window).resize(windowResized);
+
+            $('#kick-form').ajaxForm(function (response, status) {
+                window.location.reload();
+            });
+
+            $('.kick-button').click(function (event) {
+                var element = $(event.target);
+                var userId = element.data('user-id');
+                var userName = element.data('user-name');
+                $('#kick-user-input').val(userId);
+                $('#kick-user-name').html(userName);
+                $('#kick-dialog').modal();
+            });
+        });
     </script>
-    <script src="{% static "js/event_detail.js" %}"></script>
 {% endblock %}
