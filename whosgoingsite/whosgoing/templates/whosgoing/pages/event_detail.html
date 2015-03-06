@@ -6,23 +6,10 @@
 {% block pageTitle %}{{ object.name }} - {{ block.super }}{% endblock %}
 
 {% block style %}
-    <style>
-        .user-link .gravatar { margin-right: 5px; margin-bottom: 5px; }
-        .kick-button:hover { cursor: pointer; }
-        #kick-form { display: inline; margin-left: 5px; }
-        #occurance-pane { border-left: 2px solid #bbb; border-right: 2px solid #bbb; }
-        #create-occurrence-form { margin-bottom: 10px; }
-        .attendance-mark-regret { color: #a94442; }
-        .attendance-mark-accept { color: #3c763d; }
-        #attendance-form { margin-bottom: 10px; }
-        @media(max-width: 769px) {
-            #notify-address-dropdown { display: inline-block; margin-right: 5px; }
-        }
-        .notify-address { white-space: nowrap; padding: 5px 10px; cursor: pointer; }
-        .notify-address:hover { background-color: #e6e6e6; }
-        .notify-address span { margin-right: 5px; }
-        #notify-address-dropdown { margin-bottom: 10px; }
-    </style>
+    {{ block.super }}
+    {% min_style "event_actions.css" %}
+    {% min_style "occurrence.css" %}
+    {% min_style "users.css" %}
 {% endblock %}
 
 {% block content %}

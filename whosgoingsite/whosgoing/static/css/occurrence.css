@@ -1,0 +1,20 @@
+#occurance-pane {
+    border-left: 2px solid #bbb;
+    border-right: 2px solid #bbb;
+}
+
+#create-occurrence-form {
+    margin-bottom: 10px;
+}
+
+.attendance-mark-regret {
+    color: #a94442;
+}
+
+.attendance-mark-accept {
+    color: #3c763d;
+}
+
+#attendance-form {
+    margin-bottom: 10px;
+}
