@@ -65,17 +65,25 @@
 {% block script %}
     {{ block.super }}
     <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
-    {% min_script "event_detail.js" %}
     {% min_script "notify_address_checkbox.js" %}
     {% min_script "kick_member.js" %}
+    {% min_script "invite_form.js" %}
     <script>
 var toggleNotifyAddressUrl = "{% url "whosgoing:event:toggleNotifyAddress" eventId=object.id %}";
+function windowResized() {
+    if ($(window).width() < 768) {
+        $('#event-action-buttons').removeClass('btn-group-vertical').addClass('btn-group');
+    }
+    else {
+        $('#event-action-buttons').removeClass('btn-group').addClass('btn-group-vertical');
+    }
+}
 $(document).ready(function () {
     $('.notify-address').notifyAddressCheckbox();
     $('.kick-button').kickMemberButton();
     $('#kick-form').ajaxForm(function () { window.location.reload(); });
+    whosgoing.setupInviteForm();
 
-    setupInviteForm();
     windowResized();
     $(window).resize(windowResized);
 });
