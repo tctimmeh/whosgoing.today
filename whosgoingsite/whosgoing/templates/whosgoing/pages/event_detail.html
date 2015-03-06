@@ -70,9 +70,7 @@
     <script>
         var toggleNotifyAddressUrl = "{% url "whosgoing:event:toggleNotifyAddress" eventId=object.id %}";
         $(document).ready(function () {
-            $('.notify-address').each(function(index, obj) {
-                new whosgoing.NotifyAddressCheckbox($(obj));
-            });
+            $('.notify-address').notifyAddressCheckbox();
 
             setupInviteForm();
             windowResized();
