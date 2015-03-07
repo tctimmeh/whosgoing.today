@@ -14,10 +14,10 @@
             <span class="hidden-xs">{% trans "Edit" %}</span>
         </button>
 
-        <a class="btn btn-danger" href="{% url "whosgoing:event:delete" eventId=object.id %}">
+        <button id="event-delete-button" class="btn btn-danger">
             <span class="visible-xs"><strong>X</strong></span>
             <span class="hidden-xs">{% trans "Delete" %}</span>
-        </a>
+        </button>
     </div>
 
 {% else %}

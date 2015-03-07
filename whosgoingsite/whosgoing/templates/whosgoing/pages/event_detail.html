@@ -82,6 +82,11 @@ $(document).ready(function () {
             }
         });
     });
+    $('#event-delete-button').click(function(e) {
+        dcbase.popupAjaxForm({
+            url: "{% url "whosgoing:event:delete" eventId=object.id %}"
+        });
+    });
 
     windowResized();
     $(window).resize(windowResized);
