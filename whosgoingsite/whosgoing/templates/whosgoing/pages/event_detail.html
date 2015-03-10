@@ -46,7 +46,6 @@
         </div>
     </div>
 
-    {% include "whosgoing/fragments/kick_confirm_dialog.html" %}
     {% include "whosgoing/fragments/invite_dialog.html" %}
 {% endblock %}
 
@@ -59,6 +58,7 @@
     {% min_script "invite_form.js" %}
     <script>
 var toggleNotifyAddressUrl = "{% url "whosgoing:event:toggleNotifyAddress" eventId=object.id %}";
+var kickMemberUrl = "{% url "whosgoing:event:kick" eventId=object.id %}";
 function windowResized() {
     if ($(window).width() < 768) {
         $('#event-action-buttons').removeClass('btn-group-vertical').addClass('btn-group');
@@ -70,7 +70,6 @@ function windowResized() {
 $(document).ready(function () {
     $('.notify-address').notifyAddressCheckbox();
     $('.kick-button').kickMemberButton();
-    $('#kick-form').ajaxForm(function () { window.location.reload(); });
     whosgoing.setupInviteForm();
     $('#event-update-button').click(function(e) {
         dcbase.popupAjaxForm({

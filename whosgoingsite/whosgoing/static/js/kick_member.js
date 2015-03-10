@@ -9,9 +9,17 @@
     };
 
     KickMemberButton.prototype.clicked = function(event) {
-        $('#kick-user-input').val(this.userId);
-        $('#kick-user-name').html(this.userName);
-        $('#kick-dialog').modal();
+        var self = this;
+        dcbase.popupAjaxForm({
+            url: dcbase.createUrl(kickMemberUrl, this.userName),
+            small: true,
+            afterLoad: function(content) { self.setupForm(content); }
+        });
+    };
+
+    KickMemberButton.prototype.setupForm = function(content) {
+        content.find('#id_kick_user').val(this.userId);
+        content.find('.kick-user-name').html(this.userName);
     };
 
     $.fn.kickMemberButton = function() {

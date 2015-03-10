@@ -11,7 +11,7 @@ class TestKickView(WhosGoingUnitTestCase):
         self.event = self.create_event()
         self.event.add_member(self.user)
         self.event.add_member(self.kicked)
-        self.post_data = {'user': self.kicked.id}
+        self.post_data = {'kick_user': self.kicked.id}
 
     def get_url(self, eventId=None):
         if eventId is None:
@@ -24,8 +24,7 @@ class TestKickView(WhosGoingUnitTestCase):
 
     def test_returnsJsonSuccessWithValidFormData(self):
         response = self.client.post(self.get_url(), self.post_data)
-        responseData = json.loads(response.content.decode())
-        self.assertTrue(responseData['success'])
+        self.assertJSONEqual(response.content.decode(), {'action': 'reload'})
 
     def test_returnsNotFoundForBadEventId(self):
         response = self.client.post(self.get_url(99999), self.post_data)
