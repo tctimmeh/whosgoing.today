@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% url "account_profile_edit_general" as edit_link %}
+
+<span class="time-zone-hint"
+      data-toggle="popover"
+      title="{% trans "Timezone seem strange?" %}"
+      data-placement="auto"
+      data-html="true"
+      data-content="{% blocktrans %}Click <a href=&quot;{{ edit_link }}&quot;>here</a> to set your timezone{% endblocktrans %}"
+      data-trigger="click">
+        {{ TIME_ZONE }}
+    </span>

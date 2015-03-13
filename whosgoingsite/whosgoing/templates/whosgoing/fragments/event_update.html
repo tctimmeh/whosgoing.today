@@ -1,0 +1,7 @@
+{% extends "dcbase/form/popup-form.html" %}
+
+{% block afterForm %}
+    {{ edit_link }}
+    <strong>Timezone: </strong>
+    {% include "whosgoing/fragments/timezone_hint.html" %}
+{% endblock %}

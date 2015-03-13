@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
-from django.forms import Form, ModelChoiceField
+from django.forms import Form, ModelChoiceField, HiddenInput
 
 
 class KickForm(Form):
-    user = ModelChoiceField(queryset=User.objects.all())
+    kick_user = ModelChoiceField(queryset=User.objects.all(), widget=HiddenInput())
 
-    def __init__(self, event, *args, **kwargs):
+    def __init__(self, instance, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['user'].queryset = event.members.all()
+        self.fields['kick_user'].queryset = instance.members.all()

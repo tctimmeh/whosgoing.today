@@ -8,6 +8,7 @@
 {% block style %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static "css/whosgoing.min.css" %}" />
+    {% min_style "whosgoing.css" %}
 {% endblock %}
 
 {% block headerBarBrand %}{% trans "Who's Going Today?" %}{% endblock %}
@@ -28,4 +29,5 @@
 
 {% block script %}
     <script src="{% static "js/whosgoing.min.js" %}"></script>
+    {% min_script "whosgoing.js" %}
 {% endblock %}

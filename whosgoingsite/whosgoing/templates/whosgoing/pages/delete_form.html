@@ -1,27 +1,18 @@
-{% extends "dcbase/base-narrow-dialog.html" %}
+{% extends "dcbase/form/popup-form.html" %}
 {% load i18n %}
 
-{% block pageTitle %}{{ title }} - {{ block.super }}{% endblock %}
+{% block url %}{% url "whosgoing:event:delete" eventId=object.id %}{% endblock %}
 
-{% block panelType %}danger{% endblock %}
+{% block title %}{{ object }} - DELETE{% endblock %}
 
-{% block panelHeading %}<h4>{% blocktrans %}Delete <strong>{{ title }}</strong>?{% endblocktrans %}</h4>{% endblock %}
-
-{% block panelBody %}
-    <form method="post">
-        {% csrf_token %}
-        <p>
-            {% blocktrans %}
-                Are you sure you want to delete <strong>{{ title }}</strong>?
-            {% endblocktrans %}
-        </p>
-        <p>
-            {% blocktrans %}
-                There is <strong>no undo</strong> from this operation. All related data will be destroyed.
-            {% endblocktrans %}
-        </p>
-        <p>{{ extra_text }}</p>
-
-        <input class="btn btn-danger" type="submit" value="{% trans "Confirm" %}" />
-    </form>
+{% block beforeForm %}
+    <p class="text-danger">
+        Are you sure you want to delete <strong>{{ object }}</strong>?
+    </p>
+    <p class="text-danger">
+        All associated data, including membership and occurrences, will be destroyed.
+    </p>
+    <p class="text-danger">
+        There is <strong>no undo</strong> from this operation.
+    </p>
 {% endblock %}

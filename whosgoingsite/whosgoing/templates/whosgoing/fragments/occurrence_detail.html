@@ -4,7 +4,9 @@
 {% if occurrence %}
     <div>
         <p>
-            <strong>{% trans "When:" %}</strong> {{ occurrence.time }}
+            <strong>{% trans "When:" %}</strong>
+            {{ occurrence.time|date:"D, M jS, g:i a" }}
+            {% include "whosgoing/fragments/timezone_hint.html" %}
         </p>
 
         {% if user_is_member and not occurrence.is_past %}
@@ -45,11 +47,13 @@
                     <td>
                         {% include "whosgoing/fragments/user_link_with_avatar.html" with user=member.user %}
                     </td>
-                    <td class="visible-xs">
-                        <span class="kick-button text-danger" data-user-id="{{ user.id }}" data-user-name="{% user_display user %}">
-                            &#x2716;
-                        </span>
-                    </td>
+                    {% if user_is_member %}
+                        <td class="visible-xs">
+                            <span class="kick-button text-danger" data-user-id="{{ member.user.id }}" data-user-name="{% user_display member.user %}">
+                                &#x2716;
+                            </span>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

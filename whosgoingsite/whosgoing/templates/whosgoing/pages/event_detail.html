@@ -7,6 +7,7 @@
 
 {% block style %}
     {{ block.super }}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.6.0/jquery.timepicker.min.css" rel="stylesheet" />
     {% min_style "event_actions.css" %}
     {% min_style "occurrence.css" %}
     {% min_style "users.css" %}
@@ -52,18 +53,19 @@
         </div>
     </div>
 
-    {% include "whosgoing/fragments/kick_confirm_dialog.html" %}
     {% include "whosgoing/fragments/invite_dialog.html" %}
 {% endblock %}
 
 {% block script %}
     {{ block.super }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.6.0/jquery.timepicker.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
     {% min_script "notify_address_checkbox.js" %}
     {% min_script "kick_member.js" %}
     {% min_script "invite_form.js" %}
     <script>
 var toggleNotifyAddressUrl = "{% url "whosgoing:event:toggleNotifyAddress" eventId=object.id %}";
+var kickMemberUrl = "{% url "whosgoing:event:kick" eventId=object.id %}";
 function windowResized() {
     if ($(window).width() < 768) {
         $('#event-action-buttons').removeClass('btn-group-vertical').addClass('btn-group');
@@ -75,8 +77,23 @@ function windowResized() {
 $(document).ready(function () {
     $('.notify-address').notifyAddressCheckbox();
     $('.kick-button').kickMemberButton();
-    $('#kick-form').ajaxForm(function () { window.location.reload(); });
     whosgoing.setupInviteForm();
+    $('#event-update-button').click(function(e) {
+        dcbase.popupAjaxForm({
+            url: "{% url "whosgoing:event:update" eventId=object.id %}",
+            afterLoad: function() {
+                $('#id_time').timepicker({
+                    timeFormat: 'g:i a'
+                });
+                $('.time-zone-hint').popover();
+            }
+        });
+    });
+    $('#event-delete-button').click(function(e) {
+        dcbase.popupAjaxForm({
+            url: "{% url "whosgoing:event:delete" eventId=object.id %}"
+        });
+    });
 
     windowResized();
     $(window).resize(windowResized);

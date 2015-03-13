@@ -9,15 +9,15 @@
             <span class="hidden-xs">{% trans "Invite To Event" %}</span>
         </button>
 
-        <a class="btn btn-default" href="{% url "whosgoing:event:update" eventId=object.id %}">
-            <span class="event-action-glyph glyphicon glyphicon-pencil visible-xs"></span>
+        <button id="event-update-button" class="btn btn-default">
+            <span class="glyphicon glyphicon-pencil visible-xs" style="height: 20px"></span>
             <span class="hidden-xs">{% trans "Edit" %}</span>
-        </a>
+        </button>
 
-        <a class="btn btn-danger" href="{% url "whosgoing:event:delete" eventId=object.id %}">
-            <span class="event-action-glyph glyphicon glyphicon-remove visible-xs"></span>
+        <button id="event-delete-button" class="btn btn-danger">
+            <span class="visible-xs"><strong>X</strong></span>
             <span class="hidden-xs">{% trans "Delete" %}</span>
-        </a>
+        </button>
     </div>
 
 {% else %}
