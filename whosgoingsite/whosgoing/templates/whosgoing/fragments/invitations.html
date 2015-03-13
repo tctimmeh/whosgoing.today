@@ -1,12 +1,18 @@
+{% load gravatar %}
+
 <table class="table table-condensed">
     <tbody>
     {% for invitation in invitations %}
         <tr>
             <td>
-                {% if invitation.sent_by == user %}
-                    {{ invitation.address }}
+                {% if invitation.invited_user %}
+                    {% include "whosgoing/fragments/user_link_with_avatar.html" with user=invitation.invited_user avatar_size=20 %}
                 {% else %}
-                    {{ invitation.masked_address }}
+                    {% if invitation.sent_by == user %}
+                        {{ invitation.address }}
+                    {% else %}
+                        {{ invitation.masked_address }}
+                    {% endif %}
                 {% endif %}
             </td>
             <td>

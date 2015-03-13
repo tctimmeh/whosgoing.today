@@ -1,8 +1,12 @@
 {% load account %}
 {% load gravatar %}
 
+{% with avatar_size|default:"30" as avatar_size %}
+
 <span class="user-link">
     <a href="{% url "account_profile_user" username=user.username %}">
-        {% gravatar user.email 30 %}{% user_display user %}
+        {% gravatar user.email avatar_size %}{% user_display user %}
     </a>
 </span>
+
+{% endwith %}

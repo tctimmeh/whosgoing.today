@@ -1,4 +1,5 @@
 import uuid
+from allauth.account.models import EmailAddress
 from django.contrib.auth.models import User
 import re
 
@@ -46,6 +47,14 @@ class Invitation(Model):
         if not hasattr(Invitation, 'rxMaskedEmail'):
             Invitation.rxMaskedEmail = re.compile(r'''(.{1,3}).*@(.{1,3}).*\.(.*)$''')
         return self.rxMaskedEmail.sub(r'''\1*****.\2*****.\3''', self.address)
+
+    @property
+    def invited_user(self):
+        try:
+            email = EmailAddress.objects.get(email__iexact=self.address)
+        except EmailAddress.DoesNotExist:
+            return None
+        return email.user
 
 
 @receiver(pre_save, sender=Invitation)
