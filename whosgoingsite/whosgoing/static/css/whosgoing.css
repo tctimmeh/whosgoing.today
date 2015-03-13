@@ -1,0 +1,9 @@
+.time-zone-hint {
+    color: #333;
+    border-bottom: 1px dashed gray;
+}
+.time-zone-hint:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+}

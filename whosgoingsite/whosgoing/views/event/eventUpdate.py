@@ -16,6 +16,7 @@ class EventUpdateView(PopupFormMixin, UpdateView):
     form_class = EventForm
     form_valid_action = PopupValidAction.reload
     submit_text = _('Update')
+    template_name = 'whosgoing/fragments/event_update.html'
 
     def get_initial(self):
         return {'time': to_current_timezone(self.object.time).time()}

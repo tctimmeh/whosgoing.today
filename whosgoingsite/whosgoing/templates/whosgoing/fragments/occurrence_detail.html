@@ -4,7 +4,9 @@
 {% if occurrence %}
     <div>
         <p>
-            <strong>{% trans "When:" %}</strong> {{ occurrence.time }}
+            <strong>{% trans "When:" %}</strong>
+            {{ occurrence.time|date:"D, M jS, g:i a" }}
+            {% include "whosgoing/fragments/timezone_hint.html" %}
         </p>
 
         {% if user_is_member and not occurrence.is_past %}
