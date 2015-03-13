@@ -1,0 +1,17 @@
+{% extends "dcbase/form/popup-form.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Cancel Invitation" %}{% endblock %}
+
+{% block beforeForm %}
+    <p>
+        {% trans "Are you sure you want to cancel the invitation for this user:" %}
+        {% include "whosgoing/fragments/invited_user.html" %}
+    </p>
+    <p>
+        {% trans "They will not be able to join again without a new invitation from an existing member." %}
+    </p>
+    <p class="text-danger">
+        {% trans "There is <strong>no undo</strong> from this operation." %}
+    </p>
+{% endblock %}

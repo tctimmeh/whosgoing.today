@@ -1,0 +1,18 @@
+{% extends "dcbase/form/popup-form.html" %}
+{% load i18n %}
+
+{% block url %}{% url "whosgoing:event:delete" eventId=object.id %}{% endblock %}
+
+{% block title %}{{ object }} - DELETE{% endblock %}
+
+{% block beforeForm %}
+    <p>
+        {% blocktrans %}Are you sure you want to delete <strong>{{ object }}</strong>?{% endblocktrans %}
+    </p>
+    <p>
+        {% trans "All associated data, including membership and occurrences, will be destroyed." %}
+    </p>
+    <p class="text-danger">
+        {% trans "There is <strong>no undo</strong> from this operation." %}
+    </p>
+{% endblock %}

@@ -63,9 +63,11 @@
     {% min_script "notify_address_checkbox.js" %}
     {% min_script "kick_member.js" %}
     {% min_script "invite_form.js" %}
+    {% min_script "cancel_invite.js" %}
     <script>
 var toggleNotifyAddressUrl = "{% url "whosgoing:event:toggleNotifyAddress" eventId=object.id %}";
 var kickMemberUrl = "{% url "whosgoing:event:kick" eventId=object.id %}";
+var cancelInviteUrl = "{% url "whosgoing:deleteInvitation" inviteId=0 %}";
 function windowResized() {
     if ($(window).width() < 768) {
         $('#event-action-buttons').removeClass('btn-group-vertical').addClass('btn-group');
@@ -77,6 +79,7 @@ function windowResized() {
 $(document).ready(function () {
     $('.notify-address').notifyAddressCheckbox();
     $('.kick-button').kickMemberButton();
+    $('.cancel-invite-button').cancelInviteButton();
     whosgoing.setupInviteForm();
     $('#event-update-button').click(function(e) {
         dcbase.popupAjaxForm({

@@ -29,6 +29,6 @@ class TestDeleteInvitationView(WhosGoingUnitTestCase, RequiresLogin):
         self.client.post(self.get_url())
         self.assertEqual(0, self.event.invitations.count())
 
-    def test_redirectsToEventPage(self):
+    def test_respondsWithReloadAction(self):
         response = self.client.post(self.get_url())
-        self.assertRedirects(response, self.event.get_absolute_url())
+        self.assertJSONEqual(response.content.decode(), {'action': 'reload'})

@@ -1,24 +1,16 @@
 {% load gravatar %}
 
-<table class="table table-condensed">
+<table class="table table-condensed table-striped">
     <tbody>
     {% for invitation in invitations %}
         <tr>
             <td>
-                {% if invitation.invited_user %}
-                    {% include "whosgoing/fragments/user_link_with_avatar.html" with user=invitation.invited_user avatar_size=20 %}
-                {% else %}
-                    {% if invitation.sent_by == user %}
-                        {{ invitation.address }}
-                    {% else %}
-                        {{ invitation.masked_address }}
-                    {% endif %}
-                {% endif %}
+                {% include "whosgoing/fragments/invited_user.html" %}
             </td>
             <td>
-                <a href="{% url "whosgoing:deleteInvitation" inviteId=invitation.inviteId %}">
-                    <span class="glyphicon glyphicon-remove text-danger"></span>
-                </a>
+                <span class="cancel-invite-button text-danger" data-invite-id="{{ invitation.inviteId }}">
+                    &#x2716;
+                </span>
             </td>
         </tr>
     {% endfor %}

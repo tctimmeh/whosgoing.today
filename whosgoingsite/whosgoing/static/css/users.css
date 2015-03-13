@@ -6,11 +6,7 @@
     margin-bottom: 5px;
 }
 
-.kick-button:hover {
+.kick-button:hover, .cancel-invite-button:hover {
     cursor: pointer;
 }
 
-#kick-form {
-    display: inline;
-    margin-left: 5px;
-}

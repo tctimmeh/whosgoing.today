@@ -28,6 +28,6 @@ urlpatterns = patterns('',
     url(r'^events/create/$', createEventView, name='createEvent'),
     url(r'^events/(?P<eventId>\d+)/', include(eventUrls, namespace='event')),
     url(r'^invitations/(?P<inviteId>[\w-]{36})/$', invitationView, name='invitation'),
-    url(r'^invitations/(?P<inviteId>[\w-]{36})/cancel/$', deleteInvitationView, name='deleteInvitation'),
+    url(r'^invitations/(?P<inviteId>[\w-]+)/cancel/$', deleteInvitationView, name='deleteInvitation'),
     url(r'^occurrences/(?P<occurrenceId>\d+)/setAttendance/$', setAttendanceView, name='setAttendance'),
 )

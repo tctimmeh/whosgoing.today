@@ -11,7 +11,7 @@ from whosgoing.models import Event
 
 class EventDeleteView(PopupFormMixin, DeleteView):
     model = Event
-    template_name = "whosgoing/pages/delete_form.html"
+    template_name = "whosgoing/fragments/delete_event.html"
     pk_url_kwarg = 'eventId'
     form_valid_action = PopupValidAction.redirect
     submit_text = _('Delete')
