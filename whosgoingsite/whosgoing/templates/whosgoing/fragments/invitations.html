@@ -1,8 +1,20 @@
-{% for invitation in invitations %}
-    <div>
-        {{ invitation.masked_address }}
-        <a href="{% url "whosgoing:deleteInvitation" inviteId=invitation.inviteId %}">
-            <span class="glyphicon glyphicon-remove text-danger"></span>
-        </a>
-    </div>
-{% endfor %}
+<table class="table table-condensed">
+    <tbody>
+    {% for invitation in invitations %}
+        <tr>
+            <td>
+                {% if invitation.sent_by == user %}
+                    {{ invitation.address }}
+                {% else %}
+                    {{ invitation.masked_address }}
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url "whosgoing:deleteInvitation" inviteId=invitation.inviteId %}">
+                    <span class="glyphicon glyphicon-remove text-danger"></span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
