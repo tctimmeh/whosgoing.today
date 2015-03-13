@@ -50,7 +50,9 @@ class EventInviteView(View):
     def _get_invitation(self):
         existing_invitations = Invitation.objects.filter(event=self.event, address=self.address)
         if not existing_invitations:
-            invitation = Invitation.objects.create(event=self.event, address=self.address, from_name=self.from_name, message=self.message)
+            invitation = Invitation.objects.create(event=self.event, address=self.address,
+                                                   from_name=self.from_name, message=self.message,
+                                                   sent_by=self.request.user)
         else:
             invitation = existing_invitations[0]
             if invitation.since_last_sent < EventInviteView.MAX_INVITE_FREQUENCY:

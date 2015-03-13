@@ -1,4 +1,5 @@
 import uuid
+from django.contrib.auth.models import User
 import re
 
 from django.core.urlresolvers import reverse
@@ -19,6 +20,7 @@ class Invitation(Model):
     event = ForeignKey('Event', related_name='invitations')
     inviteId = CharField(max_length=36, default=uuid.uuid4)
     sent = DateTimeField(auto_now_add=True)
+    sent_by = ForeignKey(User, default=1)
     address = EmailField(max_length=254)
     from_name = CharField(max_length=50, blank=True)
     message = TextField(blank=True)
