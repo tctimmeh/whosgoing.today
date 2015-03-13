@@ -33,6 +33,8 @@ class Event(Model):
         return reverse('whosgoing:event:detail', kwargs={'eventId': self.id})
 
     def add_member(self, user):
+        if self.is_member(user):
+            return
         EventMember.objects.create(event=self, user=user)
         occurrence = self.next_occurrence
         if occurrence and not occurrence.is_past:

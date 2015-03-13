@@ -75,3 +75,10 @@ class TestInvitationView(WhosGoingUnitTestCase):
         EmailAddress.objects.create(user=self.user, email=self.invitation.address)
         self.client.post(self.get_url(), {'action': 'accept'})
         self.assertRaises(Invitation.DoesNotExist, Invitation.objects.get, id=self.invitation.id)
+
+    def test_acceptingInviteToEventUserIsAlreadyMemberOfRedirectsToEventPage(self):
+        self.invitation.event.add_member(self.loggedInUser)
+        EmailAddress.objects.create(user=self.user, email=self.invitation.address)
+        response = self.client.post(self.get_url(), {'action': 'accept'})
+        self.assertRedirects(response, self.invitation.event.get_absolute_url())
+
