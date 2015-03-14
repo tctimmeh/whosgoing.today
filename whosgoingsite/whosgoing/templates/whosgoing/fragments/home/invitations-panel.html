@@ -1,0 +1,35 @@
+{% load i18n %}
+
+{% if invitations %}
+    <div id="invitations-panel" class="panel panel-info">
+        <div class="panel-heading">
+            <strong>{% trans "New Invitations!" %}</strong>
+        </div>
+
+        <div class="panel-body">
+            <div class="list-group">
+                {% for invitation in invitations %}
+                    <a class="list-group-item" href="{% url "whosgoing:invitation" inviteId=invitation.inviteId %}">
+                        {% if invitation.from_name %}
+                            <span class="label label-info">
+                                {% blocktrans %}
+                                    Invited By:
+                                    <strong>{{ invitation.from_name }}</strong>
+                                {% endblocktrans %}
+                            </span>
+                        {% endif %}
+
+                        <h4 class="list-group-item-heading">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                            {{ invitation.event.name }}
+                        </h4>
+
+                        <p class="list-group-item-text">
+                            {{ invitation.event.description }}
+                        </p>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

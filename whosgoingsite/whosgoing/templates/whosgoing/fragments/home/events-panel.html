@@ -1,0 +1,58 @@
+{% load i18n %}
+
+<div id="events-panel" class="panel panel-default">
+    <div class="panel-heading">
+        <strong>
+            {% trans "Your Events" %}
+        </strong>
+
+        <span class="label label-default">
+            {{ events|length }}
+        </span>
+
+        <button class="btn btn-success btn-sm create-event-button">
+            <span class="glyphicon glyphicon-plus"></span>
+            {% trans "Create Event" %}
+        </button>
+    </div>
+
+    <div class="panel-body">
+        <div class="list-group">
+            {% for event in events %}
+                <a class="list-group-item" href="{{ event.get_absolute_url }}">
+                    <span class="label label-default">
+                        {% with event.members.count as num_members %}
+                            {{ event.members.count }}
+                            <span class="hidden-xs">
+                                {% blocktrans %}
+                                    Member{{ num_members|pluralize }}
+                                {% endblocktrans %}
+                            </span>
+                        {% endwith %}
+                    </span>
+
+                    <h4 class="list-group-item-heading">
+                        {{ event }}
+                    </h4>
+
+                    <p class="list-group-item-text">
+                        {{ event.description }}
+                    </p>
+                </a>
+            {% empty %}
+                <div id="no-events-message">
+                    <p>
+                        {% trans "You are not a member of any events." %}
+                    </p>
+                    <p>
+                        {% trans "Use the button below to create an event and start inviting people!" %}
+                    </p>
+
+                    <button class="btn btn-primary btn-lg center-block create-event-button">
+                        {% trans "Create Event" %}
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

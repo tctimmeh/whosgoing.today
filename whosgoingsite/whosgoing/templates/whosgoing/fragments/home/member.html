@@ -1,0 +1,26 @@
+{% load i18n %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h1 class="text-center">{% trans "Who's Going Today?" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-1">
+        {% include "whosgoing/fragments/home/invitations-panel.html" %}
+        {% include "whosgoing/fragments/home/events-panel.html" %}
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>What's New?</strong>
+            </div>
+            <div class="panel-body">
+                Coming soon...
+            </div>
+        </div>
+    </div>
+</div>
+

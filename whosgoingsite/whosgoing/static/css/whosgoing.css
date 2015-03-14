@@ -1,3 +1,18 @@
+.panel-heading {
+    position: relative;
+}
+.panel-heading .badge, .panel-heading .label {
+    margin-left: 5px;
+}
+.panel-heading .btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+.list-group-item .label {
+    float: right;
+}
+
 .time-zone-hint {
     color: #333;
     border-bottom: 1px dashed gray;

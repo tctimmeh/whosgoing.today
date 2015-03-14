@@ -1,45 +1,18 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load whosgoing %}
 
 {% block style %}
 {{ block.super }}
 <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.6.0/jquery.timepicker.min.css" rel="stylesheet" />
+{% min_style "home.css" %}
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1>{% trans "Who's Going Today?" %}</h1>
-
         {% if user.is_authenticated %}
-            {% if invitations %}
-                <h3>Your Pending Invitations</h3>
-
-                <ul>
-                    {% for invitation in invitations %}
-                        <li><a href="{% url "whosgoing:invitation" inviteId=invitation.inviteId %}">
-                            {{ invitation.event.name }}
-                        </a></li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            <h3>Your Events</h3>
-
-            <ul>
-                {% for event in events %}
-                    <li><a href="{{ event.get_absolute_url }}">{{ event }}</a></li>
-                {% empty %}
-                    {% trans "You are not a member of any events. Use the button below to create an event and start inviting people!" %}
-                {% endfor %}
-            </ul>
-
-            <p>
-                <button id="create-event-button" class="btn btn-primary">
-                    {% trans "Create Event" %}
-                </button>
-            </p>
+            {% include "whosgoing/fragments/home/member.html" %}
         {% endif %}
-
     </div>
 {% endblock %}
 
@@ -47,7 +20,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.6.0/jquery.timepicker.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#create-event-button').click(function() {
+            $('.create-event-button').click(function() {
                 dcbase.popupAjaxForm({
                     url: "{% url "whosgoing:createEvent" %}",
                     afterLoad: function() {

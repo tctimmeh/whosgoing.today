@@ -1,0 +1,21 @@
+#events-panel .panel-body,
+#invitations-panel .panel-body {
+    padding: 0;
+}
+
+#events-panel .list-group,
+#invitations-panel, .list-group {
+    margin: 0;
+}
+
+#invitations-panel {
+    margin-bottom: 20px;
+}
+
+#no-events-message {
+    padding: 10px;
+    font-size: large;
+}
+#no-events-message .btn {
+    margin: auto;
+}
