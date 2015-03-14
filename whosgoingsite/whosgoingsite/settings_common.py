@@ -13,10 +13,16 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'whosgoing',
     'allauth.socialaccount.providers.google',
+
+    'django_comments',
+    'mptt',
+    'tagging',
+    'zinnia',
 ) + INSTALLED_APPS
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'whosgoing.context_processor.whosgoing',
+    'zinnia.context_processors.version',
 ) + TEMPLATE_CONTEXT_PROCESSORS
 
 TIME_INPUT_FORMATS = (
@@ -32,3 +38,5 @@ WSGI_APPLICATION = 'whosgoingsite.wsgi.application'
 LOGIN_REDIRECT_URL = 'whosgoing:home'
 
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+ZINNIA_MARKUP_LANGUAGE = 'markdown'
