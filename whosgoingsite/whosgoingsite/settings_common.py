@@ -15,6 +15,10 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.google',
 ) + INSTALLED_APPS
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'whosgoing.context_processor.whosgoing',
+) + TEMPLATE_CONTEXT_PROCESSORS
+
 TIME_INPUT_FORMATS = (
     '%H:%M:%S',     # '14:30:59'
     '%H:%M:%S.%f',  # '14:30:59.000200'

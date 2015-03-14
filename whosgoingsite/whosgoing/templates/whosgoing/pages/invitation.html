@@ -1,9 +1,13 @@
 {% extends "dcbase/base-narrow-dialog.html" %}
 {% load i18n %}
+{% load whosgoing %}
+{% load static %}
 
 {% block pageTitle %}Invitation - {{ block.super }}{% endblock %}
 
 {% block style %}
+    {% min_style "whosgoing.css" %}
+    <link rel="stylesheet" href="{% static "css/whosgoing.min.css" %}" />
     <style>
         .event_name { color: black; font-weight: bold; font-size: 150%; font-style: italic; text-shadow: 3px 3px lightgray; }
         .invitation-form { display: inline; }

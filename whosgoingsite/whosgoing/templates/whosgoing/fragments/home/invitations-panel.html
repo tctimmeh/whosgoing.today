@@ -12,9 +12,9 @@
                     <a class="list-group-item" href="{% url "whosgoing:invitation" inviteId=invitation.inviteId %}">
                         {% if invitation.from_name %}
                             <span class="label label-info">
-                                {% blocktrans %}
+                                {% blocktrans with from_name=invitation.from_name %}
                                     Invited By:
-                                    <strong>{{ invitation.from_name }}</strong>
+                                    <strong>{{ from_name }}</strong>
                                 {% endblocktrans %}
                             </span>
                         {% endif %}

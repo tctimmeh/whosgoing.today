@@ -12,6 +12,8 @@ from django.dispatch import receiver
 
 class InvitationManager(Manager):
     def for_user(self, user):
+        if user.is_anonymous():
+            return None
         emails = [record.email for record in user.emailaddress_set.only('email')]
         emails = [email.lower() for email in emails]
         return self.filter(address__in=emails)

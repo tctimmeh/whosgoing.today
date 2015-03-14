@@ -1,3 +1,8 @@
+#header-notifications-icon {
+    display: inline;
+    margin: 5px;
+}
+
 .panel-heading {
     position: relative;
 }

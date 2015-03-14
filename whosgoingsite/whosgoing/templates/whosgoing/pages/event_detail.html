@@ -46,7 +46,7 @@
 
                 {% if invitations %}
                     <h3>Invitations</h3>
-                    {% include "whosgoing/fragments/invitations.html" %}
+                    {% include "whosgoing/fragments/invitations.html" with invitations=event_invitations %}
                 {% endif %}
             </div>
 

@@ -1,7 +1,7 @@
 {% extends "dcbase/form/popup-form.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Cancel Invitation" %}{% endblock %}
+{% block title %}{% trans "Cancel Invitation" %} - {{ invitation.event }}{% endblock %}
 
 {% block beforeForm %}
     <p>

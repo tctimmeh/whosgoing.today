@@ -13,6 +13,31 @@
 
 {% block headerBarBrand %}{% trans "Who's Going Today?" %}{% endblock %}
 
+{% block headerBarRight %}
+    {% if invitations|length %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <span id="header-notifications-icon" class="glyphicon glyphicon-envelope"></span>
+                <span class="label label-danger">
+                    {{ invitations|length }}
+                </span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                {% for invitation in invitations %}
+                    <li>
+                        <a href="{{ invitation.get_absolute_url }}">
+                            Invitation to <strong>{{ invitation.event }}</strong>
+                        </a>
+                    </li>
+                    {% if not forloop.last %}
+                        <li class="divider"></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+{% endblock %}
+
 {% block footerBar %}
     <div class="navbar-text">
         <a class="navbar-link" href="mailto:admin@whosgoing.today?Subject=whosgoing.today">
