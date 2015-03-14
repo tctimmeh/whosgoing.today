@@ -24,8 +24,8 @@
                         {% with event.members.count as num_members %}
                             {{ event.members.count }}
                             <span class="hidden-xs">
-                                {% blocktrans %}
-                                    Member{{ num_members|pluralize }}
+                                {% blocktrans with members_plural=num_members|pluralize %}
+                                    Member{{ members_plural }}
                                 {% endblocktrans %}
                             </span>
                         {% endwith %}
