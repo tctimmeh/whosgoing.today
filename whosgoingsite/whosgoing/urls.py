@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url, include
+from django.views.generic import RedirectView
 from whosgoing.views.createEvent import createEventView
 from whosgoing.views.deleteInvitation import deleteInvitationView
 from whosgoing.views.event.createOccurrence import createOccurrenceView
@@ -24,6 +25,7 @@ eventUrls = patterns('',
 )
 
 urlpatterns = patterns('',
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
     url(r'^$', homeView, name='home'),
     url(r'^events/create/$', createEventView, name='createEvent'),
     url(r'^events/(?P<eventId>\d+)/', include(eventUrls, namespace='event')),
