@@ -1,0 +1,33 @@
+{% load comments i18n %}
+{% load firstof from future %}
+
+{% if user.is_authenticated %}
+<form action="{% comment_form_target %}" method="post" id="blog-comment-form">
+{#<form action="" method="post" id="comment-form">#}
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <fieldset>
+        <legend>{% trans "Post your comment" %}</legend>
+        <input type="hidden" name="next" value="{% url 'zinnia:comment_success' %}"/>
+        {% include "dcbase/form/form-field.html" with field=form.content_type %}
+        {% include "dcbase/form/form-field.html" with field=form.object_pk %}
+        {% include "dcbase/form/form-field.html" with field=form.timestamp %}
+        {% include "dcbase/form/form-field.html" with field=form.security_hash %}
+        {% include "dcbase/form/form-field.html" with field=form.comment %}
+        <div style="display: none">
+            {% include "dcbase/form/form-field.html" with field=form.honeypot %}
+        </div>
+    </fieldset>
+
+    <p class="submit">
+        <input type="submit" name="submit" class="btn btn-primary submit-post" value="{% trans "Post" %}"/>
+        <input type="submit" name="preview" class="btn btn-default submit-preview" value="{% trans "Preview" %}"/>
+    </p>
+</form>
+{% endif %}

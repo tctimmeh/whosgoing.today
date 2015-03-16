@@ -1,0 +1,37 @@
+{% extends "zinnia/base.html" %}
+{% load i18n zinnia %}
+
+{% block blog-content %}
+    {% block content-title %}
+        {% if category %}
+            <h1>{% blocktrans %}Category: {{ category }}{% endblocktrans %}</h1>
+            {% if category.description %}
+                <p>{{ category.description|striptags|safe }}</p>
+            {% endif %}
+        {% endif %}
+
+        {% if tag %}
+            <h1>{% blocktrans %}Tag: {{ tag }}{% endblocktrans %}</h1>
+        {% endif %}
+
+        {% if author %}
+            <h1>{% blocktrans %}Author: {{ author }}{% endblocktrans %}</h1>
+        {% endif %}
+    {% endblock content-title %}
+
+    {% block content-loop %}
+        {% for object in object_list %}
+            {% include object.content_template with object_content=object.html_preview continue_reading=1 %}
+        {% empty %}
+            <p class="info">
+                {% trans "No entries yet." %}
+            </p>
+        {% endfor %}
+    {% endblock content-loop %}
+
+    {% block content-pagination %}
+        {% if is_paginated %}
+            {% zinnia_pagination page_obj %}
+        {% endif %}
+    {% endblock content-pagination %}
+{% endblock blog-content %}

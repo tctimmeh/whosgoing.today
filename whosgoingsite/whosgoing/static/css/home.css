@@ -1,13 +1,3 @@
-#events-panel .panel-body,
-#invitations-panel .panel-body {
-    padding: 0;
-}
-
-#events-panel .list-group,
-#invitations-panel, .list-group {
-    margin: 0;
-}
-
 #invitations-panel {
     margin-bottom: 20px;
 }

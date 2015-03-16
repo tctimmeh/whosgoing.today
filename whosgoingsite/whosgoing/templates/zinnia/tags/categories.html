@@ -1,0 +1,18 @@
+{% load i18n %}
+
+<div class="list-group {% if not categories %}no-{% endif %}categories">
+    {% for category in categories %}
+        <a class="list-group-item"
+           href="{{ category.get_absolute_url }}"
+           title="{% blocktrans %}Show all entries in {{ category }}{% endblocktrans %}"
+           >
+            {{ category }}
+            <span class="badge">{{ category.count_entries_published }}</span>
+        </a>
+    {% empty %}
+        <li class="list-group-item">
+            {% trans "No categories yet." %}
+        </li>
+    {% endfor %}
+</div>
+

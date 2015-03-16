@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load zinnia i18n %}
+{% load whosgoing %}
+
+{% block pageTitle %}Blog - {{ block.super }}{% endblock %}
+
+{% block head %}
+    <link rel="index" href="{% url 'zinnia:entry_archive_index' %}"/>
+    <link rel="EditURI" type="application/rsd+xml" href="{% url 'zinnia:rsd' %}"/>
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="{% url 'zinnia:wlwmanifest' %}"/>
+    <link rel="search" type="application/opensearchdescription+xml" title="Zinnia's Weblog" href="{% url 'zinnia:opensearch' %}"/>
+    <link rel="alternate" type="application/rss+xml" title="{% trans "RSS Feed of latest entries" %}" href="{% url 'zinnia:entry_latest_feed' %}"/>
+    <link rel="alternate" type="application/rss+xml" title="{% trans "RSS Feed of latest discussions" %}" href="{% url 'zinnia:discussion_latest_feed' %}"/>
+    {% get_archives_entries "zinnia/tags/entries_archives_link.html" %}
+{% endblock head %}
+
+{% block style %}
+    {{ block.super }}
+    <style>.breadcrumb { margin-top: -22px; border: 1px solid lightgray; } </style>
+    {% min_style "whosgoing.css" %}
+    {% min_style "blog.css" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% zinnia_breadcrumbs %}
+
+        <div class="row">
+            <div class="col-sm-8">
+                {% block blog-content %}{% endblock %}
+            </div>
+            <div class="col-sm-4">
+                <div id="blog-categories-panel" class="panel panel-default">
+                    <div class="panel-heading">
+                        <a href="{% url 'zinnia:category_list' %}">{% trans "Categories" %}</a>
+                    </div>
+                    <div class="panel-body">
+                        {% get_categories %}
+                    </div>
+                </div>
+                <div id="blog-authors-panel" class="panel panel-default">
+                    <div class="panel-heading">
+                        <a href="{% url 'zinnia:author_list' %}">{% trans "Authors" %}</a>
+                    </div>
+                    <div class="panel-body">
+                        {% get_authors %}
+                    </div>
+                </div>
+                <div id="blog-tags-panel" class="panel panel-default">
+                    <div class="panel-heading">
+                        <a href="{% url 'zinnia:tag_list' %}">{% trans "Tags" %}</a>
+                    </div>
+                    <div class="panel-body">
+                        {% get_tag_cloud %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

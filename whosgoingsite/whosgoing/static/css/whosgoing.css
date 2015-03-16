@@ -3,6 +3,9 @@
     margin: 5px;
 }
 
+.panel-body .list-group {
+    margin: -15px;
+}
 .panel-heading {
     position: relative;
 }

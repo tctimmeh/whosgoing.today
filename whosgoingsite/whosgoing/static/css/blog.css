@@ -1,0 +1,44 @@
+.tag-cloud .tag-1 { font-size: 0.7em; }
+.tag-cloud .tag-2 { font-size: 0.93333em; }
+.tag-cloud .tag-3 { font-size: 1.05em; }
+.tag-cloud .tag-4 { font-size: 1.86667em; }
+.tag-cloud .tag-5 { font-size: 2.1em; }
+.tag-cloud .tag-6 { font-size: 2.8em; }
+.blog-entry-title { margin-top: 0; margin-bottom: 0; }
+.blog-entry-info { font-size: 85%; color: gray; }
+.blog-entry-header { padding: 10px; }
+.blog-entry-footer { font-size: 80%; margin-bottom: 10px; }
+.blog-entry-footer p { margin-bottom: 0; }
+.blog-entry-body, .blog-entry-footer {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+ul.paginator {
+    padding: 0;
+}
+ul.paginator li {
+    display: inline;
+}
+ul.paginator li.page {
+    border: 1px solid lightgray;
+    padding: 3px;
+    min-width: 30px;
+    height: 28px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 5px;
+}
+ul.paginator li.ellipsis {
+    display: inline-block;
+    min-width: 18px;
+}
+#blog-comment-list {
+    list-style-type: none;
+    padding: 0;
+}
+#blog-comment-list .gravatar {
+    margin-right: 5px;
+}
+#blog-comment-form input.submit-post {
+    margin-right: 5px;
+}

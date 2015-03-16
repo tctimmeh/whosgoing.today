@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load gravatar %}
+{% load account %}
+
+<div class="list-group {% if not authors %}no-{% endif %}authors">
+    {% for author in authors %}
+        <a href="{{ author.get_absolute_url }}"
+           title="{% blocktrans %}Show all {{ author }}'s entries{% endblocktrans %}"
+           class="list-group-item fn url{% if not author.get_full_name %} nickname{% endif %}">
+            {% gravatar author 25 %}
+            {% user_display author %}
+            <span class="badge">{{ author.count_entries_published }}</span>
+        </a>
+    {% empty %}
+        <li class="list-group-item">
+            {% trans "No authors yet." %}
+        </li>
+    {% endfor %}
+</div>

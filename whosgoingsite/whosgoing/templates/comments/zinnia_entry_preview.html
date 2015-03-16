@@ -1,0 +1,28 @@
+{% extends "zinnia/base.html" %}
+{% load i18n zinnia comments %}
+
+{% block pageTitle %}{% trans "Comment preview" %} - {{ block.super }}{% endblock %}
+
+{% block blog-content %}
+    {% if form.errors %}
+        <h2>{% blocktrans count errors=form.errors|length %}Please correct following error.{% plural %}Please correct following errors.{% endblocktrans %}</h2>
+    {% else %}
+        <h2>{% trans "Preview of the comment" %}</h2>
+        <ol id="blog-comment-list">
+            {% with comment=form.get_comment_object %}
+                <div id="comment-preview"
+                     class="panel panel-default comment vcard box1">
+                    <div class="blog-comment-header panel-heading">
+                        {% include "whosgoing/fragments/user_link_with_avatar.html" %}
+                        {{ comment.submit_date|date }}
+                    </div>
+
+                    <div class="blog-comment-content panel-body">
+                        {{ comment.comment|linebreaks }}
+                    </div>
+                </div>
+            {% endwith %}
+        </ol>
+    {% endif %}
+    {% include "comments/zinnia/entry/form.html" %}
+{% endblock %}

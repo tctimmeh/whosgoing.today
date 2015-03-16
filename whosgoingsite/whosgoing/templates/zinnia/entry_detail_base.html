@@ -1,0 +1,54 @@
+{% extends "zinnia/base.html" %}
+{% load i18n comments zinnia %}
+{% load cycle from future %}
+{% load gravatar %}
+
+{% block pageTitle %}{{ object.title }} - {{ block.super }}{% endblock %}
+
+{% block blog-content %}
+    {% include object.content_template with object_content=object.html_content %}
+
+    <div id="comments">
+        <hr/>
+        <h3>{% trans "Comments" %}</h3>
+
+        {% if object.comment_count %}
+            {% with comment_list=object.comments %}
+                <ol id="blog-comment-list">
+                    {% for comment in comment_list %}
+                        <div id="comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}"
+                             class="panel panel-default comment vcard {% cycle box1,box2 %}{% if comment.user %} authenticated-comment{% if comment.user.is_staff %} staff-comment{% endif %}{% if comment.user.is_superuser %} superuser-comment{% endif %}{% endif %}">
+                            <div class="blog-comment-header panel-heading">
+                                {% include "whosgoing/fragments/user_link_with_avatar.html" with user=comment.user %}
+                                {{ comment.submit_date|date }}
+
+                                <a href="#comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}"
+                                   id="c{{ comment.pk }}"
+                                   class="anchor-link glyphicon glyphicon-link pull-right"
+                                   title="{% trans "Direct link to this comment" %}"></a>
+                            </div>
+
+                            <div class="blog-comment-content panel-body">
+                                {{ comment.comment|linebreaks }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </ol>
+            {% endwith %}
+
+            {% if not object.comments_are_open %}
+                <p>{% trans "Comments are closed." %}</p>
+            {% endif %}
+        {% else %}
+            {% if object.comments_are_open %}
+                <p>{% trans "No comments yet." %}</p>
+            {% else %}
+                <p>{% trans "Comments are closed." %}</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if object.comments_are_open %}
+        {% render_comment_form for object %}
+    {% endif %}
+{% endblock blog-content %}
