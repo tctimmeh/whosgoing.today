@@ -10,6 +10,9 @@
     margin: auto;
 }
 
+#whats-new-panel h1.blog-entry-title {
+    font-size: 200%;
+}
 #whats-new-panel .panel-body {
     padding: 0;
 }
