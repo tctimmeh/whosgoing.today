@@ -9,3 +9,7 @@
 #no-events-message .btn {
     margin: auto;
 }
+
+#whats-new-panel .panel-body {
+    padding: 0;
+}
