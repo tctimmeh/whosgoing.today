@@ -16,6 +16,7 @@ class CreateEventView(PopupFormMixin, CreateView):
     form_valid_action = PopupValidAction.redirect
     dialog_title = _('Create Event')
     submit_text = _('Create')
+    template_name = 'whosgoing/fragments/event_update.html'
 
     def get_initial(self):
         dt = datetime.datetime.now()
