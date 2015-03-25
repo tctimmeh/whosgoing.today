@@ -44,17 +44,25 @@ class TestCreateOccurrenceView(WhosGoingUnitTestCase):
     def getEmailsToRecipient(self, address):
         return [email for email in mail.outbox if address in email.to or address in email.cc or address in email.bcc]
 
-    def test_sendsEmailToAllNotifyAddresses(self):
+    def test_sendsEmailToAllNotifyAddressesExceptOccurrenceCreator(self):
         email1 = EmailAddress.objects.create(user=self.loggedInUser, email=self.loggedInUser.email)
+        otherEmail1 = EmailAddress.objects.create(user=self.loggedInUser, email=self.randStr() + '@host.com')
 
         otherUser = self.createUser()
         email2 = EmailAddress.objects.create(user=otherUser, email=otherUser.email)
 
+        thirdUser = self.createUser()
+        email3 = EmailAddress.objects.create(user=thirdUser, email=thirdUser.email)
+
         self.event.notify_addresses.add(email1)
+        self.event.notify_addresses.add(otherEmail1)
         self.event.notify_addresses.add(email2)
+        self.event.notify_addresses.add(email3)
 
         response = self.client.post(self.get_url())
-        self.assertEqual(1, len(self.getEmailsToRecipient(email1.email)))
+        self.assertEqual(0, len(self.getEmailsToRecipient(email1.email)))
+        self.assertEqual(0, len(self.getEmailsToRecipient(otherEmail1.email)))
         self.assertEqual(1, len(self.getEmailsToRecipient(email2.email)))
+        self.assertEqual(1, len(self.getEmailsToRecipient(email3.email)))
         self.assertTemplateUsed(response, 'whosgoing/mail/new_occurrence.txt')
         self.assertTemplateUsed(response, 'whosgoing/mail/new_occurrence.html')

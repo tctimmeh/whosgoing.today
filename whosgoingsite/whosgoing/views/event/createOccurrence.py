@@ -30,7 +30,8 @@ class CreateOccurrenceView(View):
         return HttpResponseRedirect(self.event.get_absolute_url())
 
     def send_notifications(self):
-        notifyAddresses = self.event.notify_addresses.values('email')
+        creator_addresses = self.request.user.emailaddress_set.values('id')
+        notifyAddresses = self.event.notify_addresses.exclude(id__in=creator_addresses).values('email')
         notifyAddresses = [entry['email'] for entry in notifyAddresses]
         template_context = {
             'occurrence': self.occurrence,
