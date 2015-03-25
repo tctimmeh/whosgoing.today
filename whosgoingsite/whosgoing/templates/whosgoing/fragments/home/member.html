@@ -13,14 +13,16 @@
     </div>
 
     <div class="col-sm-4">
-        <div id="whats-new-panel" class="panel panel-default">
-            <div class="panel-heading">
-                <strong>What's New?</strong>
+        {% if news %}
+            <div id="whats-new-panel" class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>What's New?</strong>
+                </div>
+                <div class="panel-body">
+                    {% include news.content_template with object=news object_content=news.html_preview continue_reading=1 %}
+                </div>
             </div>
-            <div class="panel-body">
-                {% include news.content_template with object=news object_content=news.html_preview continue_reading=1 %}
-            </div>
-        </div>
+        {% endif %}
     </div>
 </div>
 

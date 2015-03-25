@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from allauth.account.models import EmailAddress
+from django.core import mail
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from whosgoing.models import EventOccurrence
@@ -39,6 +40,9 @@ class TestCreateOccurrenceView(WhosGoingUnitTestCase):
         response = self.client.post(self.get_url())
         self.assertRedirects(response, self.event.get_absolute_url())
         self.assertEqual(2, len(EventOccurrence.objects.all()))
+
+    def getEmailsToRecipient(self, address):
+        return [email for email in mail.outbox if address in email.to or address in email.cc or address in email.bcc]
 
     def test_sendsEmailToAllNotifyAddresses(self):
         email1 = EmailAddress.objects.create(user=self.loggedInUser, email=self.loggedInUser.email)

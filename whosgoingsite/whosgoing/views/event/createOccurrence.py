@@ -1,9 +1,10 @@
 from smtplib import SMTPException
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives, BadHeaderError
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
@@ -36,14 +37,19 @@ class CreateOccurrenceView(View):
             'site': get_current_site(self.request),
         }
 
+        email = EmailMultiAlternatives(
+            subject=_("[Who's Going Today?] New occurrence of %(event_name)s!") % {'event_name': self.event.name},
+            body=render_to_string('whosgoing/mail/new_occurrence.txt', template_context),
+            from_email="Who's Going Today? <noreply@whosgoing.today>",
+            bcc=notifyAddresses,
+        )
+        email.attach_alternative(
+            content=render_to_string('whosgoing/mail/new_occurrence.html', template_context),
+            mimetype='text/html',
+        )
         try:
-            send_mail(subject=_("[Who's Going Today?] New occurrence of %(event_name)s!") % {'event_name': self.event.name},
-                      message=render_to_string('whosgoing/mail/new_occurrence.txt', template_context),
-                      from_email="Who's Going Today? <noreply@whosgoing.today>",
-                      recipient_list=notifyAddresses,
-                      html_message=render_to_string('whosgoing/mail/new_occurrence.html', template_context),
-            )
-        except SMTPException as e:
+            email.send()
+        except (SMTPException, BadHeaderError) as e:
             messages.error(self.request, _('The occurrence was created but an error was encountered sending notification emails.'))
 
 
