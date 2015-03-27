@@ -18,6 +18,8 @@ INSTALLED_APPS = (
     'mptt',
     'tagging',
     'zinnia',
+
+    'rest_framework',
 ) + INSTALLED_APPS
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -40,3 +42,8 @@ LOGIN_REDIRECT_URL = 'whosgoing:home'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 ZINNIA_MARKUP_LANGUAGE = 'markdown'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAdminUser'],
+    'PAGE_SIZE': 20,
+}

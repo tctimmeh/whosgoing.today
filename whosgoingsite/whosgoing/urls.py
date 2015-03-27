@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, url, include
 from django.views.generic import RedirectView
+from rest_framework.routers import DefaultRouter
+from whosgoing.views.api import UserViewSet, EventViewSet
 from whosgoing.views.createEvent import createEventView
 from whosgoing.views.deleteInvitation import deleteInvitationView
 from whosgoing.views.event.createOccurrence import createOccurrenceView
@@ -13,6 +15,10 @@ from whosgoing.views.home import homeView
 from whosgoing.views.invitiation import invitationView
 from whosgoing.views.setAttendance import setAttendanceView
 
+
+api_router = DefaultRouter()
+api_router.register('users', UserViewSet)
+api_router.register('events', EventViewSet)
 
 eventUrls = patterns('',
     url(r'^$', eventDetailView, name='detail'),
@@ -32,4 +38,5 @@ urlpatterns = patterns('',
     url(r'^invitations/(?P<inviteId>[\w-]{36})/$', invitationView, name='invitation'),
     url(r'^invitations/(?P<inviteId>[\w-]+)/cancel/$', deleteInvitationView, name='deleteInvitation'),
     url(r'^occurrences/(?P<occurrenceId>\d+)/setAttendance/$', setAttendanceView, name='setAttendance'),
+    url(r'api/', include(api_router.urls, namespace='api')),
 )
