@@ -1,0 +1,10 @@
+{% extends "rest_framework/base.html" %}
+{% load static %}
+
+{% block title %}API - Who's Going Today?{% endblock %}
+
+{% block branding %}
+    <a class='navbar-brand' rel="nofollow" href='{% url "whosgoing:home" %}'>
+        Who's Going Today?
+    </a>
+{% endblock %}
