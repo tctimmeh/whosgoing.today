@@ -12,6 +12,7 @@ from whosgoing.views.event.toggleNotifyAddress import toggleNotifyAddressView
 from whosgoing.views.home import homeView
 from whosgoing.views.invitiation import invitationView
 from whosgoing.views.setAttendance import setAttendanceView
+from whosgoing.views.userReadTip import userReadTipView
 
 
 eventUrls = patterns('',
@@ -27,6 +28,7 @@ eventUrls = patterns('',
 urlpatterns = patterns('',
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
     url(r'^$', homeView, name='home'),
+    url(r'readTip/', userReadTipView, name='userReadTip'),
     url(r'^events/create/$', createEventView, name='createEvent'),
     url(r'^events/(?P<eventId>\d+)/', include(eventUrls, namespace='event')),
     url(r'^invitations/(?P<inviteId>[\w-]{36})/$', invitationView, name='invitation'),

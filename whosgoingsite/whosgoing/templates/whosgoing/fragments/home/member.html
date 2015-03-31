@@ -7,16 +7,41 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6 col-sm-offset-1">
+    <div class="col-sm-5 col-sm-offset-1">
         {% include "whosgoing/fragments/home/invitations-panel.html" %}
         {% include "whosgoing/fragments/home/events-panel.html" %}
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-5">
+        {% if tip %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{% trans "Hot Tips" %}</strong>
+                    <a class="btn btn-xs btn-default" href="{% url "zinnia:category_detail" path="tips" %}">
+                        {% trans "All Tips" %}
+                    </a>
+                </div>
+                <div class="panel-body">
+                    {{ tip.html_content|safe }}
+                    <form method="post" action="{% url "whosgoing:userReadTip" %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="entry_id" value="{{ tip.id }}" />
+                        <input type="hidden" name="next" value="{{ request.path }}" />
+                        <button class="btn btn-default" type="submit">
+                            {% trans "Got it, thanks!" %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+
         {% if news %}
             <div id="whats-new-panel" class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>What's New?</strong>
+                    <strong>{% trans "What's New?" %}</strong>
+                    <a class="btn btn-xs btn-default" href="{% url "zinnia:category_detail" path="news" %}">
+                        {% trans "All News" %}
+                    </a>
                 </div>
                 <div class="panel-body">
                     {% include news.content_template with object=news object_content=news.html_preview continue_reading=1 %}
