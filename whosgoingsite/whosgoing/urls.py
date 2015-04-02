@@ -9,11 +9,17 @@ from whosgoing.views.event.eventInvite import eventInviteView
 from whosgoing.views.event.eventKick import eventKickView
 from whosgoing.views.event.eventUpdate import eventUpdateView
 from whosgoing.views.event.toggleNotifyAddress import toggleNotifyAddressView
+from whosgoing.views.event.updateOccurrence import updateOccurrenceView
 from whosgoing.views.home import homeView
 from whosgoing.views.invitiation import invitationView
 from whosgoing.views.setAttendance import setAttendanceView
 from whosgoing.views.userReadTip import userReadTipView
 
+
+occurrenceUrls = patterns('',
+    url(r'^edit/$', updateOccurrenceView, name='update'),
+    url(r'^setAttendance/$', setAttendanceView, name='setAttendance'),
+)
 
 eventUrls = patterns('',
     url(r'^$', eventDetailView, name='detail'),
@@ -33,5 +39,5 @@ urlpatterns = patterns('',
     url(r'^events/(?P<eventId>\d+)/', include(eventUrls, namespace='event')),
     url(r'^invitations/(?P<inviteId>[\w-]{36})/$', invitationView, name='invitation'),
     url(r'^invitations/(?P<inviteId>[\w-]+)/cancel/$', deleteInvitationView, name='deleteInvitation'),
-    url(r'^occurrences/(?P<occurrenceId>\d+)/setAttendance/$', setAttendanceView, name='setAttendance'),
+    url(r'^occurrences/(?P<occurrenceId>\d+)/', include(occurrenceUrls, namespace='occurrence')),
 )

@@ -5,12 +5,19 @@
     <div>
         <p>
             <strong>{% trans "When:" %}</strong>
-            {{ occurrence.time|date:"D, M jS, g:i a" }}
+            <a class="edit-occurrence-time-button" href="#">
+                {{ occurrence.time|date:"D, M jS, g:i a" }}
+            </a>
+
             {% include "whosgoing/fragments/timezone_hint.html" %}
+
+            <button class="edit-occurrence-time-button btn btn-xs btn-default">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
         </p>
 
         {% if user_is_member and not occurrence.is_past %}
-            <form id="attendance-form" method="post" action="{% url "whosgoing:setAttendance" occurrenceId=occurrence.id %}">
+            <form id="attendance-form" method="post" action="{% url "whosgoing:occurrence:setAttendance" occurrenceId=occurrence.id %}">
                 {% csrf_token %}
 
                 <strong>{% trans "Going?" %} </strong>

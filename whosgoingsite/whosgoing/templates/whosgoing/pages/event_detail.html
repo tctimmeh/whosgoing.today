@@ -97,6 +97,11 @@ $(document).ready(function () {
             url: "{% url "whosgoing:event:delete" eventId=object.id %}"
         });
     });
+    $('.edit-occurrence-time-button').click(function(e) {
+        dcbase.popupAjaxForm({
+            url: "{% url "whosgoing:occurrence:update" occurrenceId=occurrence.id %}"
+        });
+    });
 
     windowResized();
     $(window).resize(windowResized);
