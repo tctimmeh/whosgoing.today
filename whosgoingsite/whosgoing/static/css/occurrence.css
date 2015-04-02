@@ -18,3 +18,23 @@
 #attendance-form {
     margin-bottom: 10px;
 }
+
+button.edit-occurrence-time-button {
+    padding: 2px 5px;
+}
+
+#occurrence-time {
+    margin-bottom: 10px;
+}
+#occurrence-time div {
+    display: inline-block;
+}
+#occurrence-time div:last-child {
+    margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+    #occurrence-time span.time-zone-hint {
+        display: table;
+    }
+}
