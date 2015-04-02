@@ -65,6 +65,24 @@
         span.bullet {
             margin-right: 10px;
         }
+        @media (max-width: 768px) {
+            div.jumbotron {
+                padding: 40px 0;
+            }
+            #early-hook-buttons a {
+                display: table;
+                margin: auto auto 15px;
+            }
+            span.action-icon {
+                display: none;
+            }
+            div.row ul {
+                padding-left: 0;
+            }
+            #last-chance-button {
+                font-size: x-large;
+            }
+        }
     </style>
 {% endblock %}
 
@@ -94,7 +112,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <span class="action-icon glyphicon glyphicon-question-sign hidden-xs"></span>
+                    <span class="action-icon glyphicon glyphicon-question-sign"></span>
                 </div>
                 <div class="col-sm-8">
                     <p>
@@ -115,7 +133,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-sm-push-8">
-                    <span class="action-icon glyphicon glyphicon-calendar hidden-xs"></span>
+                    <span class="action-icon glyphicon glyphicon-calendar"></span>
                 </div>
                 <div class="col-sm-8 col-sm-pull-4">
                     <p>
@@ -130,7 +148,7 @@
                         </li>
                         <li>
                             <span class="bullet glyphicon glyphicon-bell"></span>
-                            Lunch meetings with colleagues?
+                            Lunch meetings<span class="hidden-xs"> with colleagues</span>?
                         </li>
                         <li>
                             <span class="bullet glyphicon glyphicon-film"></span>
@@ -150,7 +168,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <span class="action-icon glyphicon glyphicon-ok-circle hidden-xs"></span>
+                    <span class="action-icon glyphicon glyphicon-ok-circle"></span>
                 </div>
                 <div class="col-sm-8">
                     <p>
