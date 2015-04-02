@@ -6,6 +6,11 @@ from zinnia.models import Category
 class HomeView(TemplateView):
     template_name = 'whosgoing/pages/home.html'
 
+    def get_template_names(self):
+        if not self.request.user.is_authenticated():
+            return ['whosgoing/pages/landing.html']
+        return super().get_template_names()
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if not self.request.user.is_anonymous():

@@ -11,9 +11,7 @@
 
 {% block content %}
     <div class="container">
-        {% if user.is_authenticated %}
-            {% include "whosgoing/fragments/home/member.html" %}
-        {% endif %}
+        {% include "whosgoing/fragments/home/member.html" %}
     </div>
 {% endblock %}
 

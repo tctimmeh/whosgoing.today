@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <style>
+        #content-wrapper {
+            padding-bottom: 28px;
+        }
+        #headerBar {
+            margin-bottom: 0;
+        }
+        div.jumbotron {
+            margin-bottom: 0;
+            padding: 75px 0;
+        }
+        div.jumbotron div.row {
+            padding-bottom: 0;
+        }
+        #early-hook-buttons {
+            display: table;
+            margin: auto;
+        }
+        #early-hook-buttons a:first-child {
+            margin-right: 20px;
+        }
+        .jumbotron div.row {
+            padding-bottom: 100px;
+        }
+        #last-chance-button {
+            font-size: 200%;
+            display: table;
+            margin: 35px auto auto;
+        }
+        .site-title {
+            font-weight: bold;
+        }
+        .jumbotron li {
+            font-size: 21px;
+        }
+        div.row-1 {
+            background-color: white;
+        }
+        div.row-2 {
+            background-color: honeydew;
+        }
+        div.row-3 {
+            color: ivory;
+            background-color: #2F4132;
+        }
+        div.row-4 {
+            background-color: #ffffd9;
+        }
+        div.row-5 {
+            color: white;
+            background-color: rgb(51, 122, 183);
+        }
+        span.action-icon {
+            font-size: 180px;
+            display: block;
+            margin: auto;
+            width: 180px;
+        }
+        ul.action-list {
+            list-style: none;
+        }
+        span.bullet {
+            margin-right: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron row-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="text-center"><span class="site-title">Who's Going Today?</span></h1>
+
+                    <p class="text-center">Manage your daily events in a <strong>simple, light-weight and delightful</strong> way!</p>
+
+                    <p id="early-hook-buttons">
+                        <a class="btn btn-primary btn-lg" href="{% url "account_signup" %}">
+                            Join Now For Free!
+                        </a>
+                        <a class="btn btn-default btn-lg" href="{% url "account_login" %}">
+                            Existing Members Sign In
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron row-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <span class="action-icon glyphicon glyphicon-question-sign hidden-xs"></span>
+                </div>
+                <div class="col-sm-8">
+                    <p>
+                        Have you ever organized an impromptu event and accidentally left people behind?
+                    </p>
+                    <p>
+                        Ever wished you had skipped out on a meeting because no one else was going that day?
+                    </p>
+                    <p>
+                        <span class="site-title">Who's Going Today</span> let's you see exactly what's happening with your events!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron row-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-sm-push-8">
+                    <span class="action-icon glyphicon glyphicon-calendar hidden-xs"></span>
+                </div>
+                <div class="col-sm-8 col-sm-pull-4">
+                    <p>
+                        <span class="site-title">Who's Going Today</span> helps you manage all those little meetings, appointments, and
+                        get-togethers that occur all the time.
+                    </p>
+
+                    <ul class="action-list">
+                        <li>
+                            <span class="bullet glyphicon glyphicon-adjust"></span>
+                            Hanging with friends?
+                        </li>
+                        <li>
+                            <span class="bullet glyphicon glyphicon-bell"></span>
+                            Lunch meetings with colleagues?
+                        </li>
+                        <li>
+                            <span class="bullet glyphicon glyphicon-film"></span>
+                            Weekend movie nights?
+                        </li>
+                    </ul>
+
+                    <p>
+                        <span class="site-title">Who's Going Today</span> has you covered!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron row-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <span class="action-icon glyphicon glyphicon-ok-circle hidden-xs"></span>
+                </div>
+                <div class="col-sm-8">
+                    <p>
+                        With <span class="site-title">Who's Going Today</span> you will never miss another opportunity to be with the people
+                        that are most important in your day-to-day life.
+                    </p>
+                    <p>
+                        It's super easy to get started and <strong>completely free!</strong>
+                    </p>
+
+                    <ul class="action-list">
+                        <li>
+                            <span class="bullet">&#x2714;</span>
+                            Create an event
+                        </li>
+                        <li>
+                            <span class="bullet">&#x2714;</span>
+                            Invite your group
+                        </li>
+                        <li>
+                            <span class="bullet">&#x2714;</span>
+                            Let your group know that you're going today!
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron row-5">
+        <div class="container">
+            <div class="row row-5">
+                <div class="col-xs-12">
+                    <h2 class="text-center">
+                        Sign up now and find out <span class="site-title">Who's Going Today!</span>
+                    </h2>
+                    <a id="last-chance-button" class="btn btn-success btn-lg" href="{% url "account_signup" %}">
+                        Sign Up Now For Free!
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
