@@ -30,3 +30,12 @@
     cursor: pointer;
     color: #333;
 }
+input.form-control.split-date-time {
+    width: 120px;
+}
+input.form-control.split-date-time:nth-of-type(1) {
+    position: absolute;
+}
+input.form-control.split-date-time:nth-of-type(2) {
+    margin-left: 125px;
+}

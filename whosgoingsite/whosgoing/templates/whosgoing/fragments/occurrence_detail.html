@@ -3,14 +3,21 @@
 
 {% if occurrence %}
     <div>
-        <p>
-            <strong>{% trans "When:" %}</strong>
-            {{ occurrence.time|date:"D, M jS, g:i a" }}
-            {% include "whosgoing/fragments/timezone_hint.html" %}
-        </p>
+        <div id="occurrence-time">
+            <div>
+                <strong>{% trans "When:" %}</strong>
+            </div>
+            <div>
+                <button class="btn btn-default edit-occurrence-time-button">
+                    {{ occurrence.time|date:"D, M jS, g:i a" }}
+                </button>
+
+                {% include "whosgoing/fragments/timezone_hint.html" %}
+            </div>
+        </div>
 
         {% if user_is_member and not occurrence.is_past %}
-            <form id="attendance-form" method="post" action="{% url "whosgoing:setAttendance" occurrenceId=occurrence.id %}">
+            <form id="attendance-form" method="post" action="{% url "whosgoing:occurrence:setAttendance" occurrenceId=occurrence.id %}">
                 {% csrf_token %}
 
                 <strong>{% trans "Going?" %} </strong>

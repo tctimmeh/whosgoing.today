@@ -4,3 +4,4 @@ from .invitation import Invitation
 from .eventOccurrence import EventOccurrence
 from .attendance import Attendance
 from .occurrenceMember import OccurrenceMember
+from .userReadTip import UserReadTip

@@ -4,7 +4,7 @@
 {% block title %}{{ occurrence.event.name }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    {% url "whosgoing:setAttendance" occurrenceId=occurrence.id as attendance_link %}
+    {% url "whosgoing:occurrence:setAttendance" occurrenceId=occurrence.id as attendance_link %}
     {% with event_name=occurrence.event.name occurrence_time=occurrence.time event_link=occurrence.event.get_absolute_url %}
         <p style="font-size: 180%">{% trans "Good News!" %}</p>
 
