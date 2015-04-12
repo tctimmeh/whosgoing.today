@@ -9,10 +9,13 @@ class WhosGoingUnitTestCase(UnitTestCase):
     def assertModelInstanceNotExists(self, modelClass, **filterOptions):
         self.assertFalse(modelClass.objects.filter(**filterOptions).exists())
 
-    def create_event(self, name=None):
+    def create_event(self, name=None, members=()):
         if name is None:
             name = self.randStr()
-        return Event.objects.create(name=name)
+        event = Event.objects.create(name=name)
+        for user in members:
+            event.add_member(user)
+        return event
 
     def create_invitation(self, event=None, address=None):
         if event is None:

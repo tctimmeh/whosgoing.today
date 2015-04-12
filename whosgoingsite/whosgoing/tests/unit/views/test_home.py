@@ -3,7 +3,8 @@ from whosgoing.tests.unit.whosGoingUnitTestCase import WhosGoingUnitTestCase
 
 
 class TestHomeView(WhosGoingUnitTestCase):
-    def test_rootUrlRendersHomePage(self):
+    def test_rootUrlRendersHomePageForLoggedInUsers(self):
+        self.logInAs()
         response = self.get('whosgoing:home')
         self.assertResponseStatusIsOk()
         self.assertTemplateUsed(response, 'whosgoing/pages/home.html')

@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url, include
 from django.views.generic import RedirectView
 from rest_framework.routers import DefaultRouter
-from whosgoing.views.api import UserViewSet, EventViewSet
+from whosgoing.views.api.eventViewSet import EventViewSet
+from whosgoing.views.api.userViewSet import UserViewSet
 from whosgoing.views.createEvent import createEventView
 from whosgoing.views.deleteInvitation import deleteInvitationView
 from whosgoing.views.event.createOccurrence import createOccurrenceView
@@ -19,8 +20,8 @@ from whosgoing.views.userReadTip import userReadTipView
 
 
 api_router = DefaultRouter()
-api_router.register('users', UserViewSet)
-api_router.register('events', EventViewSet)
+api_router.register('users', UserViewSet, base_name='user')
+api_router.register('events', EventViewSet, base_name='event')
 
 occurrenceUrls = patterns('',
     url(r'^edit/$', updateOccurrenceView, name='update'),

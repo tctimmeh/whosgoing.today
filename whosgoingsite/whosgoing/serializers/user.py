@@ -4,10 +4,9 @@ from rest_framework.serializers import HyperlinkedModelSerializer
 
 
 class UserSerializer(HyperlinkedModelSerializer):
-    events = HyperlinkedRelatedField(many=True, view_name='whosgoing:api:event-detail', read_only=True)
     class Meta:
         model = User
-        fields = ('url', 'username', 'events')
+        fields = ('url', 'username')
         extra_kwargs = {
             'url': {'view_name': 'whosgoing:api:user-detail'}
         }

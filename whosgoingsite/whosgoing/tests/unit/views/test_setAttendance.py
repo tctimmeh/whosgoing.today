@@ -18,7 +18,7 @@ class TestSetAttendanceView(WhosGoingUnitTestCase):
         if occurrenceId is None:
             occurrenceId = self.occurrence.id
 
-        url = reverse('whosgoing:setAttendance', kwargs={'occurrenceId': occurrenceId})
+        url = reverse('whosgoing:occurrence:setAttendance', kwargs={'occurrenceId': occurrenceId})
 
         if queryArg is not None:
             url = '{}?attend={}'.format(url, queryArg)
