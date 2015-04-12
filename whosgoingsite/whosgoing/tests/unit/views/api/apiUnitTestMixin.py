@@ -1,8 +1,7 @@
 import json
-from whosgoing.tests.unit.whosGoingUnitTestCase import WhosGoingUnitTestCase
 
 
-class ApiUnitTestCase(WhosGoingUnitTestCase):
+class ApiUnitTestMixin(object):
     def setUp(self):
         super().setUp()
         self.logInAs()

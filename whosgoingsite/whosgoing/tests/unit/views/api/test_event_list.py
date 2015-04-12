@@ -1,10 +1,11 @@
 import json
 from django.core.urlresolvers import reverse
 from whosgoing.models import Event
-from whosgoing.tests.unit.views.api.apiUnitTestCase import ApiUnitTestCase
+from whosgoing.tests.unit.views.api.apiUnitTestMixin import ApiUnitTestMixin
+from whosgoing.tests.unit.whosGoingUnitTestCase import WhosGoingUnitTestCase
 
 
-class TestEventListApiView(ApiUnitTestCase):
+class TestEventListApiView(ApiUnitTestMixin, WhosGoingUnitTestCase):
     def get_url(self):
         return reverse('whosgoing:api:event-list')
 

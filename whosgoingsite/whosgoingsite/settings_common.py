@@ -18,8 +18,8 @@ INSTALLED_APPS = (
     'mptt',
     'tagging',
     'zinnia',
-
     'rest_framework',
+    'django_extensions',
 ) + INSTALLED_APPS
 
 TEMPLATE_CONTEXT_PROCESSORS = (
