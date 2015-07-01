@@ -99,6 +99,7 @@ $(document).ready(function () {
             url: "{% url "whosgoing:event:delete" eventId=object.id %}"
         });
     });
+    {% if occurrence %}
     $('.edit-occurrence-time-button').click(function(e) {
         dcbase.popupAjaxForm({
             url: "{% url "whosgoing:occurrence:update" occurrenceId=occurrence.id %}",
@@ -115,6 +116,7 @@ $(document).ready(function () {
             }
         });
     });
+    {% endif %}
 
     windowResized();
     $(window).resize(windowResized);
