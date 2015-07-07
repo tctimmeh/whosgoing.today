@@ -14,6 +14,7 @@ INSTALLED_APPS = (
     'whosgoing',
     'allauth.socialaccount.providers.google',
 
+    'corsheaders',
     'django_comments',
     'mptt',
     'tagging',
@@ -21,6 +22,10 @@ INSTALLED_APPS = (
     'rest_framework',
     'django_extensions',
 ) + INSTALLED_APPS
+
+MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
+    'corsheaders.middleware.CorsMiddleware',
+)
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'whosgoing.context_processor.whosgoing',
@@ -47,3 +52,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
     'PAGE_SIZE': 20,
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
