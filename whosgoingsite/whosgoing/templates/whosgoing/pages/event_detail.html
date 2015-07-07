@@ -99,7 +99,8 @@ $(document).ready(function () {
             url: "{% url "whosgoing:event:delete" eventId=object.id %}"
         });
     });
-    {% if occurrenceId %}
+
+    {% if occurrence %}
     $('.edit-occurrence-time-button').click(function(e) {
         dcbase.popupAjaxForm({
             url: "{% url "whosgoing:occurrence:update" occurrenceId=occurrence.id %}",
